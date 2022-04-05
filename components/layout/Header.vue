@@ -8,7 +8,6 @@
 export default {
   name: 'Header',
   components: {
-    Nav
   },
   data () {
     return {
