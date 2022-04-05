@@ -1,0 +1,58 @@
+.vue__time-picker {
+  input.display-time {
+    border: none !important;
+    padding: 10px !important;
+    // height: auto !important;
+    height: 100% !important;
+    width: 100% !important;
+    // font-size: 20px !important;
+    line-height: inherit;
+    color: $primary_color_txt;
+    @extend .bg-color-background;
+    @extend .border-rd-6;
+  }
+}
+.clendar-year p::before {
+  display: none;
+}
+.vc-arrow {
+  color: $primary_color !important;
+  svg {
+    height: 40px;
+  }
+}
+.vc-header.align-left {
+  // margin-bottom: 20px;
+  padding: 0.6rem 1rem 1.2rem 1rem !important;
+}
+.wrap-box .inner-calendar p {
+  @extend .excerpt-1;
+  @extend .font-size-16;
+  &::before {
+    top: 7px !important;
+    height: 16px !important;
+  }
+}
+
+.fc-left {
+  h2 {
+    font-size: 1.3rem;
+    font-weight: 600;
+  }
+}
+.vc-title {
+  font-size: 1.3rem !important;
+  color: $primary_color_txt !important;
+  &:hover {
+    opacity: 1 !important;
+  }
+}
+// Video plyr
+.plyr--full-ui.plyr--video .plyr__control--overlaid {
+  background: $primary_color;
+}
+
+// Math popup tickContainer expire
+.wrs_editor .wrs_tickContainer {
+  display: none !important;
+}

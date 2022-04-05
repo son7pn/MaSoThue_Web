@@ -1,0 +1,56 @@
+.menu-left-page {
+    .inner-check{
+        background-color: $secondary_color_txt;
+        width: 1.2rem;
+        height: 1.2rem;
+        display: inline-block;
+        border-radius: 3px;
+        margin-right: 0.85rem;
+    }
+    .inner-text:hover {
+        background-color: $color_light_blue;
+        .inner-check{
+            background-color: $primary_color;
+        }
+    }
+    .nuxt-link-active {
+        background-color: $color_light_blue;
+        color: $primary_color;
+        .inner-check{
+            background-color: $primary_color;
+        }
+    }
+}
+.width-title {
+    width: calc(100% - 1.2rem - 0.85rem)
+}
+.style-menu-left {
+    li {
+      a {
+        height: 2.4rem;
+        padding: 0.6rem 1.2rem;
+        @media screen and (min-width: 1199px) and (max-width: 1582px) {
+          padding: 0.6rem 1.1rem;
+        }
+        // @media screen and (min-width: 1199px) and (max-width: 1369px) {
+        //   padding: 0.6rem 0.9rem;
+        // }
+        @media screen and (min-width: 985px) and (max-width: 1198px) {
+          padding: 0.6rem 0.9rem;
+        }
+        &:hover {
+          background-color: $color_light_blue;
+        }
+      }
+      .active {
+        background: $color_light_blue;
+      }
+      .menuIconSeeMore {
+        li {
+          a {
+            padding: 0.4rem 0.6rem !important;
+          }
+        }
+      }
+    }
+  }

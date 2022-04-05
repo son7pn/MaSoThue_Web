@@ -1,0 +1,35 @@
+/**
+* 1. Common style
+* -------------------------------------------------------------------
+*/
+@import "./commons/_fonts.scss";
+@import "./commons/_general.scss";
+@import "./commons/_grid.scss";
+@import "./commons/_font-icons.scss";
+@import "./commons/_elements.scss";
+@import "./commons/_colors.scss";
+@import "./commons/_transition.scss";
+@import "./commons/_aspect-ratio.scss";
+@import "./commons/_shared.scss";
+@import "./commons/_custom-library.scss";
+@import "./commons/_customform.scss";
+@import "./commons/_aspect.scss";
+/**
+* 2. Blocks (Shortcode/Widget)
+* -------------------------------------------------------------------
+*/
+@import "./block/_loading";
+@import "./block/_button.scss";
+@import "./block/_dropdown.scss";
+@import "./block/_menulist.scss";
+@import "./block/_menu-left.scss";
+@import "./block/_infor.scss";
+@import "./block/_tooltip.scss";
+@import "./block/_preview-web";
+@import "./block/_phone-ring";
+
+/**
+* 3. partials style
+* -------------------------------------------------------------------
+*/
+@import "./partials/library";

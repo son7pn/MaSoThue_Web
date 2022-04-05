@@ -1,0 +1,77 @@
+.clendar-year {
+  padding-top: 20px;
+  .vc-popover-content-wrapper {
+    display: none !important;
+  }
+  .vc-arrow {
+    color: $primary_color !important;
+  }
+  .inner-box:hover {
+    background-color: $color-light-blue;
+  }
+  .inner-text {
+    max-height: 92px;
+    min-height: 92px;
+  }
+  p {
+    padding-left: 5px !important;
+    &::before {
+      content: "";
+      height: 100%;
+      width: 3px;
+      background-color: $primary_color;
+      position: absolute;
+      left: 0;
+      top: 0;
+    }
+  }
+}
+.full-calendar {
+  .fc-time {
+    // position: relative;
+    span {
+      // position: absolute;
+      // left: 10%;
+      &:after {
+        content: ":00";
+      }
+    }
+  }
+  .fc-event-container {
+    margin: 0 i !important;
+  }
+  .fc-button-group {
+    button {
+      background: transparent;
+      border: unset;
+      box-shadow: unset;
+      color: $primary_color;
+    }
+  }
+  .fc-scroller.fc-time-grid-container {
+    height: 100% !important;
+    overflow: unset !important;
+  }
+  .fc-widget-header {
+    margin-right: 0 !important;
+  }
+  .fc-content-col {
+    .fc-time-grid-event {
+      background: $color_light_blue;
+      font-size: 20px;
+      color: $color_dark;
+      border: unset;
+      border-top: 8px solid $primary_color;
+      border-radius: 5px;
+      .fc-content {
+        margin: 16px 8px 0;
+        .fc-time {
+          display: none;
+        }
+      }
+    }
+  }
+}
+.styleDatePlace {
+  color: red;
+}

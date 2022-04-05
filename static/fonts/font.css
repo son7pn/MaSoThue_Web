@@ -1,0 +1,18 @@
+@font-face {
+  font-family: 'sandisplaypro-light';
+  font-weight: 300;
+  src: url("./sanfrancisco/SF-Pro-Display-Light.otf") format("opentype");
+}
+@font-face {
+  font-family: 'sandisplaypro';
+  font-weight: 400;
+  src: url("./sanfrancisco/SF-Pro-Display-Regular.otf") format("opentype");
+}
+@font-face {
+  font-family: 'sandisplaypro-semi';
+  src: url("./sanfrancisco/SF-Pro-Display-Semibold.otf") format("opentype");
+}
+@font-face {
+  font-family: 'sandisplaypro-bold';
+  src: url("./sanfrancisco/SF-Pro-Display-Bold.otf") format("opentype");
+}
