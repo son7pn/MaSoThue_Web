@@ -130,7 +130,7 @@ export default {
       display: block;
       position: absolute;
       bottom: -1px;
-  }
+    }
   }
 }
 </style>

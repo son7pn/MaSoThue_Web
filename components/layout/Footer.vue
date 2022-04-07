@@ -61,7 +61,7 @@
             </nuxt-link>
           </li>
           <li class="full-height mg-t-24r">
-            <nuxt-link :to="localePath('/')" class="display-flex primary-color-txt full-height align-items-center">
+            <nuxt-link :to="localePath('contact')" class="display-flex primary-color-txt full-height align-items-center">
               <span class="title_menu font-size-18">Liên hệ</span>
             </nuxt-link>
           </li>

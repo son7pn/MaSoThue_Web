@@ -1,6 +1,6 @@
 <template>
   <div class="item-info-bus full-width">
-    <h4 class="font-sanpro-semibold primary-color text-uppercase mg-b-12r">
+    <h4 class="font-sanpro-semibold primary-color text-uppercase mg-b-12r font-size-20">
       <nuxt-link :to="localePath('/0202127633-cong-ty-tnhh-kinh-doanh-van-tai-va-dau-tu-dich-vu-minh-hoang')" class="primary-color">
         {{ dataSource.nameCompany ? dataSource.nameCompany : '' }}
       </nuxt-link>
@@ -38,6 +38,9 @@ export default {
     a:hover {
       color: #014c8c;
     }
+  }
+  i {
+    width: 15px;
   }
 }
 .item-info-bus:not(:nth-last-child(3)) {
