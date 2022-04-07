@@ -6,10 +6,9 @@
 .main {
   margin-top: 7.25rem; // with height header
 
-  // @media screen and (max-width: 991px) {
-  //   // 55px for footer height
-  //   height: calc(100vh - (7.25rem + 55px));
-  // }
+  @media screen and (max-width: 991px) {
+    margin-top: 8.9rem;
+  }
 }
 // Sticky for column left & right
 .sticky {

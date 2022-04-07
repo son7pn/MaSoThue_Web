@@ -40,7 +40,7 @@ export default {
     }
   }
   i {
-    width: 15px;
+    width: 17px;
   }
 }
 .item-info-bus:not(:nth-last-child(3)) {
