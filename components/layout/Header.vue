@@ -25,20 +25,23 @@
           </nuxt-link>
         </li>
         <li class="full-height">
-          <nuxt-link :to="localePath('/')" class="font-sanpro-semibold display-flex text-uppercase full-height primary-color-txt align-items-center">
+          <nuxt-link :to="localePath('contact')" class="font-sanpro-semibold display-flex text-uppercase full-height primary-color-txt align-items-center">
             <span class="title_menu font-size-20">Liên hệ</span>
           </nuxt-link>
         </li>
       </ul>
     </div>
-    <div class="header-search bg-primary-color" />
+    <BoxSearch />
   </header>
 </template>
 
 <script>
+import BoxSearch from '@/components/search/BoxSearch.vue'
+
 export default {
   name: 'Header',
   components: {
+    BoxSearch
   },
   data () {
     return {
@@ -86,6 +89,26 @@ export default {
           color: $primary_color;
         }
       }
+    }
+  }
+}
+
+@media (max-width: 991px) {
+  .header {
+    height: 8.9rem;
+    .header-top {
+      display: block;
+      height: 5.7rem;
+    .logo {
+      padding: 0.4rem 0 0.8rem 0;
+      a {
+        margin: auto;
+      }
+    }
+  }
+    &__menu {
+      height: auto !important;
+      justify-content: space-around;
     }
   }
 }
