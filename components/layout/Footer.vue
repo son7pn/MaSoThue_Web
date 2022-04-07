@@ -51,12 +51,12 @@
         </h4>
         <ul class="list-style-none">
           <li class="full-height">
-            <nuxt-link :to="localePath('/')" class="display-flex primary-color-txt full-height align-items-center">
+            <nuxt-link :to="localePath('privacy')" class="display-flex primary-color-txt full-height align-items-center">
               <span class="title_menu font-size-18">Quyền riêng tư</span>
             </nuxt-link>
           </li>
           <li class="full-height mg-t-24r">
-            <nuxt-link :to="localePath('/')" class="display-flex primary-color-txt full-height align-items-center">
+            <nuxt-link :to="localePath('termsOfUse')" class="display-flex primary-color-txt full-height align-items-center">
               <span class="title_menu font-size-18">Điều khoản sử dụng</span>
             </nuxt-link>
           </li>
