@@ -158,7 +158,9 @@ img {
 .content-end {
   justify-content: flex-end;
 }
-
+.align-item-end {
+  align-items: end;
+}
 .align-items-end {
   align-items: flex-end;
 }
@@ -397,7 +399,7 @@ img {
   height: 48px;
 }
 .height-48 {
-  height: 48px;
+  height: 2.4rem;
 }
 .line-height-16 {
   line-height: 16px;

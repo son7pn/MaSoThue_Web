@@ -1,9 +1,10 @@
 <template>
   <div class="wrap-page">
     <Header />
-    <main class="main">
+    <main class="main container">
       <Main />
     </main>
+    <div class="border-primary-color" />
     <Footer />
   </div>
 </template>
@@ -21,3 +22,10 @@ export default {
   }
 }
 </script>
+<style lang="scss" scoped>
+.border-primary-color {
+  border: 4px solid $primary_color;
+  margin-top: 65px;
+  margin-bottom: 48px;
+}
+</style>

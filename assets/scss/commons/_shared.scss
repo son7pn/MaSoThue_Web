@@ -4,12 +4,12 @@
   margin: 0 auto;
 }
 .main {
-  margin-top: 4rem; // with height header
+  margin-top: 7.25rem; // with height header
 
-  @media screen and (max-width: 991px) {
-    // 55px for footer height
-    height: calc(100vh - (4rem + 55px));
-  }
+  // @media screen and (max-width: 991px) {
+  //   // 55px for footer height
+  //   height: calc(100vh - (7.25rem + 55px));
+  // }
 }
 // Sticky for column left & right
 .sticky {

@@ -1,11 +1,12 @@
-import { isPdf, isWord, isPowerpoint, isAudio, isVideo, isExcel, isZip } from '@/helpers/functions'
+/* eslint-disable prefer-regex-literals */
+import { isPdf, isWord, isPowerpoint, isAudio, isVideo, isExcel } from '@/helpers/functions'
 import { APP_CONFIG } from '@/utils/env'
-const imgWord = require('@/assets/images/icon/document.svg')
+// const imgWord = require('@/assets/images/icon/document.svg')
 // const imgPdf = require('@/assets/images/icon/pdf.svg')
 // const imgPptx = require('@/assets/images/icon/powerpoint.svg')
-const imgAudio = require('@/assets/images/icon/audio.svg')
+// const imgAudio = require('@/assets/images/icon/audio.svg')
 // const imgExcel = require('@/assets/images/icon/excel.svg')
-const imageDoc = require('@/assets/images/frontend/logo/logo-header.png')
+// const imageDoc = require('@/assets/images/frontend/logo/logo-header.png')
 
 export default {
   data () {
@@ -17,30 +18,30 @@ export default {
     clearTimeout(this.timeOut)
   },
   methods: {
-    renderImg (link) {
-      if (isWord(link) || isPdf(link) || isPowerpoint(link) || isExcel(link)) {
-        return imageDoc
-      } else if (isAudio(link)) {
-        return imgAudio
-      } else if (isZip(link)) {
-        return imgWord
-      } else if (link) {
-        return APP_CONFIG.cdnImageUrl + link
-      }
-      // if (isWord(link)) {
-      //   return imageDoc
-      // } else if (isPdf(link)) {
-      //   return imageDoc
-      // } else if (isPowerpoint(link)) {
-      //   return imageDoc
-      // } else if (isAudio(link)) {
-      //   return imgAudio
-      // } else if (isExcel(link)) {
-      //   return imageDoc
-      // } else if (link) {
-      //   return APP_CONFIG.cdnImageUrl + link
-      // }
-    },
+    // renderImg (link) {
+    //   if (isWord(link) || isPdf(link) || isPowerpoint(link) || isExcel(link)) {
+    //     return imageDoc
+    //   } else if (isAudio(link)) {
+    //     return imgAudio
+    //   } else if (isZip(link)) {
+    //     return imgWord
+    //   } else if (link) {
+    //     return APP_CONFIG.cdnImageUrl + link
+    //   }
+    //   // if (isWord(link)) {
+    //   //   return imageDoc
+    //   // } else if (isPdf(link)) {
+    //   //   return imageDoc
+    //   // } else if (isPowerpoint(link)) {
+    //   //   return imageDoc
+    //   // } else if (isAudio(link)) {
+    //   //   return imgAudio
+    //   // } else if (isExcel(link)) {
+    //   //   return imageDoc
+    //   // } else if (link) {
+    //   //   return APP_CONFIG.cdnImageUrl + link
+    //   // }
+    // },
 
     renderIconType (link) {
       if (isAudio(link)) {
@@ -109,7 +110,7 @@ export default {
         const fileLink = document.createElement('a')
         // console.log('nameL ', `[liber.edu.vn]_${name}`)
         fileLink.href = fileURL
-        fileLink.setAttribute('download', `[liber.edu.vn]_${name}`)
+        fileLink.setAttribute('download', `[masothue]_${name}`)
         document.body.appendChild(fileLink)
 
         fileLink.click()
@@ -128,15 +129,15 @@ export default {
       fileLink.click()
     },
 
-    renderIconDoc (link, isExam = false) {
-      if (isExam) {
-        return require('@/assets/images/frontend/icon/icon-exam.png')
-      } else if (this.isDocument(link)) {
-        return require('@/assets/images/frontend/icon/icon-pdf.png')
-      } else if (isVideo(link)) {
-        return require('@/assets/images/frontend/icon/icon-video.png')
-      }
-    },
+    // renderIconDoc (link, isExam = false) {
+    //   if (isExam) {
+    //     return require('@/assets/images/frontend/icon/icon-exam.png')
+    //   } else if (this.isDocument(link)) {
+    //     return require('@/assets/images/frontend/icon/icon-pdf.png')
+    //   } else if (isVideo(link)) {
+    //     return require('@/assets/images/frontend/icon/icon-video.png')
+    //   }
+    // },
 
     checkAspectImg (link) {
       const img = new Image()
