@@ -11,7 +11,7 @@
     </div>
     <div class="mg-b-8r">
       <i class="fa fa-user font-size-20" aria-hidden="true" /> Người đại diện:
-      <a class="primary-color text-uppercase" href="javascript:;">&ensp;{{ dataSource.representative ? dataSource.representative : '' }}</a>
+      <a class="primary-color text-uppercase font-italic font-size-18" href="javascript:;">&ensp;{{ dataSource.representative ? dataSource.representative : '' }}</a>
     </div>
     <div class="mg-b-8r">
       <i class="fa fa-map-marker font-size-20" aria-hidden="true" />

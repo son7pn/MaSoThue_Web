@@ -1,5 +1,5 @@
 <template>
-  <div class="page-contact pd-t-30r">
+  <div class="page-contact pd-t-50r">
     <h2 class="font-sanpro-semibold primary-color-txt font-size-40 mg-b-64r display-flex-center justify-content-center full-width">
       Liên hệ
     </h2>

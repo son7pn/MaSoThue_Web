@@ -139,6 +139,11 @@ export default {
       border-radius: 100%
     }
   }
+  .item-menu {
+    a:hover{
+      color: $primary_color;
+    }
+  }
 }
 @media screen and (max-width: 575px) {
   .height-48 {

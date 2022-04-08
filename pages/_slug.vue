@@ -1,5 +1,5 @@
 <template>
-  <div class="detai-company pd-t-30r full-box pd-b-60r">
+  <div class="detai-company pd-t-50r full-box pd-b-60r">
     <h3 class="font-sanpro-semibold primary-color-txt mg-b-64r">
       2100621501-006 - VĂN PHÒNG ĐẠI DIỆN CÔNG TY CỔ PHẦN XUẤT NHẬP KHẨU THƯƠNG MẠI DẦU KHÍ
     </h3>

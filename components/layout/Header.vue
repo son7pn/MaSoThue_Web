@@ -1,6 +1,6 @@
 <template>
   <header id="header" class="header bg-color-light">
-    <div class="header-top container display-flex-center justify-content-between">
+    <div class="header-top container display-flex-center justify-content-between position-rel" :class="{'showMenu': isShowDropMenu}">
       <div class="logo bg-color-light">
         <nuxt-link :to="localePath('/')" class="display-flex">
           <figure class="aspect-ratio aspect-ratio--1-1 border-rd-8 aspect-ratio--bg-transparent">
@@ -30,6 +30,9 @@
           </nuxt-link>
         </li>
       </ul>
+      <button class="bt-navbar border-rd-4 position-abs cursor-pointer" @click="() => isShowDropMenu = !isShowDropMenu ">
+        <i class="icon-hien-th-list-1" />
+      </button>
     </div>
     <BoxSearch />
   </header>
@@ -45,6 +48,7 @@ export default {
   },
   data () {
     return {
+      isShowDropMenu: false
     }
   },
   computed: {
@@ -91,6 +95,13 @@ export default {
       }
     }
   }
+  .bt-navbar {
+      border: none;
+      padding: 0.4rem 0.8rem;
+      right: 0;
+      top: 0.5rem;
+      display: none;
+    }
 }
 
 @media (max-width: 991px) {
@@ -99,16 +110,53 @@ export default {
     .header-top {
       display: block;
       height: 5.7rem;
-    .logo {
-      padding: 0.4rem 0 0.8rem 0;
-      a {
-        margin: auto;
+      .logo {
+        padding: 0.4rem 0 0.6rem 0;
+        a {
+          margin: auto;
+        }
       }
     }
-  }
     &__menu {
       height: auto !important;
       justify-content: space-around;
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .header {
+    height: auto;
+    .header-top {
+      // display: block;
+      height: auto;
+      .logo {
+        // padding: 0.4rem 0 0.6rem 0;
+        a {
+          margin: 0;
+        }
+      }
+    }
+    &__menu {
+      display: block;
+      transform-origin: top;
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 1s ease-out;
+      li {
+        margin: 0;
+        margin-top: 0.5rem;
+      }
+
+    }
+    .bt-navbar {
+      display: block;
+    }
+    .showMenu {
+      .header__menu {
+        max-height: 20rem;
+        margin-bottom: 1rem;
+      }
     }
   }
 }

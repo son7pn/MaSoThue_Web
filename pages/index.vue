@@ -1,8 +1,8 @@
 <template>
-  <div class="home-index pd-t-30r full-box pd-b-60r">
+  <div class="home-index pd-t-50r full-box">
     <div class="row">
       <div class="col-md-9 col-12 mg-b-30r">
-        <h3 class="font-sanpro-semibold primary-color-txt mg-b-30r">
+        <h3 class="font-sanpro-semibold primary-color-txt mg-b-20r">
           Doanh nghiệp mới cập nhật
         </h3>
         <!-- <vueCustomScrollbar class="scroll-class none-ps-x" @ps-y-reach-end="infiniteScroll()"> -->
@@ -194,6 +194,11 @@ export default {
     }
     li:last-child {
       border-bottom: 0;
+    }
+    li:hover {
+      a {
+          color: $primary_color;
+        }
     }
   }
 }
