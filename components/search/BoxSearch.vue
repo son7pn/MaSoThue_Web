@@ -3,7 +3,7 @@
     <div class="bg-color-light box-search__main border-rd-4 display-flex-center">
       <div class="box-search__select position-rel display-flex-center">
         <div class="full-width display-flex-center justify-content-between" @click="() => isShowDrop = !isShowDrop">
-          <span> {{ selectActive ? selectActive : 'Tìm tự động' }} </span>
+          <span class="pr-2"> {{ selectActive ? selectActive : 'Tìm tự động' }} </span>
           <i class="icon-down-arrow" />
         </div>
         <div v-if="isShowDrop" class="position-abs full-width bg-color-light drop-down">
@@ -64,6 +64,7 @@ export default {
     height: 100%;
     padding-right: 0.8rem;
     padding-left: 0.6rem;
+    min-width: max-content;
 
     .drop-down {
       box-shadow: 0px 5px 12px rgba(0, 0, 0, 0.3);
@@ -84,11 +85,26 @@ export default {
   &__input {
     width: 70%;
     padding-left: 0.8rem;
-    padding-right: 0.15rem;
+    padding-right: 0.1rem;
 
     button {
       padding: 0.3rem 0.7rem;
       border: 1px solid $color_border_button;
+    }
+  }
+}
+
+@media (max-width: 991px) {
+  .box-search {
+    &__main {
+      width: 65%;
+    }
+  }
+}
+@media (max-width: 768px) {
+  .box-search {
+    &__main {
+      width: 91%;
     }
   }
 }
