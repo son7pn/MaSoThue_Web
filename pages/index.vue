@@ -6,13 +6,13 @@
           Doanh nghiệp mới cập nhật
         </h3>
         <!-- <vueCustomScrollbar class="scroll-class none-ps-x" @ps-y-reach-end="infiniteScroll()"> -->
-        <vueCustomScrollbar class="scroll-class none-ps-x none-ps-y">
-          <ItemInfoBusiness
-            v-for="(item, index) of listCompany"
-            :key="index"
-            :data-source="item"
-          />
-        </vueCustomScrollbar>
+        <!-- <vueCustomScrollbar class="scroll-class none-ps-x none-ps-y"> -->
+        <ItemInfoBusiness
+          v-for="(item, index) of listCompany"
+          :key="index"
+          :data-source="item"
+        />
+        <!-- </vueCustomScrollbar> -->
       </div>
       <div class="col-md-3 col-12">
         <h3 class="font-sanpro-semibold primary-color-txt search-province">
@@ -145,6 +145,8 @@ export default {
         }
       ]
     }
+  },
+  methods: {
   }
 }
 </script>

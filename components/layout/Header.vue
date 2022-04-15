@@ -1,5 +1,5 @@
 <template>
-  <header id="header" class="header bg-color-light">
+  <header id="header" class="header bg-color-light" :class="{'hide-header-top': isHideHeaderTop}">
     <div class="header-top container display-flex-center justify-content-between position-rel" :class="{'showMenu': isShowDropMenu}">
       <div class="logo bg-color-light">
         <nuxt-link :to="localePath('/')" class="display-flex">
@@ -30,34 +30,69 @@
           </nuxt-link>
         </li>
       </ul>
-      <button class="bt-navbar border-rd-4 position-abs cursor-pointer" @click="() => isShowDropMenu = !isShowDropMenu ">
+      <button v-click-outside="() => isShowDropMenu = false" class="bt-navbar border-rd-4 position-abs cursor-pointer" @click="() => isShowDropMenu = !isShowDropMenu ">
         <i class="icon-hien-th-list-1" />
       </button>
     </div>
     <BoxSearch />
+    <div class="back-to-top">
+      <BackToTop v-show="isBackToTop" />
+    </div>
   </header>
 </template>
 
 <script>
+import ClickOutside from 'vue-click-outside'
 import BoxSearch from '@/components/search/BoxSearch.vue'
-
+import BackToTop from '@/components/shared/BackToTop.vue'
 export default {
   name: 'Header',
   components: {
-    BoxSearch
+    BoxSearch,
+    BackToTop
+  },
+  directives: {
+    ClickOutside
   },
   data () {
     return {
-      isShowDropMenu: false
+      isShowDropMenu: false,
+      isHideHeaderTop: false,
+      lastScrollPosition: 0,
+      isBackToTop: false
     }
   },
   computed: {
   },
-  methods: {}
+  watch: {
+  },
+  mounted () {
+    window.addEventListener('scroll', this.onScroll)
+  },
+  methods: {
+    onScroll () {
+      this.lastScrollPosition = window.pageYOffset
+      // console.log('this.lastScrollPosition: ', this.lastScrollPosition)
+      this.isBackToTop = window.pageYOffset > 600
+      if (this.lastScrollPosition > 50) {
+        this.isHideHeaderTop = true
+      } else {
+        this.isHideHeaderTop = false
+      }
+    }
+  }
 }
 </script>
 
 <style lang="scss" scoped>
+.hide-header-top {
+  height: auto !important;
+  .header-top {
+    opacity: 0 !important;
+    transition: max-height 1.5s ease-out !important;
+    max-height: 0 !important;
+  }
+}
 .header {
   left: 0;
   position: fixed;
@@ -67,6 +102,8 @@ export default {
   z-index: 105;
   .header-top {
     height: 4rem;
+    transition: opacity 1s ease-out;
+    opacity: 1;
   }
   .header-search {
     height: 3.25rem;
