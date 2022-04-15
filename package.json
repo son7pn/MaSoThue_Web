@@ -6,7 +6,7 @@
     "dev": "nuxt",
     "build": "nuxt build",
     "start": "nuxt start",
-    "prod": "pm2 start npm ecosystem.config.js --name qlgd_ee_live -- start",
+    "prod": "pm2 start npm ecosystem.config.js --name mst_dev -- start",
     "generate": "nuxt generate",
     "lint:js": "eslint --ext .js,.vue --ignore-path .gitignore .",
     "lint": "yarn lint:js",
