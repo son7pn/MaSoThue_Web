@@ -1,5 +1,5 @@
 <template>
-  <div class="page-contact pd-t-30r">
+  <div class="page-contact pd-t-30r container">
     <h2 class="font-sanpro-semibold primary-color-txt font-size-40 mg-b-64r display-flex-center justify-content-center full-width">
       Chính sách bảo mật - Quyền riêng tư
     </h2>

@@ -1091,3 +1091,19 @@ table.table-mobile-befor-content {
     width: 310px;
   }
 }
+
+
+.border-title {
+  margin-bottom: 0.842em;
+  padding-bottom: 1.053em;
+  position: relative;
+  border-bottom: 1px solid $color_border;
+  &:after {
+    content: ' ';
+    width: 60%;
+    border-bottom: 4px solid $primary_color;
+    display: block;
+    position: absolute;
+    bottom: -1px;
+  }
+}

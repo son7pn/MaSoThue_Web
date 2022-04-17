@@ -1,38 +1,40 @@
 <template>
-  <div class="detai-company pd-t-50r full-box pd-b-60r">
-    <h3 class="font-sanpro-semibold primary-color-txt mg-b-64r">
-      2100621501-006 - VĂN PHÒNG ĐẠI DIỆN CÔNG TY CỔ PHẦN XUẤT NHẬP KHẨU THƯƠNG MẠI DẦU KHÍ
-    </h3>
-    <ViewDocs :data-source="dataDoc" />
-    <div class="mg-t-64r">
-      <h4 class="font-sanpro-semibold primary-color-txt title-comment">
-        Bình luận
-      </h4>
-      <ModulesComment />
-    </div>
-    <div class="mg-t-64r">
-      <h4 class="font-sanpro-semibold primary-color-txt title-comment">
-        Doanh nghiệp tại địa phương
-      </h4>
-      <vueCustomScrollbar class="scroll-class none-ps-x none-ps-y">
-        <ItemInfoBusiness
-          v-for="(item, index) of listCompany"
-          :key="index"
-          :data-source="item"
-        />
-      </vueCustomScrollbar>
-    </div>
-    <div class="mg-t-64r">
-      <h4 class="font-sanpro-semibold primary-color-txt title-comment">
-        Doanh nghiệp mới
-      </h4>
-      <vueCustomScrollbar class="scroll-class none-ps-x none-ps-y">
-        <ItemInfoBusiness
-          v-for="(item, index) of listCompany"
-          :key="index"
-          :data-source="item"
-        />
-      </vueCustomScrollbar>
+  <div class="container">
+    <div class="detai-company pd-t-50r full-box pd-b-60r ">
+      <h3 class="font-sanpro-semibold primary-color-txt mg-b-64r">
+        2100621501-006 - VĂN PHÒNG ĐẠI DIỆN CÔNG TY CỔ PHẦN XUẤT NHẬP KHẨU THƯƠNG MẠI DẦU KHÍ
+      </h3>
+      <ViewDocs :data-source="dataDoc" />
+      <div class="mg-t-64r">
+        <h4 class="font-sanpro-semibold primary-color-txt title-comment">
+          Bình luận
+        </h4>
+        <ModulesComment />
+      </div>
+      <div class="mg-t-64r">
+        <h4 class="font-sanpro-semibold primary-color-txt title-comment">
+          Doanh nghiệp tại địa phương
+        </h4>
+        <vueCustomScrollbar class="scroll-class none-ps-x none-ps-y">
+          <ItemInfoBusiness
+            v-for="(item, index) of listCompany"
+            :key="index"
+            :data-source="item"
+          />
+        </vueCustomScrollbar>
+      </div>
+      <div class="mg-t-64r">
+        <h4 class="font-sanpro-semibold primary-color-txt title-comment">
+          Doanh nghiệp mới
+        </h4>
+        <vueCustomScrollbar class="scroll-class none-ps-x none-ps-y">
+          <ItemInfoBusiness
+            v-for="(item, index) of listCompany"
+            :key="index"
+            :data-source="item"
+          />
+        </vueCustomScrollbar>
+      </div>
     </div>
   </div>
 </template>
@@ -49,6 +51,11 @@ export default {
     ViewDocs,
     ModulesComment,
     ItemInfoBusiness
+  },
+  nuxtI18n: {
+    paths: {
+      vi: '/:slug'
+    }
   },
   data () {
     return {

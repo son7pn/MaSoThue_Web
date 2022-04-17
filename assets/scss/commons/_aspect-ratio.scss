@@ -98,6 +98,13 @@
     }
   }
 
+
+  &--2-5 {
+    &:before {
+      padding-top: 25.65%;
+    }
+  }
+
   &--bg-transparent {
     &:before {
       background: transparent!important;

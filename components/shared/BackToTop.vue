@@ -2,7 +2,7 @@
   <div>
     <div v-cloak id="backToTop" class="cursor-pointer">
       <transition name="fade">
-        <div v-show="scY > 300" id="pagetop" class="fixed right-0 bottom-0" @click="toTop">
+        <div v-show="scY > 200" id="pagetop" class="fixed right-0 bottom-0" @click="toTop">
           <i class="icon-mui-ten-1 border-rd-8 color-light" />
         </div>
       </transition>
