@@ -68,20 +68,25 @@
         </div>
       </template>
     </div>
+    <ModalConfirmInfoComment v-if="!authInfo && isShowConfirmInfo" @closeModal="closeModal" @submit="handleCreateComment" />
   </div>
 </template>
 
 <script>
+import { mapActions } from 'vuex'
 import ClickOutside from 'vue-click-outside'
 import CommentDetail from './CommentDetail'
 import ItemComment from './ItemComment'
+import ModalConfirmInfoComment from './ModalConfirmInfoComment.vue'
 import { APP_CONFIG } from '@/utils/env'
+import { COOKIE_USER } from '@/store/auth/constants'
 import mixinsFile from '@/mixins/mixinsFile'
 
 export default {
   components: {
     CommentDetail,
-    ItemComment
+    ItemComment,
+    ModalConfirmInfoComment
   },
   directives: {
     ClickOutside
@@ -146,7 +151,10 @@ export default {
         ContentComment: ''
       },
       childCommentOpen: -1,
-      parentChildCommentOpen: -1
+      parentChildCommentOpen: -1,
+      isShowConfirmInfo: false,
+      authInfo: {},
+      contentFirtComment: {}
     }
   },
   computed: {
@@ -156,11 +164,19 @@ export default {
     //   }
     //   return !this.infoNewsfeed.isCommentId || [EVERY_BODY, FOLLOWERS].includes(this.infoNewsfeed.isCommentId)
     // }
+    // eslint-disable-next-line vue/return-in-computed-property
+  },
+  watch: {
+    authInfo (newVal) {
+      console.log('newVal: ', newVal)
+    }
   },
   mounted () {
+    this.authInfo = JSON.parse(localStorage.getItem(COOKIE_USER))
     this.windowWidth = window.innerWidth
   },
   methods: {
+    ...mapActions('common', ['acCreateComment']),
     handleRemoveComment (id) {
       console.log('val: ', id)
     },
@@ -178,13 +194,43 @@ export default {
       this.parentChildCommentOpen = index
     },
     async handleAddComment (val) {
-      await console.log('val: ', val)
+      if (!this.authInfo) {
+        this.isShowConfirmInfo = true
+        this.contentFirtComment = val
+      } else {
+        const payloadCreate = { ...val, articleId: 3333, email: this.authInfo.email, fullName: this.authInfo.name, phoneNumber: this.authInfo.phoneNumber, rate: { rating: 1 } }
+        const data = await this.acCreateComment(payloadCreate)
+        console.log('data: ', data)
+        if (!data) {
+          return
+        }
+        this.$toast.success('Bình luận thành công!')
+        this.$emit('created')
+      }
+      // await console.log('val: ', val)
+      // console.log('this.authInfo: ', this.authInfo)
     },
-
+    async handleCreateComment (val) {
+      if (!this.authInfo) {
+        localStorage.setItem(COOKIE_USER, JSON.stringify(val))
+        this.authInfo = JSON.parse(localStorage.getItem(COOKIE_USER))
+        const payloadCreate = { ...this.contentFirtComment, articleId: 3333, email: this.authInfo.email, fullName: this.authInfo.name, phoneNumber: this.authInfo.phoneNumber, rate: { rating: 1 } }
+        const data = await this.acCreateComment(payloadCreate)
+        console.log('data: ', data)
+        if (!data) {
+          return
+        }
+        this.$toast.success('Bình luận thành công!')
+        this.$emit('created')
+      }
+      console.log('this.authInfo: ', this.authInfo)
+    },
     async hadleCommentUpdated (val) {
       await console.log('val: ', val)
     },
-
+    closeModal () {
+      this.isShowConfirmInfo = false
+    },
     handleLikeComment (val) {
       console.log('val: ', val)
     }

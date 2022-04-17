@@ -17,17 +17,15 @@
           <client-only>
             <EditorBubble
               :ref="`comment_focus_${isEdit ? 'edit_' + position : position}`"
-              :value-content="contentComment"
+              :value-content="body"
               :is-show-menu="false"
               :is-module-comment="true"
               :placeholder="'Viết bình luận tại đây ...'"
               :is-comment="true"
-              :list-user-tags="dataSource.listUser"
               @change="editorChange"
-              @tagUser="handleTagUser"
             />
           </client-only>
-          <input ref="input_comment_parent" type="hidden" name="commentParentId" :value="parentId">
+          <input ref="input_comment_parent" type="hidden" name="parentId" :value="parentId">
           <span v-if="invalid" class="display-block color-err mr-t-5 text-left">Vui lòng điền nội dung</span>
         </form>
         <div class="position-rel">
@@ -97,13 +95,13 @@ export default {
   data () {
     return {
       // cdnUrl: APP_CONFIG.cdnImageUrl,
-      contentComment: '',
+      body: '',
       submitForm: false,
       dataFile: {
         fileUrl: '',
         name: '',
         documentId: 0,
-        commentParentId: 0
+        parentId: 0
       },
       dataCommentUpdate: {},
       invalid: false,
@@ -114,7 +112,7 @@ export default {
     }
   },
   validations: {
-    contentComment: {
+    body: {
       required
     }
   },
@@ -127,64 +125,64 @@ export default {
     //     return
     //   }
     //   if (this.userId && this.userName && this.authInfo.userId !== this.userId) {
-    //     this.contentComment = `@${this.userName}`
+    //     this.body = `@${this.userName}`
     //   }
     //   this.$refs[`comment_focus_${newVal}`].focus()
     // }
   },
   mounted () {
     this.setDataEditInit()
-    this.$nextTick(function () {
-      this.setFocusInputEdit()
-    })
+    // this.$nextTick(function () {
+    //   this.setFocusInputEdit()
+    // })
   },
   methods: {
-    setFocusInputEdit () {
-      if (!this.isEdit && this.focusIndex > -1 && this.authInfo.userId !== this.userId) {
-        const html = `<a href="${this.userId}" rel="noopener noreferrer nofollow">${this.userName}</a>`
-        this.contentComment = `<a href="${this.userId}" rel="noopener noreferrer nofollow">${this.userName}</a>`
-        this.handleTagUser({ fullName: this.userName, userId: this.userId, html })
-      }
-      // this.isEdit && this.focusIndex > -1 && this.$refs[`comment_focus_edit_${this.focusIndex}`] && this.$refs[`comment_focus_edit_${this.focusIndex}`].focus()
-    },
+    // setFocusInputEdit () {
+    //   if (!this.isEdit && this.focusIndex > -1 && this.authInfo.userId !== this.userId) {
+    //     const html = `<a href="${this.userId}" rel="noopener noreferrer nofollow">${this.userName}</a>`
+    //     this.body = `<a href="${this.userId}" rel="noopener noreferrer nofollow">${this.userName}</a>`
+    //     this.handleTagUser({ fullName: this.userName, userId: this.userId, html })
+    //   }
+    //   // this.isEdit && this.focusIndex > -1 && this.$refs[`comment_focus_edit_${this.focusIndex}`] && this.$refs[`comment_focus_edit_${this.focusIndex}`].focus()
+    // },
 
     setDataEditInit () {
       this.dataCommentUpdate = this.dataSource
-      const { contentComment, documentId, fileName, path, pathView } = this.dataSource
-      this.contentComment = contentComment
-      this.dataFile = { documentId, fileName, path, pathView, commentParentId: this.parentId ? this.parentId : 0 }
+      const { body } = this.dataSource
+      this.body = body
+      // this.dataFile = { documentId, fileName, path, pathView, parentId: this.parentId ? this.parentId : 0 }
     },
 
-    async onChangeFileComment (e) {
-      const file = await this.uploadFile2CDN(e)
-      if (!file) {
-        return
-      }
-      const { documentId, fileName, path, pathView } = file.data
-      this.dataFile = { ...this.dataFile, documentId, fileName, path, pathView }
-    },
+    // async onChangeFileComment (e) {
+    //   const file = await this.uploadFile2CDN(e)
+    //   if (!file) {
+    //     return
+    //   }
+    //   const { documentId, fileName, path, pathView } = file.data
+    //   this.dataFile = { ...this.dataFile, documentId, fileName, path, pathView }
+    // },
 
     saveComment (e) {
       this.submitForm = true
-      console.log('Content comment: ', this.contentComment)
-      if (!this.contentComment) {
+      console.log('Content comment: ', this.body)
+      if (!this.body) {
         return
       }
-      // if (this.contentComment) {
-      const check = this.contentComment.split('<p>').join('').split('</p>').join('').trim()
+      // if (this.body) {
+      const check = this.body.split('<p>').join('').split('</p>').join('').trim()
 
       if (!check) {
         this.invalid = true
         return
       }
       const payload = {
-        contentComment: this.contentComment,
-        commentParentId: parseInt(this.$refs.input_comment_parent.value)
+        body: this.body,
+        parentId: parseInt(this.$refs.input_comment_parent.value)
       }
 
       // Add preview html into content
       if (this.previewHtml && this.previewHtml.length > 0) {
-        payload.contentComment += this.previewHtml.join(' ')
+        payload.body += this.previewHtml.join(' ')
       }
       // console.log('Saved comment: ', this.previewHtml, payload)
       // console.log('Payload comment: ', payload, this.listUserContent, userTagged)
@@ -195,7 +193,7 @@ export default {
         this.$emit('updated', dataUpdate)
       }
       // Reset form
-      this.contentComment = ''
+      this.body = ''
       this.submitForm = false
       this.invalid = false
       this.listUserContent = []
@@ -213,7 +211,7 @@ export default {
     },
 
     async editorChange (val, link = null) {
-      this.contentComment = val
+      this.body = val
       const content = val
       if (!content || !link || link === this.linkCurrInput) {
         return
@@ -225,12 +223,12 @@ export default {
         // Variable: linkCurrInput from mixins data
         const contentBefore = `<a href="${this.linkCurrInput}" rel="noopener noreferrer nofollow">${this.linkCurrInput}</a>`
 
-        this.contentComment = content.replace(contentBefore, '')
+        this.body = content.replace(contentBefore, '')
         // this.$refs.chat_message.value = content.replace(this.linkCurrInput, '')
         // this.renderStyleBody()
       }
 
-      // console.log('Previe:', this.previewHtml, this.linkCurrInput, this.contentComment)
+      // console.log('Previe:', this.previewHtml, this.linkCurrInput, this.body)
       // if (link && link !== this.linkGetMetaTag) {
       //   this.acGetHtmlLink(link).then((res) => {
       //     if (res) {

@@ -1,6 +1,8 @@
-import Common from './common/common'
+import Common from './common/Common'
+import CommentRespository from './CommentRespository'
 export default ($axios) => {
   return {
-    common: Common($axios)
+    common: Common($axios),
+    commentApi: CommentRespository($axios)
   }
 }

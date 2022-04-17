@@ -153,7 +153,7 @@ export default {
     'editor.content': 'handleChangeContent',
     linkImg (newVal) {
       newVal && this.insertImg(newVal)
-    }
+    },
     // refForm () {
     //   if (this.refForm) {
     //     // console.log('ReForm: ', this.editor.getHTML())
@@ -161,12 +161,12 @@ export default {
     //     this.acRefreshForm(this.refForm = false)
     //   }
     // }
-    // valueContent (newVal) {
-    //   if (newVal !== this.editor.getHTML()) {
-    //     this.handleConvertContentHasTag(newVal)
-    //   }
-    //   // console.log('content chaneg', newVal, this.editor.getHTML())
-    // }
+    valueContent (newVal) {
+      if (!newVal) {
+        this.editor.setContent('')
+      }
+      // console.log('content chaneg', newVal, this.editor.getHTML())
+    }
   },
   mounted () {
     this.linkImg && this.editor && this.insertImg(this.linkImg)
