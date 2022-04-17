@@ -4,7 +4,9 @@ import mutations from './mutations'
 
 export const initState = () => {
   return {
-    loading: false
+    loading: false,
+    listComment: [],
+    totalRecordsComment: null
   }
 }
 const state = initState()

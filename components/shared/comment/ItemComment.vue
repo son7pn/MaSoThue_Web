@@ -23,12 +23,12 @@
             </nuxt-link>
           </h4>
           <div class="position-rel display-flex">
-            <span class="date font-primary secondary-color-txt font-size-14">{{ $dayjs(dataSource.createAt).format('DD/MM/YYYY') }}</span>
+            <span class="date font-primary secondary-color-txt font-size-14">{{ $dayjs(dataSource.createdDate).format('DD/MM/YYYY') }}</span>
           </div>
         </div>
         <div class="home-comment__item-cmt__descriptions">
           <!-- eslint-disable-next-line vue/no-v-html -->
-          <p class="font-primary primary-color-txt word-break-all" v-html="replaceDescription(dataSource, 'contentComment', true)" />
+          <p class="font-primary primary-color-txt word-break-all" v-html="replaceDescription(dataSource, 'body', true)" />
         </div>
         <CommentDetail
           v-if="isOpenEditForm"
@@ -41,20 +41,16 @@
       </div>
       <div class="home-comment__item-cmt__feedback justify-content-between display-flex">
         <div class="left display-flex-center">
-          <div class="left__icons">
-            <a v-if="dataSource.countLove" class="color-err font-size-16" href="javascript:;"><i class="icon-heart" /></a>
-            <a v-if="dataSource.countLike" class="primary-color font-size-16" href="javascript:;"><i class="icon-like" /></a>
-            <a v-if="dataSource.countdisLike" class="third-color font-size-16" href="javascript:;"><i class="icon-dislike" /></a>
-          </div>
           <span class="display-inline-block font-primary secondary-color-txt font-size-16">
-            {{ dataSource.countLike + dataSource.countLove + dataSource.countdisLike }} - {{ dataSource.countComment ? dataSource.countComment : 0 }} Trả lời
+            {{ dataSource.countComment ? dataSource.countComment : 0 }} Trả lời
           </span>
         </div>
         <ul class="right list-style-none menu font-size-24 display-flex">
           <!-- eslint-disable-next-line vue/no-mutating-props -->
           <!-- <ActionLikes :data-source="dataSource" :type="'comment'" @onChange="($event) => dataSource = handleLikePost($event, dataSource.commentId, dataSource)" /> -->
           <li v-if="hasComment">
-            <a class="secondary-color-txt display-flex" :class="{'active-cmt': isShowCommentReply === index}" href="javascript:;" @click="replyComment(position)">
+            <a class="secondary-color-txt display-flex" href="javascript:;" @click="replyComment(position)">
+              <i class="fa fa-comments font-size-30 primary-color-txt" aria-hidden="true" />
               <!-- <img loading="lazy" src="@/assets/images/frontend/icon/icon-messages.png" alt="icon-mess" class="height-24"> -->
             </a>
           </li>
@@ -162,7 +158,37 @@ export default {
     closeModalConfirm () {
       this.idModalConfirmDel = 0
     },
-
+    replaceDescription (data, key, isComment = false) {
+      if (!data) {
+        return
+      }
+      let contentCurr = data[key] ? data[key] : ''
+      // if (!data.listUserContent || data.listUserContent.length === 0) {
+      //   return contentCurr
+      // }
+      // console.log('Data convert', data)
+      if (isComment) {
+        // eslint-disable-next-line array-callback-return
+        data.listUser && data.listUser.length > 0 && data.listUser.map((user) => {
+          contentCurr = this.changeContent(contentCurr, isComment, user)
+          // const contentLinkUser = `<a id="user_${user.userId}" href="${APP_CONFIG.baseUrl}/profile/${user.userId}/new-feed" class="primary-color cursor-pointer" target="_blank">@${user.fullName}</a>`
+          // const contentNoLink = `<a href="javascript:;" rel="noopener noreferrer nofollow" data-niw-user="${user.userId}">${user.fullName}</a>`
+          // user.html = contentNoLink
+          // contentCurr = contentCurr.replace(`${isComment ? KEY_TAG_USER_CONTENT_COMMENT : KEY_TAG_USER_CONTENT}${user.userId}`, contentLinkUser)
+        })
+      } else {
+        // eslint-disable-next-line array-callback-return
+        data.listUserContent && data.listUserContent.length > 0 && data.listUserContent.map((user) => {
+          contentCurr = this.changeContent(contentCurr, isComment, user)
+          // const contentLinkUser = `<a id="user_${user.userId}" href="${APP_CONFIG.baseUrl}/profile/${user.userId}/new-feed" class="primary-color cursor-pointer" target="_blank">@${user.fullName}</a>`
+          // const contentNoLink = `<a href="javascript:;" rel="noopener noreferrer nofollow" data-niw-user="${user.userId}">${user.fullName}</a>`
+          // user.html = contentNoLink
+          // contentCurr = contentCurr.replace(`${isComment ? KEY_TAG_USER_CONTENT_COMMENT : KEY_TAG_USER_CONTENT}${user.userId}`, contentLinkUser)
+        })
+      }
+      return contentCurr
+      // })
+    },
     handleRemoveComment () {
       this.$emit('deleted', this.idModalConfirmDel)
       this.closeModalConfirm()

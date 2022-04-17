@@ -9,7 +9,7 @@
         <h4 class="font-sanpro-semibold primary-color-txt title-comment">
           Bình luận
         </h4>
-        <ModulesComment />
+        <ModulesComment :list-comment-post="listComment" />
       </div>
       <div class="mg-t-64r">
         <h4 class="font-sanpro-semibold primary-color-txt title-comment">
@@ -40,6 +40,7 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
 import vueCustomScrollbar from 'vue-custom-scrollbar'
 import 'vue-custom-scrollbar/dist/vueScrollbar.css'
 import ViewDocs from '@/components/shared/previewDocs/ViewDocs.vue'
@@ -56,6 +57,9 @@ export default {
     paths: {
       vi: '/:slug'
     }
+  },
+  asyncData ({ route, store }) {
+    return store.dispatch('common/acGetListComment', { articleId: 3333, pageIndex: 1, pageSize: 10 })
   },
   data () {
     return {
@@ -114,7 +118,26 @@ export default {
           representative: 'NGUYỄN NGỌC THÁI',
           address: 'Số 79, phố Hoàng Cầu, Phường Ô Chợ Dừa, Quận Đống Đa, Thành phố Hà Nội, Việt Nam'
         }
-      ]
+      ],
+      isFetchListComment: false
+    }
+  },
+  fetch () {
+    const self = this
+    if (self.isFetchListComment) {
+      self.isFetchListComment = false
+      self.$store.dispatch('common/acGetListComment', { articleId: 3333, pageIndex: 1, pageSize: 10 })
+    }
+  },
+  computed: {
+    ...mapState('common', ['listComment'])
+  },
+  watch: {
+    listComment () {
+      setTimeout(() => {
+        this.isFetchListComment = true
+        return this.$fetch()
+      }, 500)
     }
   }
 }

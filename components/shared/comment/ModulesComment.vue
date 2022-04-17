@@ -15,7 +15,7 @@
             @deleted="handleRemoveComment"
             @onLike="handleLikeComment"
           />
-          <div v-if="childCommentOpen === index && item.lstComment" class="comment-child">
+          <div v-if="childCommentOpen === index" class="comment-child">
             <template v-for="(child, pos) of item.lstComment">
               <div :key="pos" class="position-rel">
                 <ItemComment
@@ -31,7 +31,7 @@
                   @deleted="handleRemoveComment"
                   @onLike="handleLikeComment"
                 />
-                <div v-if="parentChildCommentOpen === pos && child.lstComment" class="comment-child comment-parent-child">
+                <div v-if="parentChildCommentOpen === pos" class="comment-child comment-parent-child">
                   <ItemComment
                     v-for="(child2, pos2) of child.lstComment"
                     :key="pos2"
@@ -46,7 +46,7 @@
                   />
                   <CommentDetail
                     v-if="isCreateComment"
-                    :parent-id="child.commentId"
+                    :parent-id="child.id"
                     :user-name="child.fullName"
                     :user-id="child.createBy"
                     :position="pos"
@@ -57,7 +57,7 @@
             </template>
             <CommentDetail
               v-if="isCreateComment"
-              :parent-id="item.commentId"
+              :parent-id="item.id"
               :user-name="item.fullName"
               :user-id="item.createBy"
               :focus-index="childCommentOpen"
@@ -188,6 +188,7 @@ export default {
       this.parentChildCommentOpen = this.parentChildCommentOpen === index ? -1 : index
     },
     handleReplyComment (index, isChild) {
+      console.log('index: ', index)
       this.childCommentOpen = index
     },
     handleReplyParentComment (index) {

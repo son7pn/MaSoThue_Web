@@ -4,5 +4,9 @@ import * as types from './constants'
 export default {
   [types.SET_LOADING] (state, data) {
     state.loading = data
+  },
+  [types.LIST_COMMENT] (state, data) {
+    state.listComment = data.list
+    state.totalRecordsComment = data.totalRow
   }
 }
