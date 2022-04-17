@@ -59,6 +59,7 @@ export default {
     '~/plugins/i18n.js',
     '@/plugins/axios.js',
     '~/plugins/api.js',
+    { src: '~/plugins/vue-awesome-swiper.js', mode: 'client' },
     { src: '~/plugins/vuelidate.js', ssr: false, mode: 'client' },
     { src: '~plugins/vue-debounce.js', ssr: false },
     { src: '~plugins/paginate', ssr: false, mode: 'client' },

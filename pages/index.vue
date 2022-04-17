@@ -1,6 +1,6 @@
 <template>
   <div class="home-index pd-t-50r full-box">
-    <!-- <Banner /> -->
+    <Banner />
     <div class="row">
       <div class="col-md-9 col-12 mg-b-30r">
         <h3 class="font-sanpro-semibold primary-color-txt mg-b-20r">
@@ -40,13 +40,13 @@
 import vueCustomScrollbar from 'vue-custom-scrollbar'
 import 'vue-custom-scrollbar/dist/vueScrollbar.css'
 import ItemInfoBusiness from '@/components/shared/ItemInfoBusiness.vue'
-// import Banner from '@/components/shared/Banner.vue'
+import Banner from '@/components/shared/Banner.vue'
 import Pagination from '@/components/shared/Pagination.vue'
 export default {
   components: {
     vueCustomScrollbar,
     ItemInfoBusiness,
-    // Banner,
+    Banner,
     Pagination
   },
   data () {
