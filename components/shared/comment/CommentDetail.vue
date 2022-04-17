@@ -173,13 +173,12 @@ export default {
       // if (this.contentComment) {
       const check = this.contentComment.split('<p>').join('').split('</p>').join('').trim()
 
-      if (!check && !this.dataFile.documentId) {
+      if (!check) {
         this.invalid = true
         return
       }
       const payload = {
         contentComment: this.contentComment,
-        ...this.dataFile,
         commentParentId: parseInt(this.$refs.input_comment_parent.value)
       }
 
@@ -197,16 +196,15 @@ export default {
       }
       // Reset form
       this.contentComment = ''
-      this.handleRemoveFileComment()
       this.submitForm = false
       this.invalid = false
       this.listUserContent = []
       this.previewHtml = []
     },
 
-    handleRemoveFileComment () {
-      this.dataFile = { ...this.dataFile, documentId: 0, fileName: '', path: '', pathView: '' }
-    },
+    // handleRemoveFileComment () {
+    //   this.dataFile = { ...this.dataFile, documentId: 0, fileName: '', path: '', pathView: '' }
+    // },
 
     handleInputComment (evt) {
       const content = evt.target.value
