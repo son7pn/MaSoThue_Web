@@ -1,7 +1,7 @@
 <template>
   <div class="wrap-page">
     <Header />
-    <main class="main container">
+    <main class="main">
       <Main />
     </main>
     <div class="border-primary-color" />

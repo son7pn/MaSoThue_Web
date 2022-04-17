@@ -121,7 +121,8 @@ export default {
   /*
    ** Global CSS
    */
-  css: ['@/assets/scss/style.scss', '@/assets/font-awesome/css/font-awesome.min.css'],
+  css: ['@/assets/scss/style.scss', '@/assets/font-awesome/css/font-awesome.min.css', 'swiper/swiper-bundle.css'],
+
   /*
    ** Auto import components
    ** See https://nuxtjs.org/api/configuration-components
