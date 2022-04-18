@@ -147,7 +147,7 @@ export default {
     outline: 0;
     border: 0;
     -webkit-appearance: none;
-    border-radius: 1.571em;
+    border-radius: 0.4rem;
     border: 1px solid $color_border;
     margin-top: 0.85rem;
   }

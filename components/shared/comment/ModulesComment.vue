@@ -66,7 +66,7 @@
       </template>
       <Pagination
         :total-records="totalRecordsComment"
-        :total-page="(totalRecordsComment/10 + (totalRecordsComment % 10 == 0 ? 0 : 1 ))"
+        :total-page="(Math.floor(totalRecordsComment/10) + (totalRecordsComment % 10 == 0 ? 0 : 1 ))"
         @change="changPage"
       />
     </div>

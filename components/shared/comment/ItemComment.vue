@@ -18,11 +18,11 @@
     <div class="comment-item__content">
       <div class="home-comment__item-cmt__container border-rd-6">
         <div class="home-comment__item-cmt__head display-flex-center justify-content-between">
-          <h4 class=" font-sanpro-semibold primary-color-txt display-flex-center">
+          <h4 class=" font-sanpro-semibold primary-color-txt display-flex-center mg-b-16r">
             <a href="javascript:;" class="cursor-pointer primary-color-txt mg-r-20r">
               {{ dataSource.fullName }}
             </a>
-            <RateStar :rating="dataSource.rating" />
+            <RateStar :rating="dataSource.rating ? dataSource.rating : dataSource.rate.rating" />
           </h4>
           <div class="position-rel display-flex">
             <span class="date font-primary secondary-color-txt font-size-14">{{ $dayjs(dataSource.createdDate).format('DD/MM/YYYY') }}</span>
@@ -267,7 +267,7 @@ export default {
 .home-comment__item-cmt {
   &__container {
     background: $color_background;
-    padding: 8px 16px;
+    padding: 8px 16px 25px 16px ;
     .date {
       padding-right: 35px;
     }
@@ -317,8 +317,8 @@ export default {
 </style>
 <style lang="scss">
 #avatar_user {
-  width: 2.4rem !important;
-  height: 2.4rem !important;
+  width: 2.8rem !important;
+  height: 2.8rem !important;
   span {
     font-size: 14px;
   }
