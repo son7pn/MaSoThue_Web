@@ -10,12 +10,9 @@
             :focus-index="childCommentOpen"
             :is-create-comment="isCreateComment"
             @toggleChildComment="toggleChildComment"
-            @updated="hadleCommentUpdated"
             @replyComment="handleReplyComment(index)"
-            @deleted="handleRemoveComment"
-            @onLike="handleLikeComment"
           />
-          <div v-if="childCommentOpen === index" class="comment-child">
+          <!-- <div v-if="childCommentOpen === index" class="comment-child">
             <template v-for="(child, pos) of item.lstComment">
               <div :key="pos" class="position-rel">
                 <ItemComment
@@ -64,7 +61,7 @@
               :position="index"
               @created="handleAddComment"
             />
-          </div>
+          </div> -->
         </div>
       </template>
     </div>
@@ -73,6 +70,7 @@
 </template>
 
 <script>
+
 import { mapActions } from 'vuex'
 import ClickOutside from 'vue-click-outside'
 import CommentDetail from './CommentDetail'
@@ -167,19 +165,19 @@ export default {
     // eslint-disable-next-line vue/return-in-computed-property
   },
   watch: {
-    authInfo (newVal) {
-      console.log('newVal: ', newVal)
-    }
+    // authInfo (newVal) {
+    //   console.log('newVal: ', newVal)
+    // }
   },
   mounted () {
     this.authInfo = JSON.parse(localStorage.getItem(COOKIE_USER))
     this.windowWidth = window.innerWidth
   },
   methods: {
-    ...mapActions('common', ['acCreateComment']),
-    handleRemoveComment (id) {
-      console.log('val: ', id)
-    },
+    ...mapActions('common', ['acCreateComment', 'acGetListComment']),
+    // handleRemoveComment (id) {
+    //   console.log('val: ', id)
+    // },
 
     toggleChildComment (index) {
       this.childCommentOpen = this.childCommentOpen === index ? -1 : index
@@ -188,7 +186,7 @@ export default {
       this.parentChildCommentOpen = this.parentChildCommentOpen === index ? -1 : index
     },
     handleReplyComment (index, isChild) {
-      console.log('index: ', index)
+      // console.log('index: ', index)
       this.childCommentOpen = index
     },
     handleReplyParentComment (index) {
@@ -201,12 +199,14 @@ export default {
       } else {
         const payloadCreate = { ...val, articleId: 3333, email: this.authInfo.email, fullName: this.authInfo.name, phoneNumber: this.authInfo.phoneNumber, rate: { rating: 1 } }
         const data = await this.acCreateComment(payloadCreate)
-        console.log('data: ', data)
+        // console.log('data: ', data)
         if (!data) {
           return
         }
         this.$toast.success('Bình luận thành công!')
         this.$emit('created')
+        // eslint-disable-next-line vue/no-mutating-props
+        this.listCommentPost.unshift(data)
       }
       // await console.log('val: ', val)
       // console.log('this.authInfo: ', this.authInfo)
@@ -217,24 +217,26 @@ export default {
         this.authInfo = JSON.parse(localStorage.getItem(COOKIE_USER))
         const payloadCreate = { ...this.contentFirtComment, articleId: 3333, email: this.authInfo.email, fullName: this.authInfo.name, phoneNumber: this.authInfo.phoneNumber, rate: { rating: 1 } }
         const data = await this.acCreateComment(payloadCreate)
-        console.log('data: ', data)
+        // console.log('data: ', data)
         if (!data) {
           return
         }
         this.$toast.success('Bình luận thành công!')
         this.$emit('created')
+        // eslint-disable-next-line vue/no-mutating-props
+        this.listCommentPost.unshift(data)
       }
-      console.log('this.authInfo: ', this.authInfo)
+      // console.log('this.authInfo: ', this.authInfo)
     },
-    async hadleCommentUpdated (val) {
-      await console.log('val: ', val)
-    },
+    // hadleCommentUpdated (val) {
+    //   await console.log('val: ', val)
+    // },
     closeModal () {
       this.isShowConfirmInfo = false
-    },
-    handleLikeComment (val) {
-      console.log('val: ', val)
     }
+    // handleLikeComment (val) {
+    //   console.log('val: ', val)
+    // }
   }
 }
 </script>

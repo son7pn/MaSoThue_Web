@@ -2,7 +2,7 @@
 <template>
   <div class="comment-item home-comment__item-cmt display-flex" @keydown.esc="handleCloseEdit">
     <div class="home-comment__item-cmt__img-user box-avatar z-index-1">
-      <nuxt-link :to="`/profile/${dataSource.createBy}/new-feed/`" class="cursor-pointer">
+      <!-- <a href="javascript:;" class="cursor-pointer">
         <figure class="aspect-ratio aspect-ratio--1-1 border-rd-50">
           <img
             v-lazy-load
@@ -12,15 +12,16 @@
             class="img-fit"
           >
         </figure>
-      </nuxt-link>
+      </a> -->
+      <avatar id="avatar_user" :username="dataSource.fullName" />
     </div>
     <div class="comment-item__content">
       <div class="home-comment__item-cmt__container border-rd-6">
         <div class="home-comment__item-cmt__head display-flex-center justify-content-between">
           <h4 class=" font-sanpro-semibold primary-color-txt">
-            <nuxt-link :to="`/profile/${dataSource.createBy}/new-feed/`" class="cursor-pointer primary-color-txt">
+            <a href="javascript:;" class="cursor-pointer primary-color-txt">
               {{ dataSource.fullName }}
-            </nuxt-link>
+            </a>
           </h4>
           <div class="position-rel display-flex">
             <span class="date font-primary secondary-color-txt font-size-14">{{ $dayjs(dataSource.createdDate).format('DD/MM/YYYY') }}</span>
@@ -40,23 +41,22 @@
         />
       </div>
       <div class="home-comment__item-cmt__feedback justify-content-between display-flex">
-        <div class="left display-flex-center">
+        <!-- <div class="left display-flex-center">
           <span class="display-inline-block font-primary secondary-color-txt font-size-16">
             {{ dataSource.countComment ? dataSource.countComment : 0 }} Trả lời
           </span>
-        </div>
-        <ul class="right list-style-none menu font-size-24 display-flex">
-          <!-- eslint-disable-next-line vue/no-mutating-props -->
-          <!-- <ActionLikes :data-source="dataSource" :type="'comment'" @onChange="($event) => dataSource = handleLikePost($event, dataSource.commentId, dataSource)" /> -->
-          <li v-if="hasComment">
+        </div> -->
+        <!-- <ul class="right list-style-none menu font-size-24 display-flex"> -->
+        <!-- eslint-disable-next-line vue/no-mutating-props -->
+        <!-- <ActionLikes :data-source="dataSource" :type="'comment'" @onChange="($event) => dataSource = handleLikePost($event, dataSource.commentId, dataSource)" /> -->
+        <!-- <li v-if="hasComment">
             <a class="secondary-color-txt display-flex" href="javascript:;" @click="replyComment(position)">
               <i class="fa fa-comments font-size-30 primary-color-txt" aria-hidden="true" />
-              <!-- <img loading="lazy" src="@/assets/images/frontend/icon/icon-messages.png" alt="icon-mess" class="height-24"> -->
             </a>
-          </li>
-        </ul>
+          </li> -->
+        <!-- </ul> -->
       </div>
-      <div class="home-comment__item-cmt__repcmt">
+      <!-- <div class="home-comment__item-cmt__repcmt">
         <a
           v-if="dataSource.lstComment && dataSource.lstComment.length > 0"
           href="javascript:;"
@@ -65,7 +65,7 @@
         >
           {{ isOpenChildComment && ((!isChildComment && focusIndex === position) || (isChildComment && focusIndexChild === position)) ? 'Ẩn' : 'Hiển thị' }} {{ dataSource.countComment }} phản hồi
         </a>
-      </div>
+      </div> -->
     </div>
     <!-- <ConfirmModal v-if="idModalConfirmDel > 0" @onCancle="closeModalConfirm" @onOk="handleRemoveComment">
       <template #content>
@@ -80,6 +80,7 @@
 <script>
 import { mapActions } from 'vuex'
 import ClickOutside from 'vue-click-outside'
+import Avatar from 'vue-avatar'
 import CommentDetail from './CommentDetail'
 // import ActionLikes from './ActionLikes'
 // import { APP_CONFIG } from '@/utils/env'
@@ -93,7 +94,8 @@ const avatarDefault = require('@/assets/images/logo/avatar-user.png')
 export default {
   name: 'CommentItem',
   components: {
-    CommentDetail
+    CommentDetail,
+    Avatar
     // ActionLikes,
     // ConfirmModal
   },
@@ -308,5 +310,12 @@ export default {
       }
     }
   }
+}
+</style>
+<style lang="scss">
+#avatar_user {
+  width: 2.4rem !important;
+  height: 2.4rem !important;
+  font-size: 18px !important;
 }
 </style>

@@ -133,12 +133,12 @@ export default {
     ...mapState('common', ['listComment'])
   },
   watch: {
-    listComment () {
-      setTimeout(() => {
-        this.isFetchListComment = true
-        return this.$fetch()
-      }, 500)
-    }
+    // listComment () {
+    //   setTimeout(() => {
+    //     this.isFetchListComment = true
+    //     return this.$fetch()
+    //   }, 500)
+    // }
   }
 }
 </script>
