@@ -18,10 +18,11 @@
     <div class="comment-item__content">
       <div class="home-comment__item-cmt__container border-rd-6">
         <div class="home-comment__item-cmt__head display-flex-center justify-content-between">
-          <h4 class=" font-sanpro-semibold primary-color-txt">
-            <a href="javascript:;" class="cursor-pointer primary-color-txt">
+          <h4 class=" font-sanpro-semibold primary-color-txt display-flex-center">
+            <a href="javascript:;" class="cursor-pointer primary-color-txt mg-r-20r">
               {{ dataSource.fullName }}
             </a>
+            <RateStar :rating="dataSource.rating" />
           </h4>
           <div class="position-rel display-flex">
             <span class="date font-primary secondary-color-txt font-size-14">{{ $dayjs(dataSource.createdDate).format('DD/MM/YYYY') }}</span>
@@ -85,6 +86,7 @@ import CommentDetail from './CommentDetail'
 // import ActionLikes from './ActionLikes'
 // import { APP_CONFIG } from '@/utils/env'
 import mixinsFile from '@/mixins/mixinsFile'
+import RateStar from '@/components/shared/RateStar.vue'
 // import ConfirmModal from '@/components/modal/ConfirmModal'
 /**
  * replaceDescription method
@@ -95,7 +97,8 @@ export default {
   name: 'CommentItem',
   components: {
     CommentDetail,
-    Avatar
+    Avatar,
+    RateStar
     // ActionLikes,
     // ConfirmModal
   },
@@ -316,6 +319,8 @@ export default {
 #avatar_user {
   width: 2.4rem !important;
   height: 2.4rem !important;
-  font-size: 18px !important;
+  span {
+    font-size: 14px;
+  }
 }
 </style>

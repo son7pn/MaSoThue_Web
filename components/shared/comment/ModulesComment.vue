@@ -64,6 +64,11 @@
           </div> -->
         </div>
       </template>
+      <Pagination
+        :total-records="totalRecordsComment"
+        :total-page="(totalRecordsComment/10 + (totalRecordsComment % 10 == 0 ? 0 : 1 ))"
+        @change="changPage"
+      />
     </div>
     <ModalConfirmInfoComment v-if="!authInfo && isShowConfirmInfo" @closeModal="closeModal" @submit="handleCreateComment" />
   </div>
@@ -71,20 +76,22 @@
 
 <script>
 
-import { mapActions } from 'vuex'
+import { mapActions, mapState } from 'vuex'
 import ClickOutside from 'vue-click-outside'
 import CommentDetail from './CommentDetail'
 import ItemComment from './ItemComment'
 import ModalConfirmInfoComment from './ModalConfirmInfoComment.vue'
 import { APP_CONFIG } from '@/utils/env'
 import { COOKIE_USER } from '@/store/auth/constants'
+import Pagination from '@/components/shared/Pagination.vue'
 import mixinsFile from '@/mixins/mixinsFile'
 
 export default {
   components: {
     CommentDetail,
     ItemComment,
-    ModalConfirmInfoComment
+    ModalConfirmInfoComment,
+    Pagination
   },
   directives: {
     ClickOutside
@@ -156,6 +163,7 @@ export default {
     }
   },
   computed: {
+    ...mapState('common', ['totalRecordsComment'])
     // isCreateComment () {
     //   if (!this.infoNewsfeed || Object.keys(this.infoNewsfeed).length === 0) {
     //     return false
@@ -197,7 +205,7 @@ export default {
         this.isShowConfirmInfo = true
         this.contentFirtComment = val
       } else {
-        const payloadCreate = { ...val, articleId: 3333, email: this.authInfo.email, fullName: this.authInfo.name, phoneNumber: this.authInfo.phoneNumber, rate: { rating: 1 } }
+        const payloadCreate = { ...val, articleId: 3333, email: this.authInfo.email, fullName: this.authInfo.name, phoneNumber: this.authInfo.phoneNumber, rate: { rating: this.authInfo.rate.rating } }
         const data = await this.acCreateComment(payloadCreate)
         // console.log('data: ', data)
         if (!data) {
@@ -215,7 +223,7 @@ export default {
       if (!this.authInfo) {
         localStorage.setItem(COOKIE_USER, JSON.stringify(val))
         this.authInfo = JSON.parse(localStorage.getItem(COOKIE_USER))
-        const payloadCreate = { ...this.contentFirtComment, articleId: 3333, email: this.authInfo.email, fullName: this.authInfo.name, phoneNumber: this.authInfo.phoneNumber, rate: { rating: 1 } }
+        const payloadCreate = { ...this.contentFirtComment, articleId: 3333, email: this.authInfo.email, fullName: this.authInfo.name, phoneNumber: this.authInfo.phoneNumber, rate: { rating: this.authInfo.rate.rating } }
         const data = await this.acCreateComment(payloadCreate)
         // console.log('data: ', data)
         if (!data) {
@@ -233,6 +241,9 @@ export default {
     // },
     closeModal () {
       this.isShowConfirmInfo = false
+    },
+    changPage (page) {
+      this.acGetListComment({ articleId: 3333, pageIndex: page.page, pageSize: 10 })
     }
     // handleLikeComment (val) {
     //   console.log('val: ', val)
@@ -279,6 +290,9 @@ export default {
 }
 .home-comment{
   margin-top: 24px;
+  &__list-cmt {
+    margin-top: 1.5rem;
+  }
   &__write-cmt{
     padding-bottom: 20px;
     &__img-user{
@@ -427,6 +441,7 @@ export default {
     }
   }
   &__item {
+    margin-bottom: 1.5rem;
     .comment-child {
       padding-left: 3rem;
       &::before {

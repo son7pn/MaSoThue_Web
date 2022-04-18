@@ -10,6 +10,26 @@
     <template #body>
       <form @submit.prevent="handleSubmit">
         <div class="form-group">
+          <div class="mg-b-16r">
+            Đánh giá
+          </div>
+          <fieldset class="star-rating border-none">
+            <template v-for="(item, index) in 6" class="item-star">
+              <input
+                :id="`rating${index}`"
+                :checked="((form.rate.rating) ? index===form.rate.rating : index==0) ? true : false"
+                :key="index"
+                name="rating"
+                :value="index"
+                type="radio"
+              >
+              <label :key="index" :for="`rating${index}`" class="cursor-pointer text-center" @click="evaluteCourse(index)">
+                <span role="presentation" class="star"><i v-if="index>0" class="icon-Star display-inline-block" /></span>
+              </label>
+            </template>
+          </fieldset>
+        </div>
+        <div class="form-group">
           <label>Họ và tên *</label>
           <input v-model="form.name" class="primary-color-txt input-text full-width" type="text">
           <span v-if="!$v.form.name.required && status" class="error mg-t-5r display-block color-err font-size-14 text-left">Vui lòng nhập họ tên</span>
@@ -51,7 +71,8 @@ export default {
       form: {
         name: '',
         email: '',
-        phoneNumber: null
+        phoneNumber: null,
+        rate: { rating: 5 }
       }
     }
   },
@@ -83,6 +104,9 @@ export default {
       } else {
         this.$emit('submit', this.form)
       }
+    },
+    evaluteCourse (index) {
+      this.form.rate.rating = index
     }
   }
 }
@@ -172,6 +196,46 @@ export default {
     padding: 0.5rem 1rem;
   }
 }
+.hide-visually, .star-rating>input {
+    border: 0;
+    padding: 0;
+    margin: 0;
+    position: absolute !important;
+    height: 1px;
+    width: 1px;
+    overflow: hidden;
+    clip: rect(1px 1px 1px 1px); /* IE6, IE7 - a 0 height clip, off to the bottom right of the visible 1px box */
+    clip: rect(1px, 1px, 1px, 1px); /*maybe deprecated but we need to support legacy browsers */
+    clip-path: inset(50%); /*modern browsers, clip-path works inwards from each corner*/
+    white-space: nowrap; /* added line to stop words getting smushed together (as they go onto seperate lines and some screen readers do not understand line feeds as a space */
+  }
+
+  .star-rating {
+    display: inline-flex;
+    padding: 0;
+  }
+
+  .star-rating label {
+    line-height: 1em;
+  }
+
+  .star-rating input:checked~label>span.star>i,
+  .star-rating>label:hover~input~label>span.star>i {
+    color: $color_background_image;
+  }
+
+  .star-rating span.star i,
+  .star-rating:hover>input+label>span.star>i,
+  .star-rating>input:checked+label>span.star>i,
+  .star-rating>input~label:hover>span.star>i {
+    color: $yellow_color;
+  }
+  .star-rating span.star i {
+    margin-right: 8px;
+  }
+  .star-rating>input~label:hover>span.star>i {
+    color: $third_color;
+  }
 </style>
 <style lang="scss">
   #modal_choose_user {
