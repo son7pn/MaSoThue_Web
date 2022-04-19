@@ -1,5 +1,5 @@
 <template>
-  <div class="detail-company">
+  <div class="detail-company font-size-18">
     <h3 class="detail-company__name">
       {{ dataSource.compnayName ? dataSource.compnayName : '' }}
     </h3>
@@ -49,10 +49,10 @@
       <div class="item-key__title">
         <i class="fa fa-info" /><span> Tình trạng</span>
       </div>
-      ...
+      {{ dataSource.status === 1 ? 'Đang hoạt động' : 'Ngừng hoạt động' }}
     </div>
     <div class="item-key">
-      Cập nhật mã số thuế <b>{{ dataSource.tax ? dataSource.tax : '' }}</b>  lần cuối vào <i>2022-04-18 18:30:27.</i>
+      Cập nhật mã số thuế <b>{{ dataSource.tax ? dataSource.tax : '' }}</b>  lần cuối vào <i>{{ dataSource.lastModifiedDate ? $dayjs(dataSource.lastModifiedDate).format('YYYY-MM-DD HH:mm:ss') : '' }}.</i>
     </div>
   </div>
 </template>
@@ -81,7 +81,8 @@ export default {
      &__title {
        width: 200px;
        i {
-         margin-right: 0.4rem;
+         margin-right: 0.2rem;
+         width: 17px;
        }
      }
    }

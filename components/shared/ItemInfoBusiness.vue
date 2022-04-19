@@ -1,21 +1,21 @@
 <template>
   <div class="item-info-bus full-width">
-    <h4 class="font-sanpro-semibold primary-color text-uppercase mg-b-12r font-size-20">
+    <h4 class="font-weight-medium primary-color text-uppercase mg-b-12r font-size-20">
       <nuxt-link :to="localePath({ path: `/${dataSource.tax}-${dataSource.slug}`, query: {tax: dataSource.tax }})" class="primary-color">
         {{ dataSource.compnayName ? dataSource.compnayName : '' }}
       </nuxt-link>
     </h4>
-    <div class="mg-b-8r">
+    <div class="mg-b-8r font-size-18">
       <i class="fa fa-hashtag font-size-20" aria-hidden="true" /> Mã số thuế:
       <a class="primary-color-txt" href="javascript:;">&ensp;{{ dataSource.tax ? dataSource.tax : '0000000' }}</a>
     </div>
-    <div class="mg-b-8r">
+    <div class="mg-b-8r font-size-18">
       <i class="fa fa-user font-size-20" aria-hidden="true" /> Người đại diện:
-      <a class="primary-color text-uppercase font-italic font-size-18" href="javascript:;">&ensp;{{ dataSource.director ? dataSource.director : '' }}</a>
+      <a class="primary-color text-uppercase font-italic font-size-16" href="javascript:;">&ensp;{{ dataSource.director ? dataSource.director : '' }}</a>
     </div>
-    <div class="mg-b-8r">
+    <div class="mg-b-8r font-size-18">
       <i class="fa fa-map-marker font-size-20" aria-hidden="true" />
-      <a class="primary-color-txt" href="javascript:;">{{ dataSource.address ? dataSource.address : '...' }}</a>
+      <a class="primary-color-txt font-size-18" href="javascript:;">{{ dataSource.address ? dataSource.address : '...' }}</a>
     </div>
   </div>
 </template>

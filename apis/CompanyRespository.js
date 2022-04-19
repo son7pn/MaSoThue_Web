@@ -3,8 +3,8 @@ const resource = '/v1/article'
 
 export default ($axios) => {
   return {
-    async showCompanyByTax ({ tax, pageIndex, pageSize }) {
-      const data = await $axios.get(`${resource}/search?tax=${tax}&pageIndex=${pageIndex}&pageSize=${pageSize}`)
+    async showCompanyByTax ({ keyword, pageIndex, pageSize, type }) {
+      const data = await $axios.get(`${resource}/search?keyword=${keyword}&pageIndex=${pageIndex}&pageSize=${pageSize}&type=${type}`)
       return data !== STATUS_FAIL ? data : null
     },
     async detaiCompanyByTax (payload) {

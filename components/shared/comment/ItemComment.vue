@@ -17,12 +17,12 @@
     </div>
     <div class="comment-item__content">
       <div class="home-comment__item-cmt__container border-rd-6">
-        <div class="home-comment__item-cmt__head display-flex-center justify-content-between">
-          <h4 class=" font-sanpro-semibold primary-color-txt display-flex-center mg-b-16r">
+        <div class="home-comment__item-cmt__head display-flex-center-wrap justify-content-between mg-b-16r">
+          <h4 class=" font-sanpro-semibold primary-color-txt display-flex-center mg-b-8r">
             <a href="javascript:;" class="cursor-pointer primary-color-txt mg-r-20r">
               {{ dataSource.fullName }}
             </a>
-            <RateStar :rating="dataSource.rating ? dataSource.rating : dataSource.rate.rating" />
+            <RateStar v-if="dataSource.rating !== -1" :rating="dataSource.rating ? dataSource.rating : dataSource.rate.rating" />
           </h4>
           <div class="position-rel display-flex">
             <span class="date font-primary secondary-color-txt font-size-14">{{ $dayjs(dataSource.createdDate).format('DD/MM/YYYY') }}</span>

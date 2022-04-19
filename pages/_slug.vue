@@ -1,10 +1,15 @@
 <template>
   <div class="container">
     <div class="detai-company pd-t-50r full-box pd-b-60r ">
-      <h3 class="font-sanpro-semibold primary-color-txt mg-b-64r">
+      <h3 class="font-weight-medium border-title primary-color-txt mg-b-64r">
         {{ detailCompanyByTax.tax }} - {{ detailCompanyByTax.compnayName }}
       </h3>
       <!-- <ViewDocs :data-source="dataDoc" /> -->
+      <!--eslint-disable-->
+      <client-only>
+        <p v-html="detailCompanyByTax.content ? detailCompanyByTax.content : ''"/>
+      </client-only>
+      <!-- eslint-enable -->
       <div class="row">
         <DetailCompany :data-source="detailCompanyByTax" class="col-md-9" />
       </div>
@@ -108,21 +113,21 @@ export default {
       },
       listCompany: [
         {
-          nameCompany: 'CÔNG TY CỔ PHẦN ĐẦU TƯ VÀ THƯƠNG MẠI TỔNG HỢP XNK HÀ NỘI',
-          code: '0109956516',
-          representative: 'NGUYỄN NGỌC THÁI',
+          compnayName: 'CÔNG TY CỔ PHẦN ĐẦU TƯ VÀ THƯƠNG MẠI TỔNG HỢP XNK HÀ NỘI',
+          tax: '0109956516',
+          director: 'NGUYỄN NGỌC THÁI',
           address: 'Số 79, phố Hoàng Cầu, Phường Ô Chợ Dừa, Quận Đống Đa, Thành phố Hà Nội, Việt Nam'
         },
         {
-          nameCompany: 'CÔNG TY CỔ PHẦN ĐẦU TƯ VÀ THƯƠNG MẠI TỔNG HỢP XNK HÀ NỘI',
-          code: '0109956516',
-          representative: 'NGUYỄN NGỌC THÁI',
+          compnayName: 'CÔNG TY CỔ PHẦN ĐẦU TƯ VÀ THƯƠNG MẠI TỔNG HỢP XNK HÀ NỘI',
+          tax: '0109956516',
+          director: 'NGUYỄN NGỌC THÁI',
           address: 'Số 79, phố Hoàng Cầu, Phường Ô Chợ Dừa, Quận Đống Đa, Thành phố Hà Nội, Việt Nam'
         },
         {
-          nameCompany: 'CÔNG TY CỔ PHẦN ĐẦU TƯ VÀ THƯƠNG MẠI TỔNG HỢP XNK HÀ NỘI',
-          code: '0109956516',
-          representative: 'NGUYỄN NGỌC THÁI',
+          compnayName: 'CÔNG TY CỔ PHẦN ĐẦU TƯ VÀ THƯƠNG MẠI TỔNG HỢP XNK HÀ NỘI',
+          tax: '0109956516',
+          director: 'NGUYỄN NGỌC THÁI',
           address: 'Số 79, phố Hoàng Cầu, Phường Ô Chợ Dừa, Quận Đống Đa, Thành phố Hà Nội, Việt Nam'
         }
       ],
@@ -150,9 +155,13 @@ export default {
   },
   mounted () {
     this.acGetListComment({ articleId: this.detailCompanyByTax.id, pageIndex: 1, pageSize: 10 })
+    this.scrollToTop()
   },
   methods: {
-    ...mapActions('common', ['acGetListComment'])
+    ...mapActions('common', ['acGetListComment']),
+    scrollToTop () {
+      window.scrollTo(0, 0)
+    }
   }
 }
 </script>
@@ -170,7 +179,7 @@ export default {
     &:after {
       content: ' ';
       width: 20%;
-      border-bottom: 4px solid $primary_color;
+      border-bottom: 3px solid $primary_color;
       display: block;
       position: absolute;
       bottom: -1px;

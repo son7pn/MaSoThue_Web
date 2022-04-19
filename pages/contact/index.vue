@@ -90,12 +90,18 @@ export default {
       }
     }
   },
+  mounted () {
+    this.scrollToTop()
+  },
   methods: {
+    scrollToTop () {
+      window.scrollTo(0, 0)
+    },
     handleSubmit () {
       if (this.$v.$invalid) {
         this.status = true
       } else {
-        console.log('form: ', this.form)
+        // console.log('form: ', this.form)
       }
     }
   }
@@ -112,7 +118,7 @@ export default {
     &:after {
       content: ' ';
       width: 20%;
-      border-bottom: 4px solid $primary_color;
+      border-bottom: 3px solid $primary_color;
       display: block;
       position: absolute;
       bottom: -1px;

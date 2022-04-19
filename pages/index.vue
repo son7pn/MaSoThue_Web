@@ -4,8 +4,8 @@
     <div class="container pd-t-50r">
       <div class="row">
         <div class="col-md-9 col-12 mg-b-30r">
-          <h3 class="font-sanpro-semibold primary-color-txt mg-b-20r">
-            Doanh nghiệp
+          <h3 class="font-weight-medium primary-color-txt mg-b-20r border-title font-size-36">
+            Tra Cứu Mã Số Thuế (Công Ty, Cá Nhân)
           </h3>
           <!-- <vueCustomScrollbar class="scroll-class none-ps-x" @ps-y-reach-end="infiniteScroll()"> -->
           <!-- <vueCustomScrollbar class="scroll-class none-ps-x none-ps-y"> -->
@@ -23,7 +23,7 @@
         </div>
         <div class="col-md-3 col-12">
           <div class="mb-5">
-            <h3 class="font-sanpro-semibold primary-color-txt search-province">
+            <h3 class="font-weight-medium primary-color-txt search-province">
               Tra mã số thuế trên Facebook
             </h3>
             <a href="https://www.facebook.com/masothuedotcom" target="_blank">
@@ -33,13 +33,13 @@
             </a>
           </div>
           <div>
-            <h3 class="font-sanpro-semibold primary-color-txt search-province">
+            <h3 class="font-weight-medium primary-color-txt search-province">
               Tỉnh/thành phố
             </h3>
             <vueCustomScrollbar class="scroll-class none-ps-x none-ps-y">
               <ul class="row list-sort list-style-none">
                 <li v-for="(item1, index1) of listProvince" :key="index1" class="cat-item align-items-center col-xs-6 col-md-12">
-                  <nuxt-link :to="localePath('/tra-cuu-ma-so-thue-theo-tinh/ha-noi')" class="primary-color-txt">
+                  <nuxt-link :to="localePath('/tra-cuu-ma-so-thue-theo-tinh/ha-noi')" class="primary-color-txt font-size-18">
                     {{ item1.name }}
                   </nuxt-link>
                 </li>
@@ -68,7 +68,7 @@ export default {
     Pagination
   },
   asyncData ({ route, store }) {
-    return store.dispatch('company/acGetListCompanyByTax', { tax: 3603865094, pageIndex: 1, pageSize: 10 })
+    return store.dispatch('company/acGetListCompanyByTax', { keyword: '', pageIndex: 1, pageSize: 10, type: -1 })
   },
   data () {
     return {
@@ -113,11 +113,16 @@ export default {
     ...mapState(STORE_KEY, ['listCompany', 'totalRecordsCompany'])
   },
   mounted () {
+    this.scrollToTop()
   },
   methods: {
     // ...mapActions(STORE_KEY, ['acGetListCompanyByTax']),
     changPage (page) {
       console.log('page: ', page)
+    },
+
+    scrollToTop () {
+      window.scrollTo(0, 0)
     }
   }
 }
@@ -134,7 +139,7 @@ export default {
   &:after {
     content: ' ';
     width: 60%;
-    border-bottom: 4px solid $primary_color;
+    border-bottom: 3px solid $primary_color;
     display: block;
     position: absolute;
     bottom: -1px;

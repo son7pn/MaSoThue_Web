@@ -201,11 +201,11 @@ export default {
       this.parentChildCommentOpen = index
     },
     async handleAddComment (val) {
-      if (!this.authInfo) {
+      if (!this.authInfo || (this.authInfo && this.authInfo.articleId !== this.articleId)) {
         this.isShowConfirmInfo = true
         this.contentFirtComment = val
       } else {
-        const payloadCreate = { ...val, articleId: this.articleId, email: this.authInfo.email, fullName: this.authInfo.name, phoneNumber: this.authInfo.phoneNumber, rate: { rating: this.authInfo.rate.rating } }
+        const payloadCreate = { ...val, articleId: this.articleId, email: this.authInfo.email, fullName: this.authInfo.name, phoneNumber: this.authInfo.phoneNumber, rate: this.authInfo.articleId === this.articleId ? { rating: -1 } : { rating: this.authInfo.rating } }
         const data = await this.acCreateComment(payloadCreate)
         // console.log('data: ', data)
         if (!data) {
@@ -220,8 +220,8 @@ export default {
       // console.log('this.authInfo: ', this.authInfo)
     },
     async handleCreateComment (val) {
-      if (!this.authInfo) {
-        localStorage.setItem(COOKIE_USER, JSON.stringify(val))
+      if (!this.authInfo || (this.authInfo && this.authInfo.articleId !== this.articleId)) {
+        localStorage.setItem(COOKIE_USER, JSON.stringify({ ...val, articleId: this.articleId }))
         this.authInfo = JSON.parse(localStorage.getItem(COOKIE_USER))
         const payloadCreate = { ...this.contentFirtComment, articleId: this.articleId, email: this.authInfo.email, fullName: this.authInfo.name, phoneNumber: this.authInfo.phoneNumber, rate: { rating: this.authInfo.rate.rating } }
         const data = await this.acCreateComment(payloadCreate)

@@ -2,7 +2,7 @@
   <div class="career container">
     <div class="row mt-4">
       <div class="col-md-9">
-        <h3 class="career__title font-sanpro-semibold primary-color-txt border-title">
+        <h3 class="career__title font-weight-medium primary-color-txt border-title">
           Tra cứu mã số thuế theo ngành nghề
         </h3>
         <div class="career__list">
@@ -13,7 +13,7 @@
             <h4>Ngành</h4>
           </div>
           <div class="career-body">
-            <div v-for="(item, index) of listCareer" :key="index" class="item display-flex cursor-pointer">
+            <div v-for="(item, index) of listCareer" :key="index" class="item display-flex cursor-pointer font-size-18">
               <p class="code text-center mr-4">
                 {{ item.id }}
               </p>
@@ -29,7 +29,7 @@
       </div>
       <div class="col-md-3">
         <div class="mb-5">
-          <h3 class="font-sanpro-semibold primary-color-txt border-title">
+          <h3 class="font-weight-medium primary-color-txt border-title">
             Tra mã số thuế trên Facebook
           </h3>
           <a href="https://www.facebook.com/masothuedotcom" target="_blank">
@@ -39,13 +39,15 @@
           </a>
         </div>
         <div>
-          <h3 class="font-sanpro-semibold primary-color-txt border-title">
+          <h3 class="font-weight-medium primary-color-txt border-title">
             Tỉnh/thành phố
           </h3>
           <vueCustomScrollbar class="scroll-class none-ps-x none-ps-y">
             <ul class="row list-sort list-style-none">
               <li v-for="(item1, index1) of listProvince" :key="index1" class="cat-item align-items-center col-xs-6 col-md-12">
-                <a href="javascript:;" class="primary-color-txt">{{ item1.name }}</a>
+                <nuxt-link :to="localePath('/tra-cuu-ma-so-thue-theo-tinh/ha-noi')" class="primary-color-txt font-size-18">
+                  {{ item1.name }}
+                </nuxt-link>
               </li>
             </ul>
           </vueCustomScrollbar>
@@ -160,10 +162,15 @@ export default {
       ]
     }
   },
-
+  mounted () {
+    this.scrollToTop()
+  },
   methods: {
     changPage (page) {
       console.log('page: ', page)
+    },
+    scrollToTop () {
+      window.scrollTo(0, 0)
     }
   }
 }

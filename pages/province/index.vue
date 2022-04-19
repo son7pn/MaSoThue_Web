@@ -2,13 +2,13 @@
   <div class="province container">
     <div class="row mt-4">
       <div class="col-md-9">
-        <h3 class="font-sanpro-semibold primary-color-txt border-title">
+        <h3 class="font-weight-medium primary-color-txt border-title">
           Tra cứu mã số thuế theo tỉnh, thành phố
         </h3>
         <vueCustomScrollbar class="scroll-class none-ps-x none-ps-y">
           <ul class="row list-sort list-style-none">
             <li v-for="(item1, index1) of listProvince" :key="index1" class="cat-item align-items-center col-xs-6 col-md-12">
-              <nuxt-link :to="localePath('/tra-cuu-ma-so-thue-theo-tinh/ha-noi')" class="primary-color-txt">
+              <nuxt-link :to="localePath('/tra-cuu-ma-so-thue-theo-tinh/ha-noi')" class="primary-color-txt font-size-18">
                 {{ item1.name }}
               </nuxt-link>
             </li>
@@ -17,7 +17,7 @@
       </div>
       <div class="col-md-3">
         <div class="mb-5">
-          <h3 class="font-sanpro-semibold primary-color-txt border-title">
+          <h3 class="font-weight-medium primary-color-txt border-title">
             Tra mã số thuế trên Facebook
           </h3>
           <a href="https://www.facebook.com/masothuedotcom" target="_blank">
@@ -27,13 +27,13 @@
           </a>
         </div>
         <div>
-          <h3 class="font-sanpro-semibold primary-color-txt border-title">
+          <h3 class="font-weight-medium primary-color-txt border-title">
             Tỉnh/thành phố
           </h3>
           <vueCustomScrollbar class="scroll-class none-ps-x none-ps-y">
             <ul class="row list-sort list-style-none">
               <li v-for="(item1, index1) of listProvince" :key="index1" class="cat-item align-items-center col-xs-6 col-md-12">
-                <nuxt-link :to="localePath('/tra-cuu-ma-so-thue-theo-tinh/ha-noi')" class="primary-color-txt">
+                <nuxt-link :to="localePath('/tra-cuu-ma-so-thue-theo-tinh/ha-noi')" class="primary-color-txt font-size-18">
                   {{ item1.name }}
                 </nuxt-link>
               </li>

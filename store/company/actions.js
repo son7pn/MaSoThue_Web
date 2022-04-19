@@ -1,8 +1,8 @@
 import * as types from './constants'
 
 export default {
-  async acGetListCompanyByTax ({ commit }, { tax, pageIndex, pageSize }) {
-    const data = await this.$apis.companyApi.showCompanyByTax({ tax, pageIndex, pageSize })
+  async acGetListCompanyByTax ({ commit }, { keyword, pageIndex, pageSize, type }) {
+    const data = await this.$apis.companyApi.showCompanyByTax({ keyword, pageIndex, pageSize, type })
     data && commit(types.GET_LIST_COMPANY_BY_TAX, data)
   },
   async acDetailCompanyByTax ({ commit }, params) {

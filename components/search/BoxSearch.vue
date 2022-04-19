@@ -15,9 +15,9 @@
         </div>
       </div>
       <div class="box-search__input display-flex-center">
-        <input placeholder="Nhập mã số thuế, CMND, tên công ty" class="border-none full-width">
-        <button class="bg-primary-color border-rd-4">
-          <i class="icon-search" />
+        <input v-model="keyword" placeholder="Nhập mã số thuế, CMND, tên công ty" class="border-none full-width">
+        <button class="bg-primary-color border-rd-4" @click="hanleSearch">
+          <i class="icon-search color-light" />
         </button>
       </div>
     </div>
@@ -25,6 +25,8 @@
 </template>
 
 <script>
+import { mapActions, mapState } from 'vuex'
+import { STORE_KEY } from '@/store/company/constants'
 export default {
   name: 'BoxSearch',
   data () {
@@ -32,18 +34,38 @@ export default {
       isShowDrop: false,
       selectActive: '',
       listSelect: [
-        { id: 0, value: 'Mã số thuế công ty' },
-        { id: 1, value: 'Mã số thuế cá nhân' },
-        { id: 2, value: 'CMND, căn cước' },
-        { id: 3, value: 'Tên công ty' },
-        { id: 4, value: 'Giám đốc công ty' }
-      ]
+        // { id: 0, value: 'Mã số thuế công ty' },
+        { id: 1, value: 'Mã số thuế' },
+        // { id: 2, value: 'CMND, căn cước' },
+        { id: 2, value: 'Tên công ty' },
+        { id: 3, value: 'Tên giám đốc công ty' }
+      ],
+      keyword: '',
+      type: -1
+    }
+  },
+  computed: {
+    ...mapState(STORE_KEY, ['listCompany'])
+  },
+  watch: {
+    listCompany (newVal) {
+      if (newVal && newVal.length === 1) {
+        this.$router.push({ path: `/${newVal[0].tax}-${newVal[0].slug}`, query: { tax: newVal[0].tax } })
+      }
     }
   },
   methods: {
+    ...mapActions(STORE_KEY, ['acGetListCompanyByTax']),
     onSelect (item) {
       this.selectActive = item.value
+      this.type = item.id
       this.isShowDrop = false
+    },
+    hanleSearch () {
+      this.acGetListCompanyByTax({ keyword: this.keyword, pageIndex: 1, pageSize: 10, type: this.type })
+      this.selectActive = ''
+      this.type = -1
+      this.keyword = ''
     }
   }
 }
@@ -89,7 +111,7 @@ export default {
 
     button {
       padding: 0.3rem 0.7rem;
-      border: 1px solid $color_border_button;
+      border: 1px solid $color_f1;
     }
   }
 }
