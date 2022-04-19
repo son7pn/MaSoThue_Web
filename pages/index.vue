@@ -5,7 +5,7 @@
       <div class="row">
         <div class="col-md-9 col-12 mg-b-30r">
           <h3 class="font-sanpro-semibold primary-color-txt mg-b-20r">
-            Doanh nghiệp mới cập nhật
+            Doanh nghiệp
           </h3>
           <!-- <vueCustomScrollbar class="scroll-class none-ps-x" @ps-y-reach-end="infiniteScroll()"> -->
           <!-- <vueCustomScrollbar class="scroll-class none-ps-x none-ps-y"> -->
@@ -16,8 +16,8 @@
           />
           <!-- </vueCustomScrollbar> -->
           <Pagination
-            :total-records="50"
-            :total-page="10"
+            :total-records="totalRecordsCompany"
+            :total-page="(Math.floor(totalRecordsCompany/10) + (totalRecordsCompany % 10 == 0 ? 0 : 1 ))"
             @change="changPage"
           />
         </div>
@@ -53,7 +53,9 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
 import vueCustomScrollbar from 'vue-custom-scrollbar'
+import { STORE_KEY } from '@/store/company/constants'
 import 'vue-custom-scrollbar/dist/vueScrollbar.css'
 import ItemInfoBusiness from '@/components/shared/ItemInfoBusiness.vue'
 import Banner from '@/components/shared/Banner.vue'
@@ -65,76 +67,11 @@ export default {
     Banner,
     Pagination
   },
+  asyncData ({ route, store }) {
+    return store.dispatch('company/acGetListCompanyByTax', { tax: 3603865094, pageIndex: 1, pageSize: 10 })
+  },
   data () {
     return {
-      listCompany: [
-        {
-          nameCompany: 'CÔNG TY CỔ PHẦN ĐẦU TƯ VÀ THƯƠNG MẠI TỔNG HỢP XNK HÀ NỘI',
-          code: '0109956516',
-          representative: 'NGUYỄN NGỌC THÁI',
-          address: 'Số 79, phố Hoàng Cầu, Phường Ô Chợ Dừa, Quận Đống Đa, Thành phố Hà Nội, Việt Nam'
-        },
-        {
-          nameCompany: 'CÔNG TY CỔ PHẦN ĐẦU TƯ VÀ THƯƠNG MẠI TỔNG HỢP XNK HÀ NỘI',
-          code: '0109956516',
-          representative: 'NGUYỄN NGỌC THÁI',
-          address: 'Số 79, phố Hoàng Cầu, Phường Ô Chợ Dừa, Quận Đống Đa, Thành phố Hà Nội, Việt Nam'
-        },
-        {
-          nameCompany: 'CÔNG TY CỔ PHẦN ĐẦU TƯ VÀ THƯƠNG MẠI TỔNG HỢP XNK HÀ NỘI',
-          code: '0109956516',
-          representative: 'NGUYỄN NGỌC THÁI',
-          address: 'Số 79, phố Hoàng Cầu, Phường Ô Chợ Dừa, Quận Đống Đa, Thành phố Hà Nội, Việt Nam'
-        },
-        {
-          nameCompany: 'CÔNG TY CỔ PHẦN ĐẦU TƯ VÀ THƯƠNG MẠI TỔNG HỢP XNK HÀ NỘI',
-          code: '0109956516',
-          representative: 'NGUYỄN NGỌC THÁI',
-          address: 'Số 79, phố Hoàng Cầu, Phường Ô Chợ Dừa, Quận Đống Đa, Thành phố Hà Nội, Việt Nam'
-        },
-        {
-          nameCompany: 'CÔNG TY CỔ PHẦN ĐẦU TƯ VÀ THƯƠNG MẠI TỔNG HỢP XNK HÀ NỘI',
-          code: '0109956516',
-          representative: 'NGUYỄN NGỌC THÁI',
-          address: 'Số 79, phố Hoàng Cầu, Phường Ô Chợ Dừa, Quận Đống Đa, Thành phố Hà Nội, Việt Nam'
-        },
-        {
-          nameCompany: 'CÔNG TY CỔ PHẦN ĐẦU TƯ VÀ THƯƠNG MẠI TỔNG HỢP XNK HÀ NỘI',
-          code: '0109956516',
-          representative: 'NGUYỄN NGỌC THÁI',
-          address: 'Số 79, phố Hoàng Cầu, Phường Ô Chợ Dừa, Quận Đống Đa, Thành phố Hà Nội, Việt Nam'
-        },
-        {
-          nameCompany: 'CÔNG TY CỔ PHẦN ĐẦU TƯ VÀ THƯƠNG MẠI TỔNG HỢP XNK HÀ NỘI',
-          code: '0109956516',
-          representative: 'NGUYỄN NGỌC THÁI',
-          address: 'Số 79, phố Hoàng Cầu, Phường Ô Chợ Dừa, Quận Đống Đa, Thành phố Hà Nội, Việt Nam'
-        },
-        {
-          nameCompany: 'CÔNG TY CỔ PHẦN ĐẦU TƯ VÀ THƯƠNG MẠI TỔNG HỢP XNK HÀ NỘI',
-          code: '0109956516',
-          representative: 'NGUYỄN NGỌC THÁI',
-          address: 'Số 79, phố Hoàng Cầu, Phường Ô Chợ Dừa, Quận Đống Đa, Thành phố Hà Nội, Việt Nam'
-        },
-        {
-          nameCompany: 'CÔNG TY CỔ PHẦN ĐẦU TƯ VÀ THƯƠNG MẠI TỔNG HỢP XNK HÀ NỘI',
-          code: '0109956516',
-          representative: 'NGUYỄN NGỌC THÁI',
-          address: 'Số 79, phố Hoàng Cầu, Phường Ô Chợ Dừa, Quận Đống Đa, Thành phố Hà Nội, Việt Nam'
-        },
-        {
-          nameCompany: 'CÔNG TY CỔ PHẦN ĐẦU TƯ VÀ THƯƠNG MẠI TỔNG HỢP XNK HÀ NỘI',
-          code: '0109956516',
-          representative: 'NGUYỄN NGỌC THÁI',
-          address: 'Số 79, phố Hoàng Cầu, Phường Ô Chợ Dừa, Quận Đống Đa, Thành phố Hà Nội, Việt Nam'
-        },
-        {
-          nameCompany: 'CÔNG TY CỔ PHẦN ĐẦU TƯ VÀ THƯƠNG MẠI TỔNG HỢP XNK HÀ NỘI',
-          code: '0109956516',
-          representative: 'NGUYỄN NGỌC THÁI',
-          address: 'Số 79, phố Hoàng Cầu, Phường Ô Chợ Dừa, Quận Đống Đa, Thành phố Hà Nội, Việt Nam'
-        }
-      ],
       listProvince: [
         {
           name: 'Hà Nội'
@@ -172,7 +109,13 @@ export default {
       ]
     }
   },
+  computed: {
+    ...mapState(STORE_KEY, ['listCompany', 'totalRecordsCompany'])
+  },
+  mounted () {
+  },
   methods: {
+    // ...mapActions(STORE_KEY, ['acGetListCompanyByTax']),
     changPage (page) {
       console.log('page: ', page)
     }

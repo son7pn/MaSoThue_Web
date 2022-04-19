@@ -1,0 +1,3 @@
+export const STORE_KEY = 'company'
+export const GET_LIST_COMPANY_BY_TAX = 'GET_LIST_COMPANY_BY_TAX'
+export const DETAIL_COMPANY_BY_TAX = 'DETAIL_COMPANY_BY_TAX'

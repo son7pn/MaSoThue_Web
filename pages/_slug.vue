@@ -2,18 +2,18 @@
   <div class="container">
     <div class="detai-company pd-t-50r full-box pd-b-60r ">
       <h3 class="font-sanpro-semibold primary-color-txt mg-b-64r">
-        2100621501-006 - VĂN PHÒNG ĐẠI DIỆN CÔNG TY CỔ PHẦN XUẤT NHẬP KHẨU THƯƠNG MẠI DẦU KHÍ
+        {{ detailCompanyByTax.tax }} - {{ detailCompanyByTax.compnayName }}
       </h3>
       <!-- <ViewDocs :data-source="dataDoc" /> -->
       <div class="row">
-        <DetailCompany class="col-md-9" />
+        <DetailCompany :data-source="detailCompanyByTax" class="col-md-9" />
       </div>
 
       <div class="mg-t-64r">
         <h4 class="font-sanpro-semibold primary-color-txt title-comment">
           Bình luận
         </h4>
-        <ModulesComment :list-comment-post="listComment" />
+        <ModulesComment :list-comment-post="listComment" :article-id="detailCompanyByTax.id" />
       </div>
       <div class="mg-t-64r">
         <h4 class="font-sanpro-semibold primary-color-txt title-comment">
@@ -44,10 +44,11 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import { mapState, mapActions } from 'vuex'
 import vueCustomScrollbar from 'vue-custom-scrollbar'
 import 'vue-custom-scrollbar/dist/vueScrollbar.css'
 // import ViewDocs from '@/components/shared/previewDocs/ViewDocs.vue'
+import { STORE_KEY } from '@/store/company/constants'
 import ModulesComment from '@/components/shared/comment/ModulesComment.vue'
 import ItemInfoBusiness from '@/components/shared/ItemInfoBusiness.vue'
 import DetailCompany from '@/components/shared/DetailCompany.vue'
@@ -65,7 +66,7 @@ export default {
     }
   },
   asyncData ({ route, store }) {
-    return store.dispatch('common/acGetListComment', { articleId: 3333, pageIndex: 1, pageSize: 10 })
+    return store.dispatch('company/acDetailCompanyByTax', Number(route.query.tax))
   },
   data () {
     return {
@@ -128,15 +129,16 @@ export default {
       isFetchListComment: false
     }
   },
-  fetch () {
-    const self = this
-    if (self.isFetchListComment) {
-      self.isFetchListComment = false
-      self.$store.dispatch('common/acGetListComment', { articleId: 3333, pageIndex: 1, pageSize: 10 })
-    }
-  },
+  // fetch () {
+  //   const self = this
+  //   if (self.isFetchListComment) {
+  //     self.isFetchListComment = false
+  //     self.$store.dispatch('common/acGetListComment', { articleId: 3333, pageIndex: 1, pageSize: 10 })
+  //   }
+  // },
   computed: {
-    ...mapState('common', ['listComment'])
+    ...mapState('common', ['listComment']),
+    ...mapState(STORE_KEY, ['detailCompanyByTax'])
   },
   watch: {
     // listComment () {
@@ -145,6 +147,12 @@ export default {
     //     return this.$fetch()
     //   }, 500)
     // }
+  },
+  mounted () {
+    this.acGetListComment({ articleId: this.detailCompanyByTax.id, pageIndex: 1, pageSize: 10 })
+  },
+  methods: {
+    ...mapActions('common', ['acGetListComment'])
   }
 }
 </script>

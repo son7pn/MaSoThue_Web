@@ -1,66 +1,71 @@
 <template>
   <div class="detail-company">
     <h3 class="detail-company__name">
-      Công ty cổ phần
+      {{ dataSource.compnayName ? dataSource.compnayName : '' }}
     </h3>
     <div class="item-key display-flex">
       <div class="item-key__title">
         <i class="fa fa-hashtag" /><span> Mã số thuế</span>
       </div>
-      1623
+      {{ dataSource.tax ? dataSource.tax : '' }}
     </div>
     <div class="item-key display-flex">
       <div class="item-key__title">
         <i class="fa fa-map-marker" /><span> Địa chỉ</span>
       </div>
-      1623
+      {{ dataSource.address ? dataSource.address : '...' }}
     </div>
     <div class="item-key display-flex">
       <div class="item-key__title">
         <i class="fa fa-user" /><span> Người đại diện</span>
       </div>
-      1623
+      {{ dataSource.director ? dataSource.director : '' }}
     </div>
     <div class="item-key display-flex">
       <div class="item-key__title">
         <i class="fa fa-phone" /><span> Điện thoại</span>
       </div>
-      1623
+      {{ dataSource.phone ? dataSource.phone : '' }}
     </div>
     <div class="item-key display-flex">
       <div class="item-key__title">
         <i class="fa fa-calendar" /><span> Ngày hoạt động</span>
       </div>
-      1623
+      {{ dataSource.foundingDate ? $dayjs(dataSource.foundingDate).format('DD/MM/YYYY') : '' }}
     </div>
     <div class="item-key display-flex">
       <div class="item-key__title">
         <i class="fa fa-users" /><span> Quản lý bởi</span>
       </div>
-      1623
+      {{ dataSource.director ? dataSource.director : '' }}
     </div>
     <div class="item-key display-flex">
       <div class="item-key__title">
         <i class="fa fa-building" /><span> Loại hình DN</span>
       </div>
-      1623
+      {{ dataSource.businessType ? dataSource.businessType : '' }}
     </div>
     <div class="item-key display-flex">
       <div class="item-key__title">
         <i class="fa fa-info" /><span> Tình trạng</span>
       </div>
-      1623
+      ...
     </div>
     <div class="item-key">
-      Cập nhật mã số thuế <b>1602158758</b>  lần cuối vào <i>2022-04-18 18:30:27.</i>
+      Cập nhật mã số thuế <b>{{ dataSource.tax ? dataSource.tax : '' }}</b>  lần cuối vào <i>2022-04-18 18:30:27.</i>
     </div>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'DetailCompany'
-
+  name: 'DetailCompany',
+  props: {
+    dataSource: {
+      type: Object,
+      default: Object
+    }
+  }
 }
 </script>
 
