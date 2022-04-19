@@ -4,7 +4,11 @@
       <h3 class="font-sanpro-semibold primary-color-txt mg-b-64r">
         2100621501-006 - VĂN PHÒNG ĐẠI DIỆN CÔNG TY CỔ PHẦN XUẤT NHẬP KHẨU THƯƠNG MẠI DẦU KHÍ
       </h3>
-      <ViewDocs :data-source="dataDoc" />
+      <!-- <ViewDocs :data-source="dataDoc" /> -->
+      <div class="row">
+        <DetailCompany class="col-md-9" />
+      </div>
+
       <div class="mg-t-64r">
         <h4 class="font-sanpro-semibold primary-color-txt title-comment">
           Bình luận
@@ -43,15 +47,17 @@
 import { mapState } from 'vuex'
 import vueCustomScrollbar from 'vue-custom-scrollbar'
 import 'vue-custom-scrollbar/dist/vueScrollbar.css'
-import ViewDocs from '@/components/shared/previewDocs/ViewDocs.vue'
+// import ViewDocs from '@/components/shared/previewDocs/ViewDocs.vue'
 import ModulesComment from '@/components/shared/comment/ModulesComment.vue'
 import ItemInfoBusiness from '@/components/shared/ItemInfoBusiness.vue'
+import DetailCompany from '@/components/shared/DetailCompany.vue'
 export default {
   components: {
     vueCustomScrollbar,
-    ViewDocs,
+    // ViewDocs,
     ModulesComment,
-    ItemInfoBusiness
+    ItemInfoBusiness,
+    DetailCompany
   },
   nuxtI18n: {
     paths: {
