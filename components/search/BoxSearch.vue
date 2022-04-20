@@ -55,7 +55,7 @@ export default {
   watch: {
     listCompany (newVal) {
       if (newVal && newVal.length === 1) {
-        this.$router.push({ path: `/${newVal[0].tax}-${newVal[0].slug}`, query: { tax: newVal[0].tax } })
+        this.$router.push({ path: `/${newVal[0].tax}-${newVal[0].slug}` })
       }
     }
   },

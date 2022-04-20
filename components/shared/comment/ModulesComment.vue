@@ -201,7 +201,7 @@ export default {
       this.parentChildCommentOpen = index
     },
     async handleAddComment (val) {
-      console.log('aaaaaaaa: ', (this.authInfo && this.authInfo.articleId !== this.articleId))
+      // console.log('aaaaaaaa: ', (this.authInfo && this.authInfo.articleId !== this.articleId))
       if (!this.authInfo || (this.authInfo && this.authInfo.articleId !== this.articleId)) {
         this.isShowConfirmInfo = true
         this.contentFirtComment = val

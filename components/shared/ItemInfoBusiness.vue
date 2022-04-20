@@ -1,7 +1,7 @@
 <template>
   <div class="item-info-bus full-width">
     <h4 class="font-weight-medium primary-color text-uppercase mg-b-12r font-size-20">
-      <nuxt-link :to="localePath({ path: `/${dataSource.tax}-${dataSource.slug}`, query: {tax: dataSource.tax }})" class="primary-color">
+      <nuxt-link :to="localePath({ path: `/${dataSource.tax}-${dataSource.slug}`})" class="primary-color">
         {{ dataSource.compnayName ? dataSource.compnayName : '' }}
       </nuxt-link>
     </h4>
