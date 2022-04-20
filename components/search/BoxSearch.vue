@@ -15,7 +15,12 @@
         </div>
       </div>
       <div class="box-search__input display-flex-center">
-        <input v-model="keyword" placeholder="Nhập mã số thuế, CMND, tên công ty" class="border-none full-width">
+        <input
+          v-model="keyword"
+          placeholder="Nhập mã số thuế, CMND, tên công ty"
+          class="border-none full-width"
+          @keyup.enter="hanleSearch($event)"
+        >
         <button class="bg-primary-color border-rd-4" @click="hanleSearch">
           <i class="icon-search color-light" />
         </button>
