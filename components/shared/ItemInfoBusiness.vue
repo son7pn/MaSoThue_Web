@@ -1,10 +1,10 @@
 <template>
   <div class="item-info-bus full-width">
-    <h4 class="font-weight-medium primary-color text-uppercase mg-b-12r font-size-20">
+    <h2 class="font-weight-medium primary-color text-uppercase mg-b-12r font-size-20">
       <nuxt-link :to="localePath({ path: `/${dataSource.tax}-${dataSource.slug}`})" class="primary-color">
         {{ dataSource.compnayName ? dataSource.compnayName : '' }}
       </nuxt-link>
-    </h4>
+    </h2>
     <div class="mg-b-8r font-size-18">
       <i class="fa fa-hashtag font-size-20" aria-hidden="true" /> Mã số thuế:
       <a class="primary-color-txt" href="javascript:;">&ensp;{{ dataSource.tax ? dataSource.tax : '0000000' }}</a>

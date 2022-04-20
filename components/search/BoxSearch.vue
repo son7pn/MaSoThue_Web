@@ -46,18 +46,13 @@ export default {
         { id: 3, value: 'Tên giám đốc công ty' }
       ],
       keyword: '',
-      type: -1
+      type: 0
     }
   },
   computed: {
     ...mapState(STORE_KEY, ['listCompany'])
   },
   watch: {
-    listCompany (newVal) {
-      if (newVal && newVal.length === 1) {
-        this.$router.push({ path: `/${newVal[0].tax}-${newVal[0].slug}` })
-      }
-    }
   },
   methods: {
     ...mapActions(STORE_KEY, ['acGetListCompanyByTax']),
@@ -66,10 +61,15 @@ export default {
       this.type = item.id
       this.isShowDrop = false
     },
-    hanleSearch () {
-      this.acGetListCompanyByTax({ keyword: this.keyword, pageIndex: 1, pageSize: 10, type: this.type })
+    async hanleSearch () {
+      const response = await this.acGetListCompanyByTax({ keyword: this.keyword, pageIndex: 1, pageSize: 10, type: this.type })
+      if (response && response.length === 1 && this.type === 1) {
+        this.$router.push({ path: `/${response[0].tax}-${response[0].slug}` })
+      } else if (response && this.type !== 1) {
+        this.$router.push({ path: '/search', query: { type: this.type, keyword: this.keyword } })
+      }
       this.selectActive = ''
-      this.type = -1
+      this.type = 0
       this.keyword = ''
     }
   }

@@ -1,8 +1,8 @@
 <template>
   <div class="detail-company font-size-18">
-    <h3 class="detail-company__name">
+    <h2 class="detail-company__name">
       {{ dataSource.compnayName ? dataSource.compnayName : '' }}
-    </h3>
+    </h2>
     <div class="item-key display-flex">
       <div class="item-key__title">
         <i class="fa fa-hashtag" /><span> Mã số thuế</span>

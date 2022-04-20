@@ -6,7 +6,8 @@ export const initState = () => {
   return {
     loading: false,
     listComment: [],
-    totalRecordsComment: null
+    totalRecordsComment: null,
+    contentConfig: {}
   }
 }
 const state = initState()

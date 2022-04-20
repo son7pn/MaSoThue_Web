@@ -12,5 +12,9 @@ export default {
   async acGetListComment ({ commit }, { articleId, pageIndex, pageSize }) {
     const data = await this.$apis.commentApi.showListComment({ articleId, pageIndex, pageSize })
     data && commit(types.LIST_COMMENT, data)
+  },
+  async acGetContentConfig ({ commit }, params) {
+    const data = await this.$apis.common.showContentConfig(params)
+    data && commit(types.GET_CONTENT_CONFIG, data)
   }
 }

@@ -1,9 +1,9 @@
 <template>
   <div class="container">
     <div class="detai-company pd-t-50r full-box pd-b-60r ">
-      <h3 class="font-weight-medium border-title primary-color-txt mg-b-64r">
+      <h1 class="font-weight-medium border-title primary-color-txt mg-b-64r">
         {{ detailCompanyByTax.tax }} - {{ detailCompanyByTax.compnayName }}
-      </h3>
+      </h1>
       <!-- <ViewDocs :data-source="dataDoc" /> -->
       <div class="row">
         <DetailCompany :data-source="detailCompanyByTax" class="col-md-9" />

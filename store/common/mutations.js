@@ -8,5 +8,8 @@ export default {
   [types.LIST_COMMENT] (state, data) {
     state.listComment = data.list
     state.totalRecordsComment = data.totalRow
+  },
+  [types.GET_CONTENT_CONFIG] (state, data) {
+    state.contentConfig = data
   }
 }
