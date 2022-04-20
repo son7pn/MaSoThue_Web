@@ -5,15 +5,14 @@
         {{ detailCompanyByTax.tax }} - {{ detailCompanyByTax.compnayName }}
       </h3>
       <!-- <ViewDocs :data-source="dataDoc" /> -->
+      <div class="row">
+        <DetailCompany :data-source="detailCompanyByTax" class="col-md-9" />
+      </div>
       <!--eslint-disable-->
       <client-only>
         <p v-html="detailCompanyByTax.content ? detailCompanyByTax.content : ''"/>
       </client-only>
       <!-- eslint-enable -->
-      <div class="row">
-        <DetailCompany :data-source="detailCompanyByTax" class="col-md-9" />
-      </div>
-
       <div class="mg-t-64r">
         <h4 class="font-sanpro-semibold primary-color-txt title-comment">
           Bình luận
@@ -24,25 +23,25 @@
         <h4 class="font-sanpro-semibold primary-color-txt title-comment">
           Doanh nghiệp tại địa phương
         </h4>
-        <vueCustomScrollbar class="scroll-class none-ps-x none-ps-y">
-          <ItemInfoBusiness
-            v-for="(item, index) of listCompany"
-            :key="index"
-            :data-source="item"
-          />
-        </vueCustomScrollbar>
+        <!-- <vueCustomScrollbar class="scroll-class none-ps-x none-ps-y"> -->
+        <ItemInfoBusiness
+          v-for="(item, index) of listCompany"
+          :key="index"
+          :data-source="item"
+        />
+        <!-- </vueCustomScrollbar> -->
       </div>
       <div class="mg-t-64r">
         <h4 class="font-sanpro-semibold primary-color-txt title-comment">
           Doanh nghiệp mới
         </h4>
-        <vueCustomScrollbar class="scroll-class none-ps-x none-ps-y">
-          <ItemInfoBusiness
-            v-for="(item, index) of listCompany"
-            :key="index"
-            :data-source="item"
-          />
-        </vueCustomScrollbar>
+        <!-- <vueCustomScrollbar class="scroll-class none-ps-x none-ps-y"> -->
+        <ItemInfoBusiness
+          v-for="(item, index) of listCompany"
+          :key="index"
+          :data-source="item"
+        />
+        <!-- </vueCustomScrollbar> -->
       </div>
     </div>
   </div>
@@ -50,8 +49,8 @@
 
 <script>
 import { mapState, mapActions } from 'vuex'
-import vueCustomScrollbar from 'vue-custom-scrollbar'
-import 'vue-custom-scrollbar/dist/vueScrollbar.css'
+// import vueCustomScrollbar from 'vue-custom-scrollbar'
+// import 'vue-custom-scrollbar/dist/vueScrollbar.css'
 // import ViewDocs from '@/components/shared/previewDocs/ViewDocs.vue'
 import { STORE_KEY } from '@/store/company/constants'
 import ModulesComment from '@/components/shared/comment/ModulesComment.vue'
@@ -59,7 +58,7 @@ import ItemInfoBusiness from '@/components/shared/ItemInfoBusiness.vue'
 import DetailCompany from '@/components/shared/DetailCompany.vue'
 export default {
   components: {
-    vueCustomScrollbar,
+    // vueCustomScrollbar,
     // ViewDocs,
     ModulesComment,
     ItemInfoBusiness,
