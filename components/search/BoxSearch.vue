@@ -66,7 +66,7 @@ export default {
       if (response && response.length === 1 && this.type === 1) {
         this.$router.push({ path: `/${response[0].tax}-${response[0].slug}` })
       } else if (response && this.type !== 1) {
-        this.$router.push({ path: '/search', query: { type: this.type, keyword: this.keyword } })
+        this.$router.push({ path: '/tra-cuu', query: { type: this.type, keyword: this.keyword } })
       }
       this.selectActive = ''
       this.type = 0

@@ -2,7 +2,7 @@
   <div class="search container">
     <div class="row mt-4">
       <div class="col-md-9">
-        <h3 class="font-weight-medium primary-color-txt border-title">
+        <h3 class="font-weight-medium primary-color-txt border-title font-size-34">
           {{ $route.query.type == 2 ? `Tra cứu tên công ty ${$route.query.keyword}` : $route.query.type == 3 ? `Tra cứu tên người đại diện pháp luật ${$route.query.keyword}` : 'Tra cứu mã số thuế và danh sách công ty' }}
         </h3>
         <ItemInfoBusiness

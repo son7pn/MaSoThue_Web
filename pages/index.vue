@@ -4,7 +4,7 @@
     <div class="container pd-t-50r">
       <div class="row">
         <div class="col-md-9 col-12 mg-b-30r">
-          <h3 class="font-weight-medium primary-color-txt mg-b-20r border-title font-size-36">
+          <h3 class="font-weight-medium primary-color-txt mg-b-20r border-title font-size-34">
             Tra Cứu Mã Số Thuế (Công Ty, Cá Nhân)
           </h3>
           <!-- <vueCustomScrollbar class="scroll-class none-ps-x" @ps-y-reach-end="infiniteScroll()"> -->

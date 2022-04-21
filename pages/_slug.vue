@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <div class="detai-company pd-t-50r full-box pd-b-60r ">
-      <h1 class="font-weight-medium border-title primary-color-txt mg-b-64r">
+      <h1 class="font-weight-medium border-title primary-color-txt font-size-36 mg-b-64r">
         {{ detailCompanyByTax.tax }} - {{ detailCompanyByTax.compnayName }}
       </h1>
       <!-- <ViewDocs :data-source="dataDoc" /> -->
