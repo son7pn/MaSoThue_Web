@@ -35,6 +35,12 @@
     </div>
     <div class="item-key display-flex">
       <div class="item-key__title">
+        <i class="fa fa-usd" /><span> Vốn điều lệ (vnđ)</span>
+      </div>
+      {{ dataSource.capacity ? dataSource.capacity.toLocaleString('de-DE') : '' }}
+    </div>
+    <div class="item-key display-flex">
+      <div class="item-key__title">
         <i class="fa fa-users" /><span> Quản lý bởi</span>
       </div>
       {{ dataSource.director ? dataSource.director : '' }}
@@ -51,19 +57,36 @@
       </div>
       {{ dataSource.status === 1 ? 'Đang hoạt động' : 'Ngừng hoạt động' }}
     </div>
-    <div class="item-key">
-      Cập nhật mã số thuế <b>{{ dataSource.tax ? dataSource.tax : '' }}</b>  lần cuối vào <i>{{ dataSource.lastModifiedDate ? $dayjs(dataSource.lastModifiedDate).format('YYYY-MM-DD HH:mm:ss') : '' }}.</i>
+    <div class="item-key display-flex-center-wrap justify-content-between">
+      <span>Cập nhật mã số thuế <b>{{ dataSource.tax ? dataSource.tax : '' }}</b>  lần cuối vào <i>{{ dataSource.lastModifiedDate ? $dayjs(dataSource.lastModifiedDate).format('YYYY-MM-DD HH:mm:ss') : '' }}.</i></span>
+      <button type="button" class="btn bg-primary-color full-width color-light" @click="downloadFile(dataSource)">
+        Tải file
+      </button>
     </div>
   </div>
 </template>
 
 <script>
+import mixinsFile from '@/mixins/mixinsFile'
 export default {
   name: 'DetailCompany',
+  mixins: [mixinsFile],
   props: {
     dataSource: {
       type: Object,
       default: Object
+    }
+  },
+  methods: {
+    downloadFile (data) {
+      if (!data || !data.attackName) {
+        this.$toast.error('Tài liệu hiện không thể tải xuống')
+        return
+      }
+      const nameFile = data.slug ? data.slug : 'document'
+      const formatFile = data.attackName ? data.attackName.split('.')[1] : ''
+      const nameDoc = nameFile + `.${formatFile}`
+      this.downloadDocs(data.attackName, nameDoc)
     }
   }
 }

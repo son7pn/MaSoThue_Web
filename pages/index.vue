@@ -53,7 +53,7 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import { mapState, mapActions } from 'vuex'
 import vueCustomScrollbar from 'vue-custom-scrollbar'
 import { STORE_KEY } from '@/store/company/constants'
 import 'vue-custom-scrollbar/dist/vueScrollbar.css'
@@ -68,7 +68,7 @@ export default {
     Pagination
   },
   asyncData ({ route, store }) {
-    return store.dispatch('company/acGetListCompanyByTax', { keyword: '', pageIndex: 1, pageSize: 10, type: -1 })
+    return store.dispatch('company/acGetListCompanyByTax', { keyword: '', pageIndex: route.query.page ? Number(route.query.page) : 1, pageSize: 10, type: -1 })
   },
   data () {
     return {
@@ -106,21 +106,42 @@ export default {
         {
           name: 'Phú Thọ'
         }
-      ]
+      ],
+      isFetchCompany: false
+    }
+  },
+  fetch () {
+    if (this.isFetchCompany) {
+      this.isFetchCompany = false
+      return this.$store.dispatch('company/acGetListCompanyByTax', { keyword: '', pageIndex: this.$route.query.page ? Number(this.$route.query.page) : 1, pageSize: 10, type: -1 })
     }
   },
   computed: {
     ...mapState(STORE_KEY, ['listCompany', 'totalRecordsCompany'])
   },
+  watch: {
+    '$route.query.page': 'fetchData'
+  },
   mounted () {
     this.scrollToTop()
   },
   methods: {
-    // ...mapActions(STORE_KEY, ['acGetListCompanyByTax']),
+    ...mapActions(STORE_KEY, ['acGetListCompanyByTax']),
     changPage (page) {
-      console.log('page: ', page)
+      // this.acGetListCompanyByTax({ keyword: '', pageIndex: page.page, pageSize: 10, type: -1 })
+      this.$router.push({ path: '/', query: { page: page.page, size: 10 } })
     },
-
+    fetchData (newVal) {
+      if (newVal) {
+        setTimeout(() => {
+          this.isFetchCompany = true
+          return this.$fetch()
+        }, 200)
+        setTimeout(() => {
+          this.scrollToTop()
+        }, 500)
+      }
+    },
     scrollToTop () {
       window.scrollTo(0, 0)
     }

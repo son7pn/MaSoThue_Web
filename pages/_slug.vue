@@ -70,7 +70,7 @@ export default {
     }
   },
   asyncData ({ route, store }) {
-    const tax = Number(route.params.slug.split('-').shift())
+    const tax = route.params.slug.split('-').shift()
     return store.dispatch('company/acDetailCompanyByTax', tax)
   },
   data () {
@@ -154,7 +154,7 @@ export default {
     // }
   },
   mounted () {
-    // console.log('router: ', this.$route)
+    console.log('router: ', this.detailCompanyByTax)
     this.acGetListComment({ articleId: this.detailCompanyByTax.id, pageIndex: 1, pageSize: 10 })
     this.scrollToTop()
   },

@@ -65,8 +65,12 @@ export default {
       vi: '/tra-cuu'
     }
   },
+  asyncData ({ route, store }) {
+    return store.dispatch('company/acGetListCompanyByTax', { keyword: route.query.keyword ? route.query.keyword : '', pageIndex: route.query.page ? Number(route.query.page) : 1, pageSize: 10, type: route.query.type ? route.query.type : 0 })
+  },
   data () {
     return {
+      isFetchCompany: false,
       listProvince: [
         {
           name: 'Hà Nội'
@@ -104,8 +108,17 @@ export default {
       ]
     }
   },
+  fetch () {
+    if (this.isFetchCompany) {
+      this.isFetchCompany = false
+      return this.$store.dispatch('company/acGetListCompanyByTax', { keyword: this.$route.query.keyword, pageIndex: this.$route.query.page ? Number(this.$route.query.page) : 1, pageSize: 10, type: Number(this.$route.query.type) })
+    }
+  },
   computed: {
     ...mapState(STORE_KEY, ['listCompany', 'totalRecordsCompany'])
+  },
+  watch: {
+    '$route.query.page': 'fetchData'
   },
   mounted () {
     this.scrollToTop()
@@ -114,6 +127,18 @@ export default {
     ...mapActions(STORE_KEY, ['acGetListCompanyByTax']),
     changPage (page) {
       this.acGetListCompanyByTax({ keyword: this.$route.query.keyword, pageIndex: page.page, pageSize: 10, type: Number(this.$route.query.type) })
+      this.$router.push({ path: '/tra-cuu', query: { page: page.page, size: 10, keyword: this.$route.query.keyword, type: Number(this.$route.query.type) } })
+    },
+    fetchData (newVal) {
+      if (newVal) {
+        setTimeout(() => {
+          this.isFetchCompany = true
+          return this.$fetch()
+        }, 200)
+        setTimeout(() => {
+          this.scrollToTop()
+        }, 500)
+      }
     },
     scrollToTop () {
       window.scrollTo(0, 0)

@@ -17,8 +17,8 @@
             <template v-for="(item, index) in 6" class="item-star">
               <input
                 :id="`rating${index}`"
-                :checked="((form.rate.rating) ? index===form.rate.rating : index==0) ? true : false"
                 :key="index"
+                :checked="((form.rate.rating) ? index===form.rate.rating : index==0) ? true : false"
                 name="rating"
                 :value="index"
                 type="radio"

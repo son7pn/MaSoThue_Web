@@ -5,6 +5,8 @@
         <!-- Paginate from plugin -->
         <Paginate
           v-if="totalPage > 1"
+          ref="pagination"
+          v-model="pageIndex"
           :page-count="totalPage"
           :page-range="3"
           :margin-pages="1"
@@ -40,7 +42,8 @@ export default {
     return {
       perPage: 10,
       listPerPage: [10, 20, 30, 50, 100],
-      isShowPerpageDropdown: false
+      isShowPerpageDropdown: false,
+      pageIndex: 1
     }
   },
   computed: {
@@ -53,6 +56,12 @@ export default {
     rowEnd () {
       return (this.rowStart + this.perPage) - 1
     }
+  },
+  watch: {
+    '$route.query.page': 'setPageIndex'
+  },
+  mounted () {
+    this.pageIndex = this.$route.query.page ? this.$route.query.page : 1
   },
   methods: {
     onChangePerPage (number) {
@@ -72,7 +81,13 @@ export default {
     hidenPerPageDropDown () {
       this.isShowPerpageDropdown = false
     },
-
+    setPageIndex (newVal) {
+      if (newVal && newVal > 1) {
+        console.log('newVal', newVal)
+        // console.log('aaaaaaaaaa: ', this.$refs.pagination)
+        // this.$refs.pagination.innerValue = newVal
+      }
+    },
     click2Page (page) {
       if (this.currPage === page) {
         return
