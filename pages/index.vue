@@ -39,7 +39,7 @@
             <vueCustomScrollbar class="scroll-class none-ps-x none-ps-y">
               <ul class="row list-sort list-style-none">
                 <li v-for="(item1, index1) of listProvince" :key="index1" class="cat-item align-items-center col-xs-6 col-md-12">
-                  <nuxt-link :to="localePath('/tra-cuu-ma-so-thue-theo-tinh/ha-noi')" class="primary-color-txt font-size-18">
+                  <nuxt-link :to="localePath(`/tra-cuu-doanh-nghiep/${item1.alias}`)" class="primary-color-txt font-size-18">
                     {{ item1.name }}
                   </nuxt-link>
                 </li>
@@ -67,46 +67,15 @@ export default {
     Banner,
     Pagination
   },
-  asyncData ({ route, store }) {
-    return store.dispatch('company/acGetListCompanyByTax', { keyword: '', pageIndex: route.query.page ? Number(route.query.page) : 1, pageSize: 10, type: -1 })
+  async asyncData ({ route, store }) {
+    const dataApi = await Promise.allSettled([
+      store.dispatch('company/acGetListCompanyByTax', { keyword: '', pageIndex: route.query.page ? Number(route.query.page) : 1, pageSize: 10, type: -1 }),
+      store.dispatch('common/acGetListProvince')
+    ])
+    return { dataApi }
   },
   data () {
     return {
-      listProvince: [
-        {
-          name: 'Hà Nội'
-        },
-        {
-          name: 'TP Hồ Chí Minh'
-        },
-        {
-          name: 'Hải Phòng'
-        },
-        {
-          name: 'Thái Bình'
-        },
-        {
-          name: 'Thanh Hóa'
-        },
-        {
-          name: 'Đà Nẵng'
-        },
-        {
-          name: 'Huế'
-        },
-        {
-          name: 'Lạng Sơn'
-        },
-        {
-          name: 'Cao Bằng'
-        },
-        {
-          name: 'Lai Châu'
-        },
-        {
-          name: 'Phú Thọ'
-        }
-      ],
       isFetchCompany: false
     }
   },
@@ -117,7 +86,8 @@ export default {
     }
   },
   computed: {
-    ...mapState(STORE_KEY, ['listCompany', 'totalRecordsCompany'])
+    ...mapState(STORE_KEY, ['listCompany', 'totalRecordsCompany']),
+    ...mapState('common', ['listProvince'])
   },
   watch: {
     '$route.query.page': 'fetchData'
@@ -178,18 +148,18 @@ export default {
       padding-left: 0.9375rem;
       a {
         position: relative;
-        margin-left: 2.7em;
+        margin-left: 0.5rem;
         padding: 0.5em 0;
         display: inline-block;
-        &:before {
-          color: #575560;
-          content: "";
-          font-family: FontAwesome;
-          font-size: 1.1em;
-          line-height: 1em;
-          margin-left: -1.4em;
-          position: absolute;
-        }
+        // &:before {
+        //   color: #575560;
+        //   content: "";
+        //   font-family: FontAwesome;
+        //   font-size: 1.1em;
+        //   line-height: 1em;
+        //   margin-left: -1.4em;
+        //   position: absolute;
+        // }
       }
     }
     li:last-child {

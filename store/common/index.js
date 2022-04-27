@@ -7,7 +7,8 @@ export const initState = () => {
     loading: false,
     listComment: [],
     totalRecordsComment: null,
-    contentConfig: {}
+    contentConfig: {},
+    listProvince: []
   }
 }
 const state = initState()

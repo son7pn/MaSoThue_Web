@@ -53,7 +53,7 @@ export default {
   },
   nuxtI18n: {
     paths: {
-      vi: '/tra-cuu-ma-so-thue-theo-tinh/:slug'
+      vi: '/tra-cuu-doanh-nghiep/:slug'
     }
   },
   data () {

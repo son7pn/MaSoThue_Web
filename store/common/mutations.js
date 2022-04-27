@@ -11,5 +11,8 @@ export default {
   },
   [types.GET_CONTENT_CONFIG] (state, data) {
     state.contentConfig = data
+  },
+  [types.GET_LIST_PROVINCE] (state, data) {
+    state.listProvince = data.list
   }
 }

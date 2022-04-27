@@ -16,5 +16,9 @@ export default {
   async acGetContentConfig ({ commit }, params) {
     const data = await this.$apis.common.showContentConfig(params)
     data && commit(types.GET_CONTENT_CONFIG, data)
+  },
+  async acGetListProvince ({ commit }) {
+    const data = await this.$apis.common.showListProvince()
+    data && commit(types.GET_LIST_PROVINCE, data)
   }
 }
