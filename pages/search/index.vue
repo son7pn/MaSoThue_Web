@@ -1,7 +1,7 @@
 <template>
   <div class="search container">
     <div class="row mt-4">
-      <div class="col-md-9">
+      <div class="col-md-8 col-12">
         <h3 class="font-weight-medium primary-color-txt border-title font-size-34">
           {{ $route.query.type == 2 ? `Tra cứu tên công ty ${$route.query.keyword}` : $route.query.type == 3 ? `Tra cứu tên người đại diện pháp luật ${$route.query.keyword}` : 'Tra cứu mã số thuế và danh sách công ty' }}
         </h3>
@@ -16,7 +16,7 @@
           @change="changPage"
         />
       </div>
-      <div class="col-md-3">
+      <div class="col-md-4 col-12">
         <div class="mb-5">
           <h3 class="font-weight-medium primary-color-txt border-title">
             Tra mã số thuế trên Facebook
@@ -33,7 +33,7 @@
           </h3>
           <vueCustomScrollbar class="scroll-class none-ps-x none-ps-y">
             <ul class="row list-sort list-style-none">
-              <li v-for="(item1, index1) of listProvince" :key="index1" class="cat-item align-items-center col-xs-6 col-md-12">
+              <li v-for="(item1, index1) of listProvince" :key="index1" class="cat-item align-items-center col-6">
                 <nuxt-link :to="localePath(`/tra-cuu-doanh-nghiep/${item1.alias}`)" class="primary-color-txt font-size-18">
                   {{ item1.name }}
                 </nuxt-link>
@@ -121,9 +121,6 @@ export default {
 .search {
   padding-top: 1rem;
 }
-.scroll-class {
-    max-height: 100vh;
-  }
 .list-sort {
   li {
     border-bottom: 1px solid $color_border;

@@ -3,7 +3,7 @@
     <Banner />
     <div class="container pd-t-50r">
       <div class="row">
-        <div class="col-md-9 col-12 mg-b-30r">
+        <div class="col-md-8 col-12 mg-b-30r">
           <h3 class="font-weight-medium primary-color-txt mg-b-20r border-title font-size-34">
             Tra Cứu Mã Số Thuế (Công Ty, Cá Nhân)
           </h3>
@@ -21,7 +21,7 @@
             @change="changPage"
           />
         </div>
-        <div class="col-md-3 col-12">
+        <div class="col-md-4 col-12">
           <div class="mb-5">
             <h3 class="font-weight-medium primary-color-txt search-province">
               Tra mã số thuế trên Facebook
@@ -38,7 +38,7 @@
             </h3>
             <vueCustomScrollbar class="scroll-class none-ps-x none-ps-y">
               <ul class="row list-sort list-style-none">
-                <li v-for="(item1, index1) of listProvince" :key="index1" class="cat-item align-items-center col-xs-6 col-md-12">
+                <li v-for="(item1, index1) of listProvince" :key="index1" class="cat-item align-items-center col-6">
                   <nuxt-link :to="localePath(`/tra-cuu-doanh-nghiep/${item1.alias}`)" class="primary-color-txt font-size-18">
                     {{ item1.name }}
                   </nuxt-link>
@@ -136,9 +136,6 @@ export default {
     bottom: -1px;
   }
 }
-  .scroll-class {
-    max-height: 100vh;
-  }
   .list-sort {
     li {
       border-bottom: 1px solid $color_border;

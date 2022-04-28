@@ -154,7 +154,6 @@ export default {
     // }
   },
   mounted () {
-    console.log('router: ', this.detailCompanyByTax)
     this.acGetListComment({ articleId: this.detailCompanyByTax.id, pageIndex: 1, pageSize: 10 })
     this.scrollToTop()
   },

@@ -1,7 +1,7 @@
 <template>
   <div class="career container">
     <div class="row mt-4">
-      <div class="col-md-9">
+      <div class="col-md-8 col-12">
         <h3 class="career__title font-weight-medium primary-color-txt border-title">
           Tra cứu mã số thuế theo ngành nghề
         </h3>
@@ -27,7 +27,7 @@
           @change="changPage"
         />
       </div>
-      <div class="col-md-3">
+      <div class="col-md-4 col-12">
         <div class="mb-5">
           <h3 class="font-weight-medium primary-color-txt border-title">
             Tra mã số thuế trên Facebook
@@ -44,8 +44,8 @@
           </h3>
           <vueCustomScrollbar class="scroll-class none-ps-x none-ps-y">
             <ul class="row list-sort list-style-none">
-              <li v-for="(item1, index1) of listProvince" :key="index1" class="cat-item align-items-center col-xs-6 col-md-12">
-                <nuxt-link :to="localePath('/tra-cuu-ma-so-thue-theo-tinh/ha-noi')" class="primary-color-txt font-size-18">
+              <li v-for="(item1, index1) of listProvince" :key="index1" class="cat-item align-items-center col-6">
+                <nuxt-link :to="localePath(`/tra-cuu-doanh-nghiep/${item1.alias}`)" class="primary-color-txt font-size-18">
                   {{ item1.name }}
                 </nuxt-link>
               </li>
@@ -58,6 +58,7 @@
 </template>
 
 <script>
+import { mapState, mapActions } from 'vuex'
 import vueCustomScrollbar from 'vue-custom-scrollbar'
 import Pagination from '@/components/shared/Pagination.vue'
 
@@ -124,50 +125,22 @@ export default {
           id: 2356,
           name: 'Vận tải hành khách đường bộ trong nội thành, ngoại thành (trừ vận tải bằng xe buýt)'
         }
-      ],
-      listProvince: [
-        {
-          name: 'Hà Nội'
-        },
-        {
-          name: 'TP Hồ Chí Minh'
-        },
-        {
-          name: 'Hải Phòng'
-        },
-        {
-          name: 'Thái Bình'
-        },
-        {
-          name: 'Thanh Hóa'
-        },
-        {
-          name: 'Đà Nẵng'
-        },
-        {
-          name: 'Huế'
-        },
-        {
-          name: 'Lạng Sơn'
-        },
-        {
-          name: 'Cao Bằng'
-        },
-        {
-          name: 'Lai Châu'
-        },
-        {
-          name: 'Phú Thọ'
-        }
       ]
     }
   },
+  computed: {
+    ...mapState('common', ['listProvince'])
+  },
   mounted () {
     this.scrollToTop()
+    if (this.listProvince && this.listProvince.length === 0) {
+      this.acGetListProvince()
+    }
   },
   methods: {
+    ...mapActions('common', ['acGetListProvince']),
     changPage (page) {
-      console.log('page: ', page)
+      // console.log('page: ', page)
     },
     scrollToTop () {
       window.scrollTo(0, 0)
@@ -216,20 +189,20 @@ export default {
         padding-right: 0.9375rem;
         padding-left: 0.9375rem;
         a {
-          position: relative;
-          margin-left: 2.7em;
-          padding: 0.5em 0;
-          display: inline-block;
-          &:before {
-            color: #575560;
-            content: "";
-            font-family: FontAwesome;
-            font-size: 1.1em;
-            line-height: 1em;
-            margin-left: -1.4em;
-            position: absolute;
-          }
-        }
+        position: relative;
+        margin-left: 0.5rem;
+        padding: 0.5em 0;
+        display: inline-block;
+        // &:before {
+        //   color: #575560;
+        //   content: "";
+        //   font-family: FontAwesome;
+        //   font-size: 1.1em;
+        //   line-height: 1em;
+        //   margin-left: -1.4em;
+        //   position: absolute;
+        // }
+      }
       }
       li:last-child {
         border-bottom: 0;
