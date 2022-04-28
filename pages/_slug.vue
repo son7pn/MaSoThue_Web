@@ -25,7 +25,8 @@
         </h4>
         <!-- <vueCustomScrollbar class="scroll-class none-ps-x none-ps-y"> -->
         <ItemInfoBusiness
-          v-for="(item, index) of listCompany"
+          v-for="(item, index) of listCompanyByProvince"
+          v-show="item.tax !== taxActi"
           :key="index"
           :data-source="item"
         />
@@ -37,7 +38,8 @@
         </h4>
         <!-- <vueCustomScrollbar class="scroll-class none-ps-x none-ps-y"> -->
         <ItemInfoBusiness
-          v-for="(item, index) of listCompany"
+          v-for="(item, index) of listCompanyNew"
+          v-show="item.tax !== taxActi"
           :key="index"
           :data-source="item"
         />
@@ -75,63 +77,9 @@ export default {
   },
   data () {
     return {
-      dataDoc: {
-        avatar: null,
-        countComment: 0,
-        countDownload: 0,
-        countLike: 0,
-        countLove: 0,
-        countSave: 0,
-        countView: 7,
-        countdisLike: 0,
-        createAt: '2022-03-18T11:06:43.637',
-        description: null,
-        documentId: 13057,
-        fileName: 'Tiêu chuẩn hoạt động nền tảng 1.0.docx',
-        fileSize: 146.4,
-        fileUrl: null,
-        fullName: 'Sơn Phạm',
-        imageUrl: null,
-        isCommon: true,
-        isDetele: false,
-        isPublic: false,
-        isSave: false,
-        lessonPlanId: 0,
-        logId: 1,
-        name: 'Tiêu chuẩn hoạt động nền tảng 1.0.docx',
-        oldPostStatusFileId: 0,
-        path: '/uploads/202203181106113747_tieu-chuan-hoat-dong-nen-tang-1.0.docx',
-        pathView: '202203181106113747_tieu-chuan-hoat-dong-nen-tang-1.0',
-        postStatusFileId: 81951,
-        postStatusID: 72605,
-        postStatusSaveFileId: 0,
-        posterLink: null,
-        totalLike: 0,
-        totalPage: 49,
-        typeId: 1,
-        typeName: 'Tài liệu'
-      },
-      listCompany: [
-        {
-          compnayName: 'CÔNG TY CỔ PHẦN ĐẦU TƯ VÀ THƯƠNG MẠI TỔNG HỢP XNK HÀ NỘI',
-          tax: '0109956516',
-          director: 'NGUYỄN NGỌC THÁI',
-          address: 'Số 79, phố Hoàng Cầu, Phường Ô Chợ Dừa, Quận Đống Đa, Thành phố Hà Nội, Việt Nam'
-        },
-        {
-          compnayName: 'CÔNG TY CỔ PHẦN ĐẦU TƯ VÀ THƯƠNG MẠI TỔNG HỢP XNK HÀ NỘI',
-          tax: '0109956516',
-          director: 'NGUYỄN NGỌC THÁI',
-          address: 'Số 79, phố Hoàng Cầu, Phường Ô Chợ Dừa, Quận Đống Đa, Thành phố Hà Nội, Việt Nam'
-        },
-        {
-          compnayName: 'CÔNG TY CỔ PHẦN ĐẦU TƯ VÀ THƯƠNG MẠI TỔNG HỢP XNK HÀ NỘI',
-          tax: '0109956516',
-          director: 'NGUYỄN NGỌC THÁI',
-          address: 'Số 79, phố Hoàng Cầu, Phường Ô Chợ Dừa, Quận Đống Đa, Thành phố Hà Nội, Việt Nam'
-        }
-      ],
-      isFetchListComment: false
+      isFetchListComment: false,
+      listCompanyNew: [],
+      listCompanyByProvince: []
     }
   },
   // fetch () {
@@ -143,7 +91,11 @@ export default {
   // },
   computed: {
     ...mapState('common', ['listComment']),
-    ...mapState(STORE_KEY, ['detailCompanyByTax'])
+    ...mapState(STORE_KEY, ['detailCompanyByTax']),
+    taxActi () {
+      const tax = this.$route.params.slug.split('-').shift()
+      return tax
+    }
   },
   watch: {
     // listComment () {
@@ -155,10 +107,27 @@ export default {
   },
   mounted () {
     this.acGetListComment({ articleId: this.detailCompanyByTax.id, pageIndex: 1, pageSize: 10 })
+    this.initDataCompany()
     this.scrollToTop()
   },
   methods: {
     ...mapActions('common', ['acGetListComment']),
+    initDataCompany () {
+      this.acGetCompanyNew()
+      this.acGetCompanyByProvince()
+    },
+    async acGetCompanyByProvince () {
+      const data = await this.$apis.companyApi.showCompanyByTax({ keyword: this.detailCompanyByTax.provinceAlias, pageIndex: 1, pageSize: 10, type: 4 })
+      if (data) {
+        this.listCompanyByProvince = data.list
+      }
+    },
+    async acGetCompanyNew () {
+      const data = await this.$apis.companyApi.showCompanyByTax({ keyword: '', pageIndex: 1, pageSize: 10, type: 0 })
+      if (data) {
+        this.listCompanyNew = data.list
+      }
+    },
     scrollToTop () {
       window.scrollTo(0, 0)
     }

@@ -43,11 +43,11 @@ export default {
     width: 17px;
   }
 }
-.item-info-bus:not(:nth-last-child(2)) {
+.item-info-bus:not(:nth-last-child(1)) {
   padding: 1rem 0;
   border-bottom: 1px solid $color_border;;
 }
-.item-info-bus:nth-last-child(2) {
+.item-info-bus:nth-last-child(1) {
   padding-top: 1rem;
 }
 </style>

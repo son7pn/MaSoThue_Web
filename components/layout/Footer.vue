@@ -20,11 +20,11 @@
           </div>
           <div class="display-flex mg-t-24r">
             <i class="fa fa-envelope font-size-20" aria-hidden="true" />
-            <span class="mg-l-12r font-size-18">email@email.com</span>
+            <span class="mg-l-12r font-size-18">{{ emailDefault ? emailDefault : '' }}</span>
           </div>
           <div class="display-flex mg-t-24r">
             <i class="fa fa-phone font-size-20" aria-hidden="true" />
-            <span class="mg-l-12r font-size-18">03313 2132</span>
+            <span class="mg-l-12r font-size-18">{{ hotlineDefault ? hotlineDefault : '' }}</span>
           </div>
         </div>
       </div>
@@ -103,7 +103,20 @@ export default {
   name: 'Footer',
   data () {
     return {
+      emailDefault: '',
+      hotlineDefault: '',
       email: ''
+    }
+  },
+  computed: {
+  },
+  mounted () {
+    this.nuxtServerInit()
+  },
+  methods: {
+    async nuxtServerInit () {
+      this.emailDefault = await this.$axios.get('v1/config/getbykey?key=EMAIL')
+      this.hotlineDefault = await this.$axios.get('v1/config/getbykey?key=HOTLINE')
     }
   }
 }
