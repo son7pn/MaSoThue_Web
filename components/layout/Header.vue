@@ -15,7 +15,7 @@
           </nuxt-link>
         </li>
         <li class="full-height">
-          <nuxt-link :to="localePath('/')" class="font-sanpro-semibold display-flex text-uppercase full-height primary-color-txt align-items-center">
+          <nuxt-link :to="localePath('company-new')" class="font-sanpro-semibold display-flex text-uppercase full-height primary-color-txt align-items-center">
             <span class="title_menu font-size-20">Doanh nghiệp mới</span>
           </nuxt-link>
         </li>

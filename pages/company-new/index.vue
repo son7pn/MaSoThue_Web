@@ -3,18 +3,18 @@
     <div class="row mt-4">
       <div class="col-md-9">
         <h3 class="font-weight-medium primary-color-txt border-title">
-          Tra cứu mã số thuế và danh sách công ty tại {{ nameProvinceActive }}
+          Doanh nghiệp mới
         </h3>
         <ItemInfoBusiness
           v-for="(item, index) of listCompany"
           :key="index"
           :data-source="item"
         />
-        <Pagination
+        <!-- <Pagination
           :total-records="totalRecordsCompany"
           :total-page="(Math.floor(totalRecordsCompany/10) + (totalRecordsCompany % 10 == 0 ? 0 : 1 ))"
           @change="changPage"
-        />
+        /> -->
       </div>
       <div class="col-md-3">
         <div class="mb-5">
@@ -51,35 +51,34 @@ import { mapActions, mapState } from 'vuex'
 import vueCustomScrollbar from 'vue-custom-scrollbar'
 import { STORE_KEY } from '@/store/company/constants'
 import ItemInfoBusiness from '@/components/shared/ItemInfoBusiness.vue'
-import Pagination from '@/components/shared/Pagination.vue'
+// import Pagination from '@/components/shared/Pagination.vue'
 
 export default {
   name: 'SlugProvince',
   components: {
     vueCustomScrollbar,
-    ItemInfoBusiness,
-    Pagination
+    ItemInfoBusiness
+    // Pagination
   },
   nuxtI18n: {
     paths: {
-      vi: '/tra-cuu-doanh-nghiep/:slug'
+      vi: '/doanh-nghiep-moi'
     }
   },
   asyncData ({ route, store }) {
-    const provinceAlias = route.path.split('/').pop()
-    return store.dispatch('company/acGetListCompanyByTax', { keyword: provinceAlias, pageIndex: route.query.page ? Number(route.query.page) : 1, pageSize: 10, type: 4 })
+    return store.dispatch('company/acGetListCompanyByTax', { keyword: '', pageIndex: route.query.page ? Number(route.query.page) : 1, pageSize: 10, type: 0 })
   },
   data () {
     return {
       isFetchCompany: false
     }
   },
-  fetch () {
-    if (this.isFetchCompany) {
-      this.isFetchCompany = false
-      return this.$store.dispatch('company/acGetListCompanyByTax', { keyword: this.provinceAlias, pageIndex: this.$route.query.page ? Number(this.$route.query.page) : 1, pageSize: 10, type: 4 })
-    }
-  },
+  // fetch () {
+  //   if (this.isFetchCompany) {
+  //     this.isFetchCompany = false
+  //     return this.$store.dispatch('company/acGetListCompanyByTax', { keyword: this.provinceAlias, pageIndex: this.$route.query.page ? Number(this.$route.query.page) : 1, pageSize: 10, type: 4 })
+  //   }
+  // },
   computed: {
     ...mapState(STORE_KEY, ['listCompany', 'totalRecordsCompany']),
     ...mapState('common', ['listProvince']),
@@ -97,7 +96,7 @@ export default {
     }
   },
   watch: {
-    '$route.query.page': 'fetchData'
+    // '$route.query.page': 'fetchData'
   },
   mounted () {
     this.scrollToTop()
@@ -107,21 +106,21 @@ export default {
   },
   methods: {
     ...mapActions('common', ['acGetListProvince']),
-    changPage (page) {
-      // this.acGetListCompanyByTax({ keyword: '', pageIndex: page.page, pageSize: 10, type: -1 })
-      this.$router.push({ path: this.$route.path, query: { page: page.page, size: 10 } })
-    },
-    fetchData (newVal) {
-      if (newVal) {
-        setTimeout(() => {
-          this.isFetchCompany = true
-          return this.$fetch()
-        }, 200)
-        setTimeout(() => {
-          this.scrollToTop()
-        }, 500)
-      }
-    },
+    // changPage (page) {
+    //   // this.acGetListCompanyByTax({ keyword: '', pageIndex: page.page, pageSize: 10, type: -1 })
+    //   this.$router.push({ path: this.$route.path, query: { page: page.page, size: 10 } })
+    // },
+    // fetchData (newVal) {
+    //   if (newVal) {
+    //     setTimeout(() => {
+    //       this.isFetchCompany = true
+    //       return this.$fetch()
+    //     }, 200)
+    //     setTimeout(() => {
+    //       this.scrollToTop()
+    //     }, 500)
+    //   }
+    // },
     scrollToTop () {
       window.scrollTo(0, 0)
     }
