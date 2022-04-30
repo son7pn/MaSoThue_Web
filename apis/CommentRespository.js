@@ -10,6 +10,10 @@ export default ($axios) => {
     async showListComment ({ articleId, pageIndex, pageSize }) {
       const data = await $axios.get(`${resource}/getListByArticleId?articleId=${articleId}&pageIndex=${pageIndex}&pageSize=${pageSize}`)
       return data !== STATUS_FAIL ? data : null
+    },
+    async showRateArticles (id) {
+      const data = await $axios.get(`${resource}/rate-statistic?articleId=${id}`)
+      return data !== STATUS_FAIL ? data : null
     }
   }
 }
