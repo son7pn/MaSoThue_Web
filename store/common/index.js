@@ -8,7 +8,8 @@ export const initState = () => {
     listComment: [],
     totalRecordsComment: null,
     contentConfig: {},
-    listProvince: []
+    listProvince: [],
+    rateArticles: {}
   }
 }
 const state = initState()

@@ -14,5 +14,8 @@ export default {
   },
   [types.GET_LIST_PROVINCE] (state, data) {
     state.listProvince = data.list
+  },
+  [types.GET_RATE_ARTICLES] (state, data) {
+    state.rateArticles = data
   }
 }

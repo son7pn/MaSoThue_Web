@@ -1,4 +1,4 @@
-.<template>
+<template>
   <Modal id="modal_choose_user" class="modal-w-52 modal-perpost" @close="closeModal">
     <template #title>
       <div class="modal-head__wrap full-width">

@@ -20,5 +20,9 @@ export default {
   async acGetListProvince ({ commit }) {
     const data = await this.$apis.common.showListProvince()
     data && commit(types.GET_LIST_PROVINCE, data)
+  },
+  async acGetRateArticles ({ commit }, id) {
+    const data = await this.$apis.commentApi.showRateArticles(id)
+    data && commit(types.GET_RATE_ARTICLES, data)
   }
 }

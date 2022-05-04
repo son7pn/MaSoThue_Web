@@ -12,11 +12,15 @@
       <client-only>
         <p v-html="detailCompanyByTax.content ? detailCompanyByTax.content : ''"/>
       </client-only>
+       <div class="preview-pdf">
+         <iframe v-if="detailCompanyByTax.attackName" :src="cdnUrl + detailCompanyByTax.attackName" width="100%" height="100%"></iframe>
+       </div>
       <!-- eslint-enable -->
       <div class="mg-t-64r">
         <h4 class="font-sanpro-semibold primary-color-txt title-comment">
           Bình luận
         </h4>
+        <RateArticles />
         <ModulesComment :list-comment-post="listComment" :article-id="detailCompanyByTax.id" />
       </div>
       <div class="mg-t-64r">
@@ -55,16 +59,19 @@ import { mapState, mapActions } from 'vuex'
 // import 'vue-custom-scrollbar/dist/vueScrollbar.css'
 // import ViewDocs from '@/components/shared/previewDocs/ViewDocs.vue'
 import { STORE_KEY } from '@/store/company/constants'
+import { APP_CONFIG } from '@/utils/env'
 import ModulesComment from '@/components/shared/comment/ModulesComment.vue'
 import ItemInfoBusiness from '@/components/shared/ItemInfoBusiness.vue'
 import DetailCompany from '@/components/shared/DetailCompany.vue'
+import RateArticles from '@/components/shared/comment/RateArticles.vue'
 export default {
   components: {
     // vueCustomScrollbar,
     // ViewDocs,
     ModulesComment,
     ItemInfoBusiness,
-    DetailCompany
+    DetailCompany,
+    RateArticles
   },
   nuxtI18n: {
     paths: {
@@ -79,7 +86,8 @@ export default {
     return {
       isFetchListComment: false,
       listCompanyNew: [],
-      listCompanyByProvince: []
+      listCompanyByProvince: [],
+      cdnUrl: APP_CONFIG.cdnImageUrl
     }
   },
   // fetch () {
@@ -138,6 +146,10 @@ export default {
 <style lang="scss" scoped>
 .scroll-class {
   max-height: 60vh;
+}
+.preview-pdf {
+  margin-top: 2rem;
+  height: 100vh;
 }
 .detai-company {
   .title-comment {
