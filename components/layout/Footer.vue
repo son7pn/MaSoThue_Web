@@ -3,7 +3,7 @@
     <div class="row">
       <div class="footer-contact col-md-3 col-sm-6 col-xs-12">
         <div class="logo bg-color-light mg-b-32r">
-          <a href="javascript:;" class="display-flex">
+          <a href="javascript:;" class="display-flex" rel="noopener noreferrer"> 
             <figure class="aspect-ratio aspect-ratio--1-1 border-rd-8 aspect-ratio--bg-transparent">
               <img loading="lazy" class="full-box" src="@/assets/images/logo/logo-masothue.png" alt="MaSoThue">
             </figure>

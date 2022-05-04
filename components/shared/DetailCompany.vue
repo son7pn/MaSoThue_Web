@@ -71,6 +71,48 @@ import mixinsFile from '@/mixins/mixinsFile'
 export default {
   name: 'DetailCompany',
   mixins: [mixinsFile],
+   head() {
+    return {
+      script: [{ type: 'application/ld+json', json: this.structuredData }]
+    }
+  },
+  data () {
+    return {
+      isFetchCompany: false,
+      structuredData: {  
+                                    "@context":"http://schema.org",
+                                    "@type":"Article",
+                                    "mainEntityOfPage":{  
+                                        "@type":"WebPage",
+                                        "@id":"http://shopli.vn/goi-y-5-loai-mat-na-cho-da-dau-mun-gop-phan-hut-dau-tru-mun-ma-ban-nen-tham-khao.htm"
+                                    },
+                                   "headline":"[Gợi ý] 5 Loại mặt nạ cho da dầu mụn góp phần 'hút dầu, trừ mụn' mà bạn nên tham khảo!",
+                                    "image":{  
+                                        "@type":"ImageObject",
+                                        "url":"https://shopli.vn/uploads/innisfree-super-volcanic-2x-2.jpg",
+                                        "height":600,
+                                        "width":800
+                                    },
+                                    "datePublished":"9/3/2020 11:48:18 PM",
+                                    "dateModified":"9/3/2020 11:48:18 PM",
+                                    "author":{  
+                                        "@type":"Person",
+                                        "name":"hosothue"
+                                    },
+                                    "publisher":{  
+                                        "@type":"Organization",
+                                        "name":"shopli.vn",
+                                        "logo":{  
+                                            "@type":"ImageObject",
+                                            "url":"https://shopli.vn/uploads/logo.jpg",
+                                            "width":35,
+                                            "height":34
+                                        }
+                                    },
+                                    "description":"Tạm thời để tiêu đề bài viết"
+                            }
+    }
+  },
   props: {
     dataSource: {
       type: Object,

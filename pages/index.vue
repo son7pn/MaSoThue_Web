@@ -51,7 +51,7 @@
     </div>
   </div>
 </template>
-
+ 
 <script>
 import { mapState, mapActions } from 'vuex'
 import vueCustomScrollbar from 'vue-custom-scrollbar'
@@ -74,9 +74,25 @@ export default {
     ])
     return { dataApi }
   },
+   head() {
+    return {
+      script: [{ type: 'application/ld+json', json: this.structuredData }]
+    }
+  },
   data () {
     return {
-      isFetchCompany: false
+      isFetchCompany: false,
+      structuredData: {
+        "@context": "http://schema.org",
+        "@type": "Recipe",
+        "author": {
+        "@type": "Person",
+        "name": "Mary Stone"
+      },
+      "datePublished": "2022-05-10",
+      "description": "Mã Số Thuế (Công ty, Cá Nhân) - MaSoThue.",
+      "prepTime": "PT20M"
+      }
     }
   },
   fetch () {
@@ -120,6 +136,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+
 .home-index {
 
 .search-province {
