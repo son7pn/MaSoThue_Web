@@ -11,7 +11,9 @@
     </div>
     <div class="mg-b-8r font-size-18">
       <i class="fa fa-user font-size-20" aria-hidden="true" /> Người đại diện:
-      <a class="primary-color text-uppercase font-italic font-size-16" href="javascript:;">&ensp;{{ dataSource.director ? dataSource.director : '' }}</a>
+      <nuxt-link class="primary-color text-uppercase font-italic font-size-16" :to="localePath({ path: '/tra-cuu', query: { type: 3, keyword: dataSource.director }})">
+        &ensp;{{ dataSource.director ? dataSource.director : '' }}
+      </nuxt-link>
     </div>
     <div class="mg-b-8r font-size-18">
       <i class="fa fa-map-marker font-size-20" aria-hidden="true" />
