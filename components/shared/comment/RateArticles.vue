@@ -62,7 +62,7 @@ export default {
         this.rateArticles.list.map((item) => {
           rate += (item.ratingType * item.rateCount)
         })
-        return (rate / this.rateArticles.totalRow).toFixed(2)
+        return (rate / this.rateArticles.totalRow).toFixed(1)
       } else {
         return 0
       }
