@@ -17,7 +17,7 @@
           <!-- </vueCustomScrollbar> -->
           <Pagination
             :total-records="totalRecordsCompany"
-            :total-page="(Math.floor(totalRecordsCompany/10) + (totalRecordsCompany % 10 == 0 ? 0 : 1 ))"
+            :total-page="(Math.floor(totalRecordsCompany/20) + (totalRecordsCompany % 20 == 0 ? 0 : 1 ))"
             @change="changPage"
           />
         </div>
@@ -51,7 +51,7 @@
     </div>
   </div>
 </template>
- 
+
 <script>
 import { mapState, mapActions } from 'vuex'
 import vueCustomScrollbar from 'vue-custom-scrollbar'
@@ -69,36 +69,36 @@ export default {
   },
   async asyncData ({ route, store }) {
     const dataApi = await Promise.allSettled([
-      store.dispatch('company/acGetListCompanyByTax', { keyword: '', pageIndex: route.query.page ? Number(route.query.page) : 1, pageSize: 10, type: -1 }),
+      store.dispatch('company/acGetListCompanyByTax', { keyword: '', pageIndex: route.query.page ? Number(route.query.page) : 1, pageSize: 20, type: -1 }),
       store.dispatch('common/acGetListProvince')
     ])
     return { dataApi }
-  },
-   head() {
-    return {
-      script: [{ type: 'application/ld+json', json: this.structuredData }]
-    }
   },
   data () {
     return {
       isFetchCompany: false,
       structuredData: {
-        "@context": "http://schema.org",
-        "@type": "Recipe",
-        "author": {
-        "@type": "Person",
-        "name": "Mary Stone"
-      },
-      "datePublished": "2022-05-10",
-      "description": "Mã Số Thuế (Công ty, Cá Nhân) - MaSoThue.",
-      "prepTime": "PT20M"
+        '@context': 'http://schema.org',
+        '@type': 'Recipe',
+        author: {
+          '@type': 'Person',
+          name: 'Mary Stone'
+        },
+        datePublished: '2022-05-10',
+        description: 'Mã Số Thuế (Công ty, Cá Nhân) - MaSoThue.',
+        prepTime: 'PT20M'
       }
     }
   },
   fetch () {
     if (this.isFetchCompany) {
       this.isFetchCompany = false
-      return this.$store.dispatch('company/acGetListCompanyByTax', { keyword: '', pageIndex: this.$route.query.page ? Number(this.$route.query.page) : 1, pageSize: 10, type: -1 })
+      return this.$store.dispatch('company/acGetListCompanyByTax', { keyword: '', pageIndex: this.$route.query.page ? Number(this.$route.query.page) : 1, pageSize: 20, type: -1 })
+    }
+  },
+  head () {
+    return {
+      script: [{ type: 'application/ld+json', json: this.structuredData }]
     }
   },
   computed: {
@@ -115,7 +115,7 @@ export default {
     ...mapActions(STORE_KEY, ['acGetListCompanyByTax']),
     changPage (page) {
       // this.acGetListCompanyByTax({ keyword: '', pageIndex: page.page, pageSize: 10, type: -1 })
-      this.$router.push({ path: '/', query: { page: page.page, size: 10 } })
+      this.$router.push({ path: '/', query: { page: page.page } })
     },
     fetchData (newVal) {
       if (newVal) {

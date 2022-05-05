@@ -97,7 +97,7 @@ export default {
     ...mapActions('common', ['acGetListProvince']),
     changPage (page) {
       this.acGetListCompanyByTax({ keyword: this.$route.query.keyword, pageIndex: page.page, pageSize: 10, type: Number(this.$route.query.type) })
-      this.$router.push({ path: '/tra-cuu', query: { page: page.page, size: 10, keyword: this.$route.query.keyword, type: Number(this.$route.query.type) } })
+      this.$router.push({ path: '/tra-cuu', query: { page: page.page, keyword: this.$route.query.keyword, type: Number(this.$route.query.type) } })
     },
     fetchData (newVal) {
       if (newVal) {

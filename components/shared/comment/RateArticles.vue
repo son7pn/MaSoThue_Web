@@ -56,7 +56,7 @@ export default {
     ...mapState('common', ['rateArticles']),
     ...mapState(STORE_KEY, ['detailCompanyByTax']),
     rating () {
-      if (this.rateArticles && this.rateArticles.list && this.rateArticles.list.length > 0) {
+      if (this.rateArticles && this.rateArticles.list && this.rateArticles.list.length > 0 && this.rateArticles.totalRow > 0) {
         let rate = 0
         // eslint-disable-next-line array-callback-return
         this.rateArticles.list.map((item) => {
@@ -64,7 +64,7 @@ export default {
         })
         return (rate / this.rateArticles.totalRow).toFixed(2)
       } else {
-        return 5
+        return 0
       }
     }
 
