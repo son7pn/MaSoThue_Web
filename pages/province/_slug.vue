@@ -29,12 +29,12 @@
         </div>
         <div>
           <h3 class="font-weight-medium primary-color-txt border-title">
-            Tỉnh/thành phố
+            {{ code.length === 2 && (dataDistrict || dataCommune) ? dataDistrict.parent.name : `${dataCommune.parent[1].name} - ${dataCommune.parent[0].name}` }}
           </h3>
           <vueCustomScrollbar class="scroll-class none-ps-x none-ps-y">
             <ul class="row list-sort list-style-none">
-              <li v-for="(item1, index1) of listProvince" :key="index1" class="cat-item align-items-center col-6" :class="{'activeProvince' : item1.alias === provinceAlias }">
-                <nuxt-link :to="localePath(`/tra-cuu-doanh-nghiep/${item1.alias}`)" class="primary-color-txt font-size-18">
+              <li v-for="(item1, index1) of dataLocations" :key="index1" class="cat-item align-items-center col-xs-6 col-md-12" :class="{'activeProvince' : item1.alias === provinceAlias }">
+                <nuxt-link :to="localePath(`/tra-cuu-doanh-nghiep/${item1.alias}-${item1.maqh}`)" class="primary-color-txt font-size-18">
                   {{ item1.name }}
                 </nuxt-link>
               </li>
@@ -47,7 +47,7 @@
 </template>
 
 <script>
-import { mapActions, mapState } from 'vuex'
+import { mapActions, mapState, mapMutations } from 'vuex'
 import vueCustomScrollbar from 'vue-custom-scrollbar'
 import { STORE_KEY } from '@/store/company/constants'
 import ItemInfoBusiness from '@/components/shared/ItemInfoBusiness.vue'
@@ -66,8 +66,21 @@ export default {
     }
   },
   asyncData ({ route, store }) {
-    const provinceAlias = route.path.split('/').pop()
-    return store.dispatch('company/acGetListCompanyByTax', { keyword: provinceAlias, pageIndex: route.query.page ? Number(route.query.page) : 1, pageSize: 10, type: 4 })
+    const provinceAlias = route.params.slug.split('-')
+    // console.log(provinceAlias.slice(0, provinceAlias.length - 1, 1).join('-'))
+    const key = provinceAlias.slice(0, provinceAlias.length - 1, 1).join('-')
+    let id = route.params.slug.match(/\d/g)
+    id = id.join('')
+    const callAPi = []
+    callAPi.push(store.dispatch('company/acGetListCompanyByTax', { keyword: key, pageIndex: route.query.page ? Number(route.query.page) : 1, pageSize: 10, type: 4 }))
+    if (id.length === 2) {
+      callAPi.push(store.dispatch('common/acGetListDistrict', id))
+    } else if (id.length === 3) {
+      callAPi.push(store.dispatch('common/acGetListCommune', id))
+    }
+    if (callAPi.length) {
+      return Promise.allSettled(callAPi)
+    }
   },
   data () {
     return {
@@ -82,17 +95,38 @@ export default {
   },
   computed: {
     ...mapState(STORE_KEY, ['listCompany', 'totalRecordsCompany']),
-    ...mapState('common', ['listProvince']),
+    ...mapState('common', ['listProvince', 'dataDistrict', 'dataCommune']),
     provinceAlias () {
-      const provinceAlias = this.$route.path.split('/').pop()
-      return provinceAlias
+      const provinceAlias = this.$route.params.slug.split('-')
+      const key = provinceAlias.slice(0, provinceAlias.length - 1, 1).join('-')
+      return key
+    },
+    code () {
+      let id = this.$route.params.slug.match(/\d/g)
+      id = id.join('')
+      return id
     },
     nameProvinceActive () {
-      const indexActi = this.listProvince.findIndex(pro => pro.alias === this.provinceAlias)
-      if (indexActi > -1) {
-        return this.listProvince[indexActi].name
+      const indexProvinceActi = this.listProvince.findIndex(pro => pro.alias === this.provinceAlias)
+      const indexDistrictActi = this.dataDistrict && this.dataDistrict.list.findIndex(pro => pro.alias === this.provinceAlias)
+      const indexCommuneActi = this.dataCommune && this.dataCommune.list.findIndex(pro => pro.alias === this.provinceAlias)
+      if (indexProvinceActi > -1) {
+        return this.listProvince[indexProvinceActi].name
+      } else if (indexDistrictActi > -1 && this.dataDistrict) {
+        return this.dataDistrict.list[indexDistrictActi].name
+      } if (indexCommuneActi > -1 && this.dataCommune) {
+        return this.dataCommune.list[indexCommuneActi].name
       } else {
         return ''
+      }
+    },
+    dataLocations () {
+      if (this.code.length === 2 && this.dataDistrict) {
+        return this.dataDistrict.list
+      } else if (this.code.length === 3 && this.dataCommune) {
+        return this.dataCommune.list
+      } else {
+        return []
       }
     }
   },
@@ -106,7 +140,8 @@ export default {
     }
   },
   methods: {
-    ...mapActions('common', ['acGetListProvince']),
+    ...mapActions('common', ['acGetListProvince', 'acGetListDistrict', 'acGetListCommune']),
+    ...mapMutations('common', ['GET_LIST_DISTRICT', 'GET_LIST_COMMUNE']),
     changPage (page) {
       // this.acGetListCompanyByTax({ keyword: '', pageIndex: page.page, pageSize: 10, type: -1 })
       this.$router.push({ path: this.$route.path, query: { page: page.page, size: 10 } })
@@ -142,18 +177,18 @@ export default {
     padding-left: 0.9375rem;
     a {
         position: relative;
-        margin-left: 0.5rem;
+        margin-left: 2.5rem;
         padding: 0.5em 0;
         display: inline-block;
-        // &:before {
-        //   color: #575560;
-        //   content: "";
-        //   font-family: FontAwesome;
-        //   font-size: 1.1em;
-        //   line-height: 1em;
-        //   margin-left: -1.4em;
-        //   position: absolute;
-        // }
+        &:before {
+          color: #575560;
+          content: "";
+          font-family: FontAwesome;
+          font-size: 1.1em;
+          line-height: 1em;
+          margin-left: -1.4em;
+          position: absolute;
+        }
       }
   }
   li:last-child {

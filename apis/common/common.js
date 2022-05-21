@@ -7,7 +7,15 @@ export default ($axios) => {
       return data !== STATUS_FAIL ? data : null
     },
     async showListProvince () {
-      const data = await $axios.get('v1/Article/GetAllProvince')
+      const data = await $axios.get('v1/Article/ds-tinh')
+      return data !== STATUS_FAIL ? data : null
+    },
+    async showListDistrict (matp) {
+      const data = await $axios.get(`v1/Article/ds-huyen?keyword=${matp}&pageIndex=1&pageSize=100`)
+      return data !== STATUS_FAIL ? data : null
+    },
+    async showListCommune (id) {
+      const data = await $axios.get(`v1/Article/ds-xa?keyword=${id}&pageIndex=1&pageSize=100`)
       return data !== STATUS_FAIL ? data : null
     }
   }

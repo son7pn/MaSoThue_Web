@@ -24,5 +24,13 @@ export default {
   async acGetRateArticles ({ commit }, id) {
     const data = await this.$apis.commentApi.showRateArticles(id)
     data && commit(types.GET_RATE_ARTICLES, data)
+  },
+  async acGetListDistrict ({ commit }, id) {
+    const data = await this.$apis.common.showListDistrict(id)
+    data && commit(types.GET_LIST_DISTRICT, data)
+  },
+  async acGetListCommune ({ commit }, id) {
+    const data = await this.$apis.common.showListCommune(id)
+    data && commit(types.GET_LIST_COMMUNE, data)
   }
 }

@@ -9,7 +9,15 @@ export const initState = () => {
     totalRecordsComment: null,
     contentConfig: {},
     listProvince: [],
-    rateArticles: {}
+    rateArticles: {},
+    dataDistrict: {
+      list: [],
+      parent: []
+    },
+    dataCommune: {
+      list: [],
+      parent: []
+    }
   }
 }
 const state = initState()
