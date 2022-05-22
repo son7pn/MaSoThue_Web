@@ -1,6 +1,9 @@
 <template>
   <div class="rate-article">
     <div class="header display-flex-center mg-b-24r">
+      <p class="font-sanpro-semibold font-size-24 third-color mg-r-16r">
+        {{ rating }}
+      </p>
       <fieldset class="star-rating border-none disabled">
         <template v-for="(item, index) in 6" class="item-star">
           <input
@@ -47,12 +50,24 @@ export default {
   name: 'RateArticles',
   data () {
     return {
-      rating: 3.7
     }
   },
   computed: {
     ...mapState('common', ['rateArticles']),
-    ...mapState(STORE_KEY, ['detailCompanyByTax'])
+    ...mapState(STORE_KEY, ['detailCompanyByTax']),
+    rating () {
+      if (this.rateArticles && this.rateArticles.list && this.rateArticles.list.length > 0 && this.rateArticles.totalRow > 0) {
+        let rate = 0
+        // eslint-disable-next-line array-callback-return
+        this.rateArticles.list.map((item) => {
+          rate += (item.ratingType * item.rateCount)
+        })
+        return (rate / this.rateArticles.totalRow).toFixed(1)
+      } else {
+        return 0
+      }
+    }
+
   },
   mounted () {
     this.acGetRateArticles(this.detailCompanyByTax.id)
@@ -65,7 +80,7 @@ export default {
 
 <style lang="scss" scoped>
 .rate-article {
-  width: 25%;
+  width: 30%;
   margin-bottom: 3rem;
 }
 .mg-b-16 {

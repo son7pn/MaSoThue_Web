@@ -17,7 +17,7 @@
           <!-- </vueCustomScrollbar> -->
           <Pagination
             :total-records="totalRecordsCompany"
-            :total-page="(Math.floor(totalRecordsCompany/10) + (totalRecordsCompany % 10 == 0 ? 0 : 1 ))"
+            :total-page="(Math.floor(totalRecordsCompany/20) + (totalRecordsCompany % 20 == 0 ? 0 : 1 ))"
             @change="changPage"
           />
         </div>
@@ -38,8 +38,8 @@
             </h3>
             <vueCustomScrollbar class="scroll-class none-ps-x none-ps-y">
               <ul class="row list-sort list-style-none">
-                <li v-for="(item1, index1) of listProvince" :key="index1" class="cat-item align-items-center col-6">
-                  <nuxt-link :to="localePath(`/tra-cuu-doanh-nghiep/${item1.alias}`)" class="primary-color-txt font-size-18">
+                <li v-for="(item1, index1) of listProvince" :key="index1" class="cat-item align-items-center col-xs-6 col-md-12">
+                  <nuxt-link :to="localePath(`/tra-cuu-doanh-nghiep/${item1.alias}-${item1.matp}`)" class="primary-color-txt font-size-18">
                     {{ item1.name }}
                   </nuxt-link>
                 </li>
@@ -51,7 +51,7 @@
     </div>
   </div>
 </template>
- 
+
 <script>
 import { mapState, mapActions } from 'vuex'
 import vueCustomScrollbar from 'vue-custom-scrollbar'
@@ -69,36 +69,36 @@ export default {
   },
   async asyncData ({ route, store }) {
     const dataApi = await Promise.allSettled([
-      store.dispatch('company/acGetListCompanyByTax', { keyword: '', pageIndex: route.query.page ? Number(route.query.page) : 1, pageSize: 10, type: -1 }),
+      store.dispatch('company/acGetListCompanyByTax', { keyword: '', pageIndex: route.query.page ? Number(route.query.page) : 1, pageSize: 20, type: -1 }),
       store.dispatch('common/acGetListProvince')
     ])
     return { dataApi }
-  },
-   head() {
-    return {
-      script: [{ type: 'application/ld+json', json: this.structuredData }]
-    }
   },
   data () {
     return {
       isFetchCompany: false,
       structuredData: {
-        "@context": "http://schema.org",
-        "@type": "Recipe",
-        "author": {
-        "@type": "Person",
-        "name": "Mary Stone"
-      },
-      "datePublished": "2022-05-10",
-      "description": "Mã Số Thuế (Công ty, Cá Nhân) - MaSoThue.",
-      "prepTime": "PT20M"
+        '@context': 'http://schema.org',
+        '@type': 'Recipe',
+        author: {
+          '@type': 'Person',
+          name: 'Mary Stone'
+        },
+        datePublished: '2022-05-10',
+        description: 'Mã Số Thuế (Công ty, Cá Nhân) - MaSoThue.',
+        prepTime: 'PT20M'
       }
     }
   },
   fetch () {
     if (this.isFetchCompany) {
       this.isFetchCompany = false
-      return this.$store.dispatch('company/acGetListCompanyByTax', { keyword: '', pageIndex: this.$route.query.page ? Number(this.$route.query.page) : 1, pageSize: 10, type: -1 })
+      return this.$store.dispatch('company/acGetListCompanyByTax', { keyword: '', pageIndex: this.$route.query.page ? Number(this.$route.query.page) : 1, pageSize: 20, type: -1 })
+    }
+  },
+  head () {
+    return {
+      script: [{ type: 'application/ld+json', json: this.structuredData }]
     }
   },
   computed: {
@@ -115,7 +115,7 @@ export default {
     ...mapActions(STORE_KEY, ['acGetListCompanyByTax']),
     changPage (page) {
       // this.acGetListCompanyByTax({ keyword: '', pageIndex: page.page, pageSize: 10, type: -1 })
-      this.$router.push({ path: '/', query: { page: page.page, size: 10 } })
+      this.$router.push({ path: '/', query: { page: page.page } })
     },
     fetchData (newVal) {
       if (newVal) {
@@ -162,18 +162,18 @@ export default {
       padding-left: 0.9375rem;
       a {
         position: relative;
-        margin-left: 0.5rem;
+        margin-left: 2.5rem;
         padding: 0.5em 0;
         display: inline-block;
-        // &:before {
-        //   color: #575560;
-        //   content: "";
-        //   font-family: FontAwesome;
-        //   font-size: 1.1em;
-        //   line-height: 1em;
-        //   margin-left: -1.4em;
-        //   position: absolute;
-        // }
+        &:before {
+          color: #575560;
+          content: "";
+          font-family: FontAwesome;
+          font-size: 1.1em;
+          line-height: 1em;
+          margin-left: -1.4em;
+          position: absolute;
+        }
       }
     }
     li:last-child {

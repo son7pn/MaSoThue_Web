@@ -182,7 +182,7 @@ export default {
     this.windowWidth = window.innerWidth
   },
   methods: {
-    ...mapActions('common', ['acCreateComment', 'acGetListComment']),
+    ...mapActions('common', ['acCreateComment', 'acGetListComment', 'acGetRateArticles']),
     // handleRemoveComment (id) {
     //   console.log('val: ', id)
     // },
@@ -234,6 +234,7 @@ export default {
         this.$emit('created')
         // eslint-disable-next-line vue/no-mutating-props
         this.listCommentPost.unshift(data)
+        this.acGetRateArticles(this.articleId)
       }
       // console.log('this.authInfo: ', this.authInfo)
     },

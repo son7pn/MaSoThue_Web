@@ -71,52 +71,76 @@ import mixinsFile from '@/mixins/mixinsFile'
 export default {
   name: 'DetailCompany',
   mixins: [mixinsFile],
-   head() {
-    return {
-      script: [{ type: 'application/ld+json', json: this.structuredData }]
+  props: {
+    dataSource: {
+      type: Object,
+      default: Object
     }
   },
   data () {
     return {
       isFetchCompany: false,
-      structuredData: {  
-                                    "@context":"http://schema.org",
-                                    "@type":"Article",
-                                    "mainEntityOfPage":{  
-                                        "@type":"WebPage",
-                                        "@id":"http://shopli.vn/goi-y-5-loai-mat-na-cho-da-dau-mun-gop-phan-hut-dau-tru-mun-ma-ban-nen-tham-khao.htm"
-                                    },
-                                   "headline":"[Gợi ý] 5 Loại mặt nạ cho da dầu mụn góp phần 'hút dầu, trừ mụn' mà bạn nên tham khảo!",
-                                    "image":{  
-                                        "@type":"ImageObject",
-                                        "url":"https://shopli.vn/uploads/innisfree-super-volcanic-2x-2.jpg",
-                                        "height":600,
-                                        "width":800
-                                    },
-                                    "datePublished":"9/3/2020 11:48:18 PM",
-                                    "dateModified":"9/3/2020 11:48:18 PM",
-                                    "author":{  
-                                        "@type":"Person",
-                                        "name":"hosothue"
-                                    },
-                                    "publisher":{  
-                                        "@type":"Organization",
-                                        "name":"shopli.vn",
-                                        "logo":{  
-                                            "@type":"ImageObject",
-                                            "url":"https://shopli.vn/uploads/logo.jpg",
-                                            "width":35,
-                                            "height":34
-                                        }
-                                    },
-                                    "description":"Tạm thời để tiêu đề bài viết"
-                            }
+      structuredData: {
+        '@context': 'http://schema.org',
+        '@type': 'Article',
+        mainEntityOfPage: {
+          '@type': 'WebPage',
+          '@id': 'http://shopli.vn/goi-y-5-loai-mat-na-cho-da-dau-mun-gop-phan-hut-dau-tru-mun-ma-ban-nen-tham-khao.htm'
+        },
+        headline: `${this.dataSource.compnayName}`,
+        image: {
+          '@type': 'ImageObject',
+          url: 'https://hosothue.migroup.asia/uploads/logo-masothue.png',
+          height: 600,
+          width: 800
+        },
+        datePublished: '9/3/2020 11:48:18 PM',
+        dateModified: '9/3/2020 11:48:18 PM',
+        author: {
+          '@type': 'Person',
+          name: 'hosothue'
+        },
+        publisher: {
+          '@type': 'Organization',
+          name: `${this.dataSource.compnayName}`,
+          logo: {
+            '@type': 'ImageObject',
+            url: 'https://hosothue.migroup.asia/uploads/logo-masothue.png',
+            width: 35,
+            height: 34
+          }
+        },
+        description: 'Tạm thời để tiêu đề bài viết',
+        review: [{
+          '@type': 'Review',
+          reviewRating: {
+            '@type': 'Rating',
+            ratingValue: '5'
+          },
+          author: {
+            '@type': 'Person',
+            name: 'John Doe'
+          },
+          reviewBody: 'I really enjoyed this book. It captures the essential challenge people face as they try make sense of their lives and grow to adulthood.'
+        },
+        {
+          '@type': 'Review',
+          reviewRating: {
+            '@type': 'Rating',
+            ratingValue: '1'
+          },
+          author: {
+            '@type': 'Person',
+            name: 'Jane Doe'
+          },
+          reviewBody: "I really didn't care for this book."
+        }]
+      }
     }
   },
-  props: {
-    dataSource: {
-      type: Object,
-      default: Object
+  head () {
+    return {
+      script: [{ type: 'application/ld+json', json: this.structuredData }]
     }
   },
   methods: {

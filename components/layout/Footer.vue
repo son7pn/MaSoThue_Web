@@ -115,8 +115,17 @@ export default {
   },
   methods: {
     async nuxtServerInit () {
-      this.emailDefault = await this.$axios.get('v1/config/getbykey?key=EMAIL')
-      this.hotlineDefault = await this.$axios.get('v1/config/getbykey?key=HOTLINE')
+      const dataConfig = await this.$axios.get('v1/config/GetListByGroup?group=all')
+      // eslint-disable-next-line array-callback-return
+      dataConfig && dataConfig.map((item) => {
+        if (item.configKey === 'EMAIL') {
+          this.emailDefault = item.configContent
+        } else if (item.configKey === 'HOTLINE') {
+          this.hotlineDefault = item.configContent
+        }
+      })
+      // this.emailDefault =
+      // this.hotlineDefault = await this.$axios.get('v1/config/getbykey?key=HOTLINE')
     }
   }
 }
