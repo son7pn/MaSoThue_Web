@@ -1,7 +1,7 @@
 module.exports = {
   apps: [
     {
-      name: 'mst_dev',
+      name: 'ma_so_thue_live',
       script: './node_modules/nuxt/bin/nuxt-start',
       env: {
         HOST: '0.0.0.0',
