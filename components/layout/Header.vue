@@ -4,7 +4,7 @@
       <div class="logo bg-color-light">
         <nuxt-link :to="localePath('/')" class="display-flex">
           <figure class="aspect-ratio aspect-ratio--1-1 border-rd-8 aspect-ratio--bg-transparent">
-            <img loading="lazy" class="full-box" src="@/assets/images/logo/logo-masothue.png" alt="MaSoThue">
+            <img loading="lazy" class="full-box" :src="logo ? cdnUrl + logo : logoDefault" alt="MaSoThue">
           </figure>
         </nuxt-link>
       </div>
@@ -43,8 +43,10 @@
 
 <script>
 import ClickOutside from 'vue-click-outside'
+import { APP_CONFIG } from '@/utils/env'
 import BoxSearch from '@/components/search/BoxSearch.vue'
 import BackToTop from '@/components/shared/BackToTop.vue'
+const logoDefault = require('@/assets/images/logo/logo-masothue.png')
 export default {
   name: 'Header',
   components: {
@@ -56,10 +58,13 @@ export default {
   },
   data () {
     return {
+      logoDefault,
+      cdnUrl: APP_CONFIG.cdnUrl,
       isShowDropMenu: false,
       isHideHeaderTop: false,
       lastScrollPosition: 0,
-      isBackToTop: false
+      isBackToTop: false,
+      logo: ''
     }
   },
   computed: {
@@ -68,8 +73,18 @@ export default {
   },
   mounted () {
     window.addEventListener('scroll', this.onScroll)
+    this.nuxtServerInit()
   },
   methods: {
+    async nuxtServerInit () {
+      const dataConfig = await this.$axios.get('v1/config/GetListByGroup?group=all')
+      // eslint-disable-next-line array-callback-return
+      dataConfig && dataConfig.map((item) => {
+        if (item.configKey === 'LOGO') {
+          this.logo = item.configContent
+        }
+      })
+    },
     onScroll () {
       this.lastScrollPosition = window.pageYOffset
       // console.log('this.lastScrollPosition: ', this.lastScrollPosition)

@@ -8,14 +8,14 @@
     >
       <swiper-slide v-for="(item, index) of listBanner" :key="index" class="item position-rel">
         <figure class="aspect-ratio aspect-ratio--2-5">
-          <img :src="item.image" alt="banner" class="img-fit">
+          <img loading="lazy" :src="item.url ? cdnUrl + item.url : ''" alt="banner" class="img-fit">
         </figure>
         <div class="item__content  text-uppercase position-abs">
           <h3 class="primary-color mb-3 font-size-20">
-            {{ item.title }}
+            {{ item.name ? item.name : '' }}
           </h3>
           <!-- eslint-disable -->
-          <p v-html="item.content" class="font-size-42 color-dark"/>
+          <p v-html="item.thumb ? item.thumb : ''" class="font-size-42 color-dark"/>
         </div>
       </swiper-slide>
       <div slot="pagination" class="swiper-pagination" />
@@ -26,6 +26,7 @@
 <script>
 import { Swiper, SwiperSlide } from 'vue-awesome-swiper'
 import { Swiper as SwiperClass, Navigation, Pagination, Mousewheel, Autoplay, EffectFade } from 'swiper/swiper.esm'
+import { APP_CONFIG } from '@/utils/env'
 SwiperClass.use([Navigation, Pagination, Mousewheel, Autoplay, EffectFade])
 export default {
   components: {
@@ -35,28 +36,8 @@ export default {
 
   data () {
     return {
-      listBanner: [
-        {
-          title: 'Tra cứu mã số thuế cá nhân',
-          content: 'Hơn <b>1.7 triệu</b> doanh nghiệp trên 63 tỉnh thành',
-          image: require('@/assets/images/banner/tra-cuu-ma-so-thue-slide-1-min.png')
-        },
-        {
-          title: 'Tra cứu mã số thuế cá nhân',
-          content: 'Tra cứu <b>mã số thuế cá nhân</b> nhanh chóng, tiện lợi',
-          image: require('@/assets/images/banner/tra-cuu-ma-so-thue-slide-2-min.png')
-        },
-        {
-          title: 'Tra cứu mã số thuế',
-          content: 'Tra cứu trực tiếp ngay trên <b>facebook</b> & <b>zalo</b>',
-          image: require('@/assets/images/banner/tra-cuu-ma-so-thue-slide-3-min.png')
-        },
-        {
-          title: 'Tin tức',
-          content: '<b>Thông tin mới nhất</b> về thuế, kế toán và doanh nghiệp',
-          image: require('@/assets/images/banner/tra-cuu-ma-so-thue-slide-4-min.png')
-        }
-      ],
+      cdnUrl: APP_CONFIG.cdnUrl,
+      listBanner: [],
       swiperOption: {
         observer: true,
         observeParents: true,
@@ -72,6 +53,19 @@ export default {
           clickable: true,
           dynamicBullets: false
         }
+      }
+    }
+  },
+  mounted () {
+    this.nuxtServerInit()
+  },
+  methods: {
+    async nuxtServerInit () {
+      const dataBanner = await this.$axios.get('v1/Advs/GetListByPosition/0')
+      // eslint-disable-next-line array-callback-return
+      if (dataBanner && dataBanner.list) {
+        // console.log('dataBanner: ', dataBanner)
+        this.listBanner = dataBanner.list
       }
     }
   }

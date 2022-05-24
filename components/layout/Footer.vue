@@ -3,9 +3,10 @@
     <div class="row">
       <div class="footer-contact col-md-3 col-sm-6 col-xs-12">
         <div class="logo bg-color-light mg-b-32r">
-          <a href="javascript:;" class="display-flex" rel="noopener noreferrer"> 
+          <a href="javascript:;" class="display-flex" rel="noopener noreferrer">
             <figure class="aspect-ratio aspect-ratio--1-1 border-rd-8 aspect-ratio--bg-transparent">
-              <img loading="lazy" class="full-box" src="@/assets/images/logo/logo-masothue.png" alt="MaSoThue">
+              <!-- <img loading="lazy" class="full-box" :src="@/assets/images/logo/logo-masothue.png" alt="MaSoThue"> -->
+              <img loading="lazy" class="full-box" :src="logo ? cdnUrl + logo : logoDefault" alt="MaSoThue">
             </figure>
           </a>
         </div>
@@ -99,13 +100,18 @@
 </template>
 
 <script>
+import { APP_CONFIG } from '@/utils/env'
+const logoDefault = require('@/assets/images/logo/logo-masothue.png')
 export default {
   name: 'Footer',
   data () {
     return {
+      logoDefault,
+      cdnUrl: APP_CONFIG.cdnUrl,
       emailDefault: '',
       hotlineDefault: '',
-      email: ''
+      email: '',
+      logo: ''
     }
   },
   computed: {
@@ -122,6 +128,8 @@ export default {
           this.emailDefault = item.configContent
         } else if (item.configKey === 'HOTLINE') {
           this.hotlineDefault = item.configContent
+        } else if (item.configKey === 'LOGO') {
+          this.logo = item.configContent
         }
       })
       // this.emailDefault =
