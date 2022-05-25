@@ -90,7 +90,7 @@ export default {
         headline: `${this.dataSource.compnayName}`,
         image: {
           '@type': 'ImageObject',
-          url: 'https://hosothue.migroup.asia/uploads/logo-masothue.png',
+          url: 'https://api.tracuunnt.com/uploads/logo-masothue.png',
           height: 600,
           width: 800
         },
@@ -98,14 +98,14 @@ export default {
         dateModified: '9/3/2020 11:48:18 PM',
         author: {
           '@type': 'Person',
-          name: 'hosothue'
+          name: 'tracuunnt'
         },
         publisher: {
           '@type': 'Organization',
           name: `${this.dataSource.compnayName}`,
           logo: {
             '@type': 'ImageObject',
-            url: 'https://hosothue.migroup.asia/uploads/logo-masothue.png',
+            url: 'https://api.tracuunnt.com/uploads/logo-masothue.png',
             width: 35,
             height: 34
           }
