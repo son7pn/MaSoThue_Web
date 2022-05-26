@@ -49,6 +49,9 @@
         </div>
       </div>
     </div>
+    <!-- <div class="mst-ads">
+      <p v-html="listAdvertisement[0].content" />
+    </div> -->
   </div>
 </template>
 
@@ -71,6 +74,7 @@ export default {
     const dataApi = await Promise.allSettled([
       store.dispatch('company/acGetListCompanyByTax', { keyword: '', pageIndex: route.query.page ? Number(route.query.page) : 1, pageSize: 20, type: -1 }),
       store.dispatch('common/acGetListProvince')
+      // store.dispatch('common/acGetListAdvertisement')
     ])
     return { dataApi }
   },
@@ -103,7 +107,7 @@ export default {
   },
   computed: {
     ...mapState(STORE_KEY, ['listCompany', 'totalRecordsCompany']),
-    ...mapState('common', ['listProvince'])
+    ...mapState('common', ['listProvince', 'listAdvertisement'])
   },
   watch: {
     '$route.query.page': 'fetchData'

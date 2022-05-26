@@ -7,16 +7,18 @@
       :options="swiperOption"
     >
       <swiper-slide v-for="(item, index) of listBanner" :key="index" class="item position-rel">
-        <figure class="aspect-ratio aspect-ratio--2-5">
-          <img loading="lazy" :src="item.url ? cdnUrl + item.url : ''" alt="banner" class="img-fit">
-        </figure>
-        <div class="item__content  text-uppercase position-abs">
-          <h3 class="primary-color mb-3 font-size-20">
-            {{ item.name ? item.name : '' }}
-          </h3>
-          <!-- eslint-disable -->
-          <p v-html="item.thumb ? item.thumb : ''" class="font-size-42 color-dark"/>
+        <a :href="item.url" target="blank">
+          <figure class="aspect-ratio aspect-ratio--2-5">
+            <img loading="lazy" :src="item.thumb ? cdnUrl + item.thumb : ''" alt="banner" class="img-fit">
+          </figure>
+          <div class="item__content  text-uppercase position-abs">
+            <h3 class="primary-color mb-3 font-size-20">
+              {{ item.name ? item.name : '' }}
+            </h3>
+            <!-- eslint-disable -->
+          <p v-html="item.content ? item.content : ''" class="font-size-42 color-dark"/>
         </div>
+        </a>
       </swiper-slide>
       <div slot="pagination" class="swiper-pagination" />
     </swiper>
@@ -61,7 +63,11 @@ export default {
   },
   methods: {
     async nuxtServerInit () {
-      const dataBanner = await this.$axios.get('v1/Advs/GetListByPosition/0')
+      const params = {
+        type: 1,
+        group: 'slide'
+      }
+      const dataBanner = await this.$axios.get(`v1/Advs/GetListByPosition/1?type=${params.type}&group=${params.group}`)
       // eslint-disable-next-line array-callback-return
       if (dataBanner && dataBanner.list) {
         // console.log('dataBanner: ', dataBanner)

@@ -1,14 +1,15 @@
 <template>
-  <div class="container">
-    <div class="detai-company pd-t-50r full-box pd-b-60r ">
-      <h1 class="font-weight-medium border-title primary-color-txt font-size-36 mg-b-64r">
-        {{ detailCompanyByTax.tax }} - {{ detailCompanyByTax.compnayName }}
-      </h1>
-      <!-- <ViewDocs :data-source="dataDoc" /> -->
-      <div class="row">
-        <DetailCompany :data-source="detailCompanyByTax" class="col-md-9" />
-      </div>
-      <!--eslint-disable-->
+  <div class="container province">
+    <div class="row mt-4">
+      <div class="col-md-8 col-12 detai-company">
+        <h1 class="font-weight-medium border-title primary-color-txt font-size-26 mg-b-64r">
+          {{ detailCompanyByTax.tax }} - {{ detailCompanyByTax.compnayName }}
+        </h1>
+        <!-- <ViewDocs :data-source="dataDoc" /> -->
+        <div class="row">
+          <DetailCompany :data-source="detailCompanyByTax" class="col-md-9" />
+        </div>
+        <!--eslint-disable-->
       <client-only>
         <p v-html="detailCompanyByTax.content ? detailCompanyByTax.content : ''"/>
       </client-only>
@@ -16,38 +17,65 @@
          <iframe v-if="detailCompanyByTax.attackName" :src="cdnUrl + detailCompanyByTax.attackName" width="100%" height="100%"></iframe>
        </div>
       <!-- eslint-enable -->
-      <div class="mg-t-64r">
-        <h4 class="font-sanpro-semibold primary-color-txt title-comment">
-          Bình luận
-        </h4>
-        <RateArticles />
-        <ModulesComment :list-comment-post="listComment" :article-id="detailCompanyByTax.id" />
-      </div>
-      <div class="mg-t-64r">
-        <h4 class="font-sanpro-semibold primary-color-txt title-comment">
-          Doanh nghiệp tại địa phương
-        </h4>
-        <!-- <vueCustomScrollbar class="scroll-class none-ps-x none-ps-y"> -->
-        <ItemInfoBusiness
-          v-for="(item, index) of listCompanyByProvince"
-          v-show="item.tax !== taxActi"
-          :key="index"
-          :data-source="item"
-        />
+        <div class="mg-t-64r">
+          <h4 class="font-sanpro-semibold primary-color-txt title-comment">
+            Bình luận
+          </h4>
+          <RateArticles />
+          <ModulesComment :list-comment-post="listComment" :article-id="detailCompanyByTax.id" />
+        </div>
+        <div class="mg-t-64r">
+          <h4 class="font-sanpro-semibold primary-color-txt title-comment">
+            Doanh nghiệp tại địa phương
+          </h4>
+          <!-- <vueCustomScrollbar class="scroll-class none-ps-x none-ps-y"> -->
+          <ItemInfoBusiness
+            v-for="(item, index) of listCompanyByProvince"
+            v-show="item.tax !== taxActi"
+            :key="index"
+            :data-source="item"
+          />
         <!-- </vueCustomScrollbar> -->
-      </div>
-      <div class="mg-t-64r">
-        <h4 class="font-sanpro-semibold primary-color-txt title-comment">
-          Doanh nghiệp mới
-        </h4>
-        <!-- <vueCustomScrollbar class="scroll-class none-ps-x none-ps-y"> -->
-        <ItemInfoBusiness
-          v-for="(item, index) of listCompanyNew"
-          v-show="item.tax !== taxActi"
-          :key="index"
-          :data-source="item"
-        />
+        </div>
+        <div class="mg-t-64r">
+          <h4 class="font-sanpro-semibold primary-color-txt title-comment">
+            Doanh nghiệp mới
+          </h4>
+          <!-- <vueCustomScrollbar class="scroll-class none-ps-x none-ps-y"> -->
+          <ItemInfoBusiness
+            v-for="(item, index) of listCompanyNew"
+            v-show="item.tax !== taxActi"
+            :key="index"
+            :data-source="item"
+          />
         <!-- </vueCustomScrollbar> -->
+        </div>
+      </div>
+      <div class="col-md-4 col-12">
+        <div class="mb-5">
+          <h3 class="font-weight-medium primary-color-txt border-title">
+            Tra mã số thuế trên Facebook
+          </h3>
+          <a href="https://www.facebook.com/masothuedotcom" target="_blank">
+            <figure>
+              <img src="@/assets/images/banner/image-fb.png">
+            </figure>
+          </a>
+        </div>
+        <div>
+          <h3 class="font-weight-medium primary-color-txt border-title">
+            Tỉnh/thành phố
+          </h3>
+          <vueCustomScrollbar class="scroll-class none-ps-x none-ps-y">
+            <ul class="row list-sort list-style-none">
+              <li v-for="(item1, index1) of listProvince" :key="index1" class="cat-item align-items-center col-xs-6 col-md-12" :class="{'activeProvince' : item1.alias === provinceAlias }">
+                <nuxt-link :to="localePath(`/tra-cuu-doanh-nghiep/${item1.alias}-${item1.matp}`)" class="primary-color-txt font-size-18">
+                  {{ item1.name }}
+                </nuxt-link>
+              </li>
+            </ul>
+          </vueCustomScrollbar>
+        </div>
       </div>
     </div>
   </div>
@@ -98,7 +126,7 @@ export default {
   //   }
   // },
   computed: {
-    ...mapState('common', ['listComment']),
+    ...mapState('common', ['listComment', 'listProvince']),
     ...mapState(STORE_KEY, ['detailCompanyByTax']),
     taxActi () {
       const tax = this.$route.params.slug.split('-').shift()
@@ -117,9 +145,12 @@ export default {
     this.acGetListComment({ articleId: this.detailCompanyByTax.id, pageIndex: 1, pageSize: 10 })
     this.initDataCompany()
     this.scrollToTop()
+    if (this.listProvince && this.listProvince.length === 0) {
+      this.acGetListProvince()
+    }
   },
   methods: {
-    ...mapActions('common', ['acGetListComment']),
+    ...mapActions('common', ['acGetListComment', 'acGetListProvince']),
     initDataCompany () {
       this.acGetCompanyNew()
       this.acGetCompanyByProvince()
@@ -147,6 +178,9 @@ export default {
 .scroll-class {
   max-height: 60vh;
 }
+.province {
+  padding-top: 1rem;
+}
 .preview-pdf {
   margin-top: 2rem;
   height: 100vh;
@@ -165,6 +199,39 @@ export default {
       position: absolute;
       bottom: -1px;
     }
+  }
+}
+.list-sort {
+  li {
+    border-bottom: 1px solid $color_border;
+    position: relative;
+    min-height: 1px;
+    padding-right: 0.9375rem;
+    padding-left: 0.9375rem;
+    margin: 0 15px;
+    a {
+        position: relative;
+        margin-left: 1.5rem;
+        padding: 0.5em 0;
+        display: inline-block;
+        &:before {
+          color: #575560;
+          content: "";
+          font-family: FontAwesome;
+          font-size: 1.1em;
+          line-height: 1em;
+          margin-left: -1.4em;
+          position: absolute;
+        }
+      }
+  }
+  li:last-child {
+    border-bottom: 0;
+  }
+  li:hover {
+    a {
+        color: $primary_color;
+      }
   }
 }
 </style>

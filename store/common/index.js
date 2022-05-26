@@ -17,7 +17,8 @@ export const initState = () => {
     dataCommune: {
       list: [],
       parent: []
-    }
+    },
+    listAdvertisement: []
   }
 }
 const state = initState()

@@ -17,6 +17,10 @@ export default ($axios) => {
     async showListCommune (id) {
       const data = await $axios.get(`v1/Article/ds-xa?keyword=${id}&pageIndex=1&pageSize=100`)
       return data !== STATUS_FAIL ? data : null
+    },
+    async showAdvertisement () {
+      const data = await $axios.get('v1/Advs/GetListByGroup?group=ads')
+      return data !== STATUS_FAIL ? data : null
     }
   }
 }
