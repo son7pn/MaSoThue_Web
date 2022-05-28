@@ -2,7 +2,7 @@
   <div class="page-contact pd-t-50r container">
     <div v-if="listAdvertisementHead && listAdvertisementHead.length > 0">
       <div class="mst-ads">
-        <a v-for="(item, index) of listAdvertisementHead" :key="index" :href="item.url" target="blank">
+        <a v-for="(item, index) of listAdvertisementHead" v-show="item.isEnable" :key="index" :href="item.url" target="blank">
           <figure v-if="item.type === 1" class="aspect-ratio aspect-ratio--2-5">
             <img loading="lazy" :src="item.thumb ? cdnUrl + item.thumb : ''" alt="banner" class="img-fit">
           </figure>
@@ -65,7 +65,7 @@
     </div>
     <div v-if="listAdvertisementBottom && listAdvertisementBottom.length > 0">
           <div class="mst-ads">
-            <a v-for="(item, index) of listAdvertisementBottom" :key="index" :href="item.url" target="blank">
+            <a v-for="(item, index) of listAdvertisementBottom" v-show="item.isEnable" :key="index" :href="item.url" target="blank">
               <figure v-if="item.type === 1" class="aspect-ratio aspect-ratio--2-5">
                 <img loading="lazy" :src="item.thumb ? cdnUrl + item.thumb : ''" alt="banner" class="img-fit">
               </figure>
