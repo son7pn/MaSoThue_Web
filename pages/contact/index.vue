@@ -1,5 +1,16 @@
 <template>
   <div class="page-contact pd-t-50r container">
+    <div v-if="listAdvertisementHead && listAdvertisementHead.length > 0">
+      <div class="mst-ads">
+        <a v-for="(item, index) of listAdvertisementHead" :key="index" :href="item.url" target="blank">
+          <figure v-if="item.type === 1" class="aspect-ratio aspect-ratio--2-5">
+            <img loading="lazy" :src="item.thumb ? cdnUrl + item.thumb : ''" alt="banner" class="img-fit">
+          </figure>
+          <!-- eslint-disable -->
+          <p v-else v-html="item.content ? item.content : ''" class="font-size-42 color-dark"/>
+        </a>
+      </div>
+    </div>
     <h2 class="font-sanpro-semibold primary-color-txt font-size-40 mg-b-64r display-flex-center justify-content-center full-width">
       Liên hệ
     </h2>
@@ -52,12 +63,25 @@
         </div>
       </div>
     </div>
+    <div v-if="listAdvertisementBottom && listAdvertisementBottom.length > 0">
+          <div class="mst-ads">
+            <a v-for="(item, index) of listAdvertisementBottom" :key="index" :href="item.url" target="blank">
+              <figure v-if="item.type === 1" class="aspect-ratio aspect-ratio--2-5">
+                <img loading="lazy" :src="item.thumb ? cdnUrl + item.thumb : ''" alt="banner" class="img-fit">
+              </figure>
+              <!-- eslint-disable -->
+              <p v-else v-html="item.content ? item.content : ''" class="font-size-42 color-dark"/>
+            </a>
+          </div>
+        </div>
   </div>
 </template>
 
 <script>
+import { mapState } from 'vuex'
 import { validationMixin } from 'vuelidate'
 import { required, email } from 'vuelidate/lib/validators'
+import { APP_CONFIG } from '@/utils/env'
 export default {
   name: 'IndexContact',
   nuxtI18n: {
@@ -66,8 +90,15 @@ export default {
     }
   },
   mixins: [validationMixin],
+  async asyncData ({ route, store }) {
+    const dataApi = await Promise.allSettled([
+      store.dispatch('common/acGetListAdvertisement')
+    ])
+    return { dataApi }
+  },
   data () {
     return {
+      cdnUrl: APP_CONFIG.cdnUrl,
       status: false,
       form: {
         name: '',
@@ -88,6 +119,45 @@ export default {
         required,
         email
       }
+    }
+  },
+  computed: {
+    ...mapState('common', ['listAdvertisement']),
+    listAdvertisementHead () {
+      const arrayAds = []
+      if (this.listAdvertisement && this.listAdvertisement.length > 0) {
+        // eslint-disable-next-line array-callback-return
+        this.listAdvertisement.map((item) => {
+          if (item.position === 1) {
+            arrayAds.push(item)
+          }
+        })
+      }
+      return arrayAds
+    },
+    listAdvertisementRight () {
+      const arrayAds = []
+      if (this.listAdvertisement && this.listAdvertisement.length > 0) {
+        // eslint-disable-next-line array-callback-return
+        this.listAdvertisement.map((item) => {
+          if (item.position === 2) {
+            arrayAds.push(item)
+          }
+        })
+      }
+      return arrayAds
+    },
+    listAdvertisementBottom () {
+      const arrayAds = []
+      if (this.listAdvertisement && this.listAdvertisement.length > 0) {
+        // eslint-disable-next-line array-callback-return
+        this.listAdvertisement.map((item) => {
+          if (item.position === 3) {
+            arrayAds.push(item)
+          }
+        })
+      }
+      return arrayAds
     }
   },
   mounted () {

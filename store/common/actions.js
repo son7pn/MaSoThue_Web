@@ -32,5 +32,9 @@ export default {
   async acGetListCommune ({ commit }, id) {
     const data = await this.$apis.common.showListCommune(id)
     data && commit(types.GET_LIST_COMMUNE, data)
+  },
+  async acGetListAdvertisement ({ commit }) {
+    const data = await this.$apis.common.showAdvertisement()
+    data && commit(types.GET_LIST_ADVERTISEMENT, data)
   }
 }

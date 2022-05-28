@@ -23,5 +23,8 @@ export default {
   },
   [types.GET_LIST_COMMUNE] (state, data) {
     state.dataCommune = data
+  },
+  [types.GET_LIST_ADVERTISEMENT] (state, data) {
+    state.listAdvertisement = data.list
   }
 }

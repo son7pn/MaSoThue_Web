@@ -80,7 +80,7 @@ export default {
 
 <style lang="scss" scoped>
 .rate-article {
-  width: 30%;
+  width: 45%;
   margin-bottom: 3rem;
 }
 .mg-b-16 {

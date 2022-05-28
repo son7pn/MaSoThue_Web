@@ -1,5 +1,16 @@
 <template>
   <div class="home-index full-box">
+    <div v-if="listAdvertisementHead && listAdvertisementHead.length > 0" class="container">
+      <div class="mst-ads">
+        <a v-for="(item, index) of listAdvertisementHead" :key="index" :href="item.url" target="blank">
+          <figure v-if="item.type === 1" class="aspect-ratio aspect-ratio--2-5">
+            <img loading="lazy" :src="item.thumb ? cdnUrl + item.thumb : ''" alt="banner" class="img-fit">
+          </figure>
+          <!-- eslint-disable -->
+          <p v-else v-html="item.content ? item.content : ''" class="font-size-42 color-dark"/>
+        </a>
+      </div>
+    </div>
     <Banner />
     <div class="container pd-t-50r">
       <div class="row">
@@ -20,8 +31,28 @@
             :total-page="(Math.floor(totalRecordsCompany/20) + (totalRecordsCompany % 20 == 0 ? 0 : 1 ))"
             @change="changPage"
           />
+          <div v-if="listAdvertisementBottom && listAdvertisementBottom.length > 0">
+            <div class="mst-ads">
+              <a v-for="(item, index) of listAdvertisementBottom" :key="index" :href="item.url" target="blank">
+                <figure v-if="item.type === 1" class="aspect-ratio aspect-ratio--2-5">
+                  <img loading="lazy" :src="item.thumb ? cdnUrl + item.thumb : ''" alt="banner" class="img-fit">
+                </figure>
+                <!-- eslint-disable -->
+                <p v-else v-html="item.content ? item.content : ''" class="font-size-42 color-dark"/>
+              </a>
+            </div>
+          </div>
         </div>
         <div class="col-md-4 col-12">
+          <div v-if="listAdvertisementRight && listAdvertisementRight.length > 0" class="mst-ads">
+            <a v-for="(item, index) of listAdvertisementRight" :key="index" :href="item.url" target="blank">
+              <figure v-if="item.type === 1" class="aspect-ratio aspect-ratio--2-5">
+                <img loading="lazy" :src="item.thumb ? cdnUrl + item.thumb : ''" alt="banner" class="img-fit">
+              </figure>
+              <!-- eslint-disable -->
+                <p v-else v-html="item.content ? item.content : ''" class="font-size-42 color-dark"/>
+            </a>
+          </div>
           <div class="mb-5">
             <h3 class="font-weight-medium primary-color-txt search-province">
               Tra mã số thuế trên Facebook
@@ -56,6 +87,7 @@
 import { mapState, mapActions } from 'vuex'
 import vueCustomScrollbar from 'vue-custom-scrollbar'
 import { STORE_KEY } from '@/store/company/constants'
+import { APP_CONFIG } from '@/utils/env'
 import 'vue-custom-scrollbar/dist/vueScrollbar.css'
 import ItemInfoBusiness from '@/components/shared/ItemInfoBusiness.vue'
 import Banner from '@/components/shared/Banner.vue'
@@ -70,12 +102,14 @@ export default {
   async asyncData ({ route, store }) {
     const dataApi = await Promise.allSettled([
       store.dispatch('company/acGetListCompanyByTax', { keyword: '', pageIndex: route.query.page ? Number(route.query.page) : 1, pageSize: 20, type: -1 }),
-      store.dispatch('common/acGetListProvince')
+      store.dispatch('common/acGetListProvince'),
+      store.dispatch('common/acGetListAdvertisement')
     ])
     return { dataApi }
   },
   data () {
     return {
+      cdnUrl: APP_CONFIG.cdnUrl,
       isFetchCompany: false,
       structuredData: {
         '@context': 'http://schema.org',
@@ -103,7 +137,43 @@ export default {
   },
   computed: {
     ...mapState(STORE_KEY, ['listCompany', 'totalRecordsCompany']),
-    ...mapState('common', ['listProvince'])
+    ...mapState('common', ['listProvince', 'listAdvertisement']),
+    listAdvertisementHead () {
+      const arrayAds = []
+      if (this.listAdvertisement && this.listAdvertisement.length > 0) {
+        // eslint-disable-next-line array-callback-return
+        this.listAdvertisement.map((item) => {
+          if (item.position === 1) {
+            arrayAds.push(item)
+          }
+        })
+      }
+      return arrayAds
+    },
+    listAdvertisementRight () {
+      const arrayAds = []
+      if (this.listAdvertisement && this.listAdvertisement.length > 0) {
+        // eslint-disable-next-line array-callback-return
+        this.listAdvertisement.map((item) => {
+          if (item.position === 2) {
+            arrayAds.push(item)
+          }
+        })
+      }
+      return arrayAds
+    },
+    listAdvertisementBottom () {
+      const arrayAds = []
+      if (this.listAdvertisement && this.listAdvertisement.length > 0) {
+        // eslint-disable-next-line array-callback-return
+        this.listAdvertisement.map((item) => {
+          if (item.position === 3) {
+            arrayAds.push(item)
+          }
+        })
+      }
+      return arrayAds
+    }
   },
   watch: {
     '$route.query.page': 'fetchData'

@@ -1,5 +1,16 @@
 <template>
   <div class="province container">
+    <div v-if="listAdvertisementHead && listAdvertisementHead.length > 0">
+      <div class="mst-ads">
+        <a v-for="(item, index) of listAdvertisementHead" :key="index" :href="item.url" target="blank">
+          <figure v-if="item.type === 1" class="aspect-ratio aspect-ratio--2-5">
+            <img loading="lazy" :src="item.thumb ? cdnUrl + item.thumb : ''" alt="banner" class="img-fit">
+          </figure>
+          <!-- eslint-disable -->
+          <p v-else v-html="item.content ? item.content : ''" class="font-size-42 color-dark"/>
+        </a>
+      </div>
+    </div>
     <div class="row mt-4">
       <div class="col-md-8 col-12">
         <h3 class="font-weight-medium primary-color-txt border-title">
@@ -15,8 +26,28 @@
           :total-page="(Math.floor(totalRecordsCompany/10) + (totalRecordsCompany % 10 == 0 ? 0 : 1 ))"
           @change="changPage"
         />
+        <div v-if="listAdvertisementBottom && listAdvertisementBottom.length > 0">
+          <div class="mst-ads">
+            <a v-for="(item, index) of listAdvertisementBottom" :key="index" :href="item.url" target="blank">
+              <figure v-if="item.type === 1" class="aspect-ratio aspect-ratio--2-5">
+                <img loading="lazy" :src="item.thumb ? cdnUrl + item.thumb : ''" alt="banner" class="img-fit">
+              </figure>
+              <!-- eslint-disable -->
+              <p v-else v-html="item.content ? item.content : ''" class="font-size-42 color-dark"/>
+            </a>
+          </div>
+        </div>
       </div>
       <div class="col-md-4 col-12">
+        <div v-if="listAdvertisementRight && listAdvertisementRight.length > 0" class="mst-ads">
+          <a v-for="(item, index) of listAdvertisementRight" :key="index" :href="item.url" target="blank">
+            <figure v-if="item.type === 1" class="aspect-ratio aspect-ratio--2-5">
+              <img loading="lazy" :src="item.thumb ? cdnUrl + item.thumb : ''" alt="banner" class="img-fit">
+            </figure>
+            <!-- eslint-disable -->
+              <p v-else v-html="item.content ? item.content : ''" class="font-size-42 color-dark"/>
+          </a>
+        </div>
         <div class="mb-5">
           <h3 class="font-weight-medium primary-color-txt border-title">
             Tra mã số thuế trên Facebook
@@ -52,6 +83,7 @@ import vueCustomScrollbar from 'vue-custom-scrollbar'
 import { STORE_KEY } from '@/store/company/constants'
 import ItemInfoBusiness from '@/components/shared/ItemInfoBusiness.vue'
 import Pagination from '@/components/shared/Pagination.vue'
+import { APP_CONFIG } from '@/utils/env'
 
 export default {
   name: 'SlugProvince',
@@ -73,6 +105,7 @@ export default {
     id = id.join('')
     const callAPi = []
     callAPi.push(store.dispatch('company/acGetListCompanyByTax', { keyword: key, pageIndex: route.query.page ? Number(route.query.page) : 1, pageSize: 10, type: 4 }))
+    callAPi.push(store.dispatch('common/acGetListAdvertisement'))
     if (id.length === 2) {
       callAPi.push(store.dispatch('common/acGetListDistrict', id))
     } else if (id.length === 3) {
@@ -84,6 +117,7 @@ export default {
   },
   data () {
     return {
+      cdnUrl: APP_CONFIG.cdnUrl,
       isFetchCompany: false
     }
   },
@@ -95,7 +129,43 @@ export default {
   },
   computed: {
     ...mapState(STORE_KEY, ['listCompany', 'totalRecordsCompany']),
-    ...mapState('common', ['listProvince', 'dataDistrict', 'dataCommune']),
+    ...mapState('common', ['listProvince', 'dataDistrict', 'dataCommune', 'listAdvertisement']),
+    listAdvertisementHead () {
+      const arrayAds = []
+      if (this.listAdvertisement && this.listAdvertisement.length > 0) {
+        // eslint-disable-next-line array-callback-return
+        this.listAdvertisement.map((item) => {
+          if (item.position === 1) {
+            arrayAds.push(item)
+          }
+        })
+      }
+      return arrayAds
+    },
+    listAdvertisementRight () {
+      const arrayAds = []
+      if (this.listAdvertisement && this.listAdvertisement.length > 0) {
+        // eslint-disable-next-line array-callback-return
+        this.listAdvertisement.map((item) => {
+          if (item.position === 2) {
+            arrayAds.push(item)
+          }
+        })
+      }
+      return arrayAds
+    },
+    listAdvertisementBottom () {
+      const arrayAds = []
+      if (this.listAdvertisement && this.listAdvertisement.length > 0) {
+        // eslint-disable-next-line array-callback-return
+        this.listAdvertisement.map((item) => {
+          if (item.position === 3) {
+            arrayAds.push(item)
+          }
+        })
+      }
+      return arrayAds
+    },
     provinceAlias () {
       const provinceAlias = this.$route.params.slug.split('-')
       const key = provinceAlias.slice(0, provinceAlias.length - 1, 1).join('-')
