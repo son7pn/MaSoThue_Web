@@ -1,5 +1,16 @@
 <template>
   <div class="container province">
+    <div v-if="listAdvertisementHead && listAdvertisementHead.length > 0">
+      <div class="mst-ads">
+        <a v-for="(item, index) of listAdvertisementHead" :key="index" :href="item.url" target="blank">
+          <figure v-if="item.type === 1" class="aspect-ratio aspect-ratio--2-5">
+            <img loading="lazy" :src="item.thumb ? cdnUrl + item.thumb : ''" alt="banner" class="img-fit">
+          </figure>
+          <!-- eslint-disable -->
+          <p v-else v-html="item.content ? item.content : ''" class="font-size-42 color-dark"/>
+        </a>
+      </div>
+    </div>
     <div class="row mt-4">
       <div class="col-md-8 col-12 detai-company">
         <h1 class="font-weight-medium border-title primary-color-txt font-size-26 mg-b-64r">
@@ -14,7 +25,7 @@
         <p v-html="detailCompanyByTax.content ? detailCompanyByTax.content : ''"/>
       </client-only>
        <div class="preview-pdf">
-         <iframe v-if="detailCompanyByTax.attackName" :src="cdnUrl + detailCompanyByTax.attackName" width="100%" height="100%"></iframe>
+         <iframe v-if="detailCompanyByTax.attackName" :src="cdnUrlDoc + detailCompanyByTax.attackName" width="100%" height="100%"></iframe>
        </div>
       <!-- eslint-enable -->
         <div class="mg-t-64r">
@@ -50,8 +61,28 @@
           />
         <!-- </vueCustomScrollbar> -->
         </div>
+        <div v-if="listAdvertisementBottom && listAdvertisementBottom.length > 0">
+          <div class="mst-ads">
+            <a v-for="(item, index) of listAdvertisementBottom" :key="index" :href="item.url" target="blank">
+              <figure v-if="item.type === 1" class="aspect-ratio aspect-ratio--2-5">
+                <img loading="lazy" :src="item.thumb ? cdnUrl + item.thumb : ''" alt="banner" class="img-fit">
+              </figure>
+              <!-- eslint-disable -->
+              <p v-else v-html="item.content ? item.content : ''" class="font-size-42 color-dark"/>
+            </a>
+          </div>
+        </div>
       </div>
       <div class="col-md-4 col-12">
+        <div v-if="listAdvertisementRight && listAdvertisementRight.length > 0" class="mst-ads">
+          <a v-for="(item, index) of listAdvertisementRight" :key="index" :href="item.url" target="blank">
+            <figure v-if="item.type === 1" class="aspect-ratio aspect-ratio--2-5">
+              <img loading="lazy" :src="item.thumb ? cdnUrl + item.thumb : ''" alt="banner" class="img-fit">
+            </figure>
+            <!-- eslint-disable -->
+              <p v-else v-html="item.content ? item.content : ''" class="font-size-42 color-dark"/>
+          </a>
+        </div>
         <div class="mb-5">
           <h3 class="font-weight-medium primary-color-txt border-title">
             Tra mã số thuế trên Facebook
@@ -106,16 +137,21 @@ export default {
       vi: '/:slug'
     }
   },
-  asyncData ({ route, store }) {
+  async asyncData ({ route, store }) {
     const tax = route.params.slug.split('-').shift()
-    return store.dispatch('company/acDetailCompanyByTax', tax)
+    const dataApi = await Promise.allSettled([
+      store.dispatch('company/acDetailCompanyByTax', tax),
+      store.dispatch('common/acGetListAdvertisement')
+    ])
+    return { dataApi }
   },
   data () {
     return {
       isFetchListComment: false,
       listCompanyNew: [],
       listCompanyByProvince: [],
-      cdnUrl: APP_CONFIG.cdnImageUrl
+      cdnUrlDoc: APP_CONFIG.cdnImageUrl,
+      cdnUrl: APP_CONFIG.cdnUrl
     }
   },
   // fetch () {
@@ -126,11 +162,47 @@ export default {
   //   }
   // },
   computed: {
-    ...mapState('common', ['listComment', 'listProvince']),
+    ...mapState('common', ['listComment', 'listProvince', 'listAdvertisement']),
     ...mapState(STORE_KEY, ['detailCompanyByTax']),
     taxActi () {
       const tax = this.$route.params.slug.split('-').shift()
       return tax
+    },
+    listAdvertisementHead () {
+      const arrayAds = []
+      if (this.listAdvertisement && this.listAdvertisement.length > 0) {
+        // eslint-disable-next-line array-callback-return
+        this.listAdvertisement.map((item) => {
+          if (item.position === 1) {
+            arrayAds.push(item)
+          }
+        })
+      }
+      return arrayAds
+    },
+    listAdvertisementRight () {
+      const arrayAds = []
+      if (this.listAdvertisement && this.listAdvertisement.length > 0) {
+        // eslint-disable-next-line array-callback-return
+        this.listAdvertisement.map((item) => {
+          if (item.position === 2) {
+            arrayAds.push(item)
+          }
+        })
+      }
+      return arrayAds
+    },
+    listAdvertisementBottom () {
+      const arrayAds = []
+      if (this.listAdvertisement && this.listAdvertisement.length > 0) {
+        // eslint-disable-next-line array-callback-return
+        this.listAdvertisement.map((item) => {
+          if (item.position === 3) {
+            arrayAds.push(item)
+          }
+        })
+      }
+      return arrayAds
     }
   },
   watch: {
