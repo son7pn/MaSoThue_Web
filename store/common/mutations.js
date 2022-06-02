@@ -26,5 +26,9 @@ export default {
   },
   [types.GET_LIST_ADVERTISEMENT] (state, data) {
     state.listAdvertisement = data.list
+  },
+  [types.GET_LIST_BUSINESS_TYPE] (state, data) {
+    state.listBusinessType = data.list
+    state.totalRecordsBusinessType = data.totalRow
   }
 }

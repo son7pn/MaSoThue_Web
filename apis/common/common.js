@@ -21,6 +21,10 @@ export default ($axios) => {
     async showAdvertisement () {
       const data = await $axios.get('v1/Advs/GetListByGroup?group=ads')
       return data !== STATUS_FAIL ? data : null
+    },
+    async showListBusinessType (payload) {
+      const data = await $axios.get(`v1/Article/BusinessType?pageIndex=${payload}&pageSize=50`)
+      return data !== STATUS_FAIL ? data : null
     }
   }
 }

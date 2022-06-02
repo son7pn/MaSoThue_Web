@@ -35,12 +35,17 @@
         </h4>
         <ul class="list-style-none">
           <li class="full-height">
-            <nuxt-link :to="localePath('/')" class="display-flex primary-color-txt full-height align-items-center">
+            <nuxt-link :to="localePath('about')" class="display-flex primary-color-txt full-height align-items-center">
+              <span class="title_menu font-size-18">Giới thiệu</span>
+            </nuxt-link>
+          </li>
+          <li class="full-height mg-t-24r">
+            <nuxt-link :to="localePath('career')" class="display-flex primary-color-txt full-height align-items-center">
               <span class="title_menu font-size-18">Mã số thuế theo ngành nghề</span>
             </nuxt-link>
           </li>
           <li class="full-height mg-t-24r">
-            <nuxt-link :to="localePath('/')" class="display-flex primary-color-txt full-height align-items-center">
+            <nuxt-link :to="localePath('company-new')" class="display-flex primary-color-txt full-height align-items-center">
               <span class="title_menu font-size-18">Công ty mới thành lập</span>
             </nuxt-link>
           </li>
