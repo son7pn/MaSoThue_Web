@@ -36,5 +36,9 @@ export default {
   async acGetListAdvertisement ({ commit }) {
     const data = await this.$apis.common.showAdvertisement()
     data && commit(types.GET_LIST_ADVERTISEMENT, data)
+  },
+  async acGetListBusinessType ({ commit }, params) {
+    const data = await this.$apis.common.showListBusinessType(params)
+    data && commit(types.GET_LIST_BUSINESS_TYPE, data)
   }
 }

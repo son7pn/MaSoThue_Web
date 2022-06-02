@@ -1,5 +1,5 @@
 <template>
-  <div class="career container">
+  <div class="province container">
     <div v-if="listAdvertisementHead && listAdvertisementHead.length > 0">
       <div class="mst-ads">
         <a v-for="(item, index) of listAdvertisementHead" v-show="item.isEnable" :key="index" :href="item.url" target="blank">
@@ -12,35 +12,18 @@
       </div>
     </div>
     <div class="row mt-4">
-      <div class="col-md-9">
-        <h3 class="career__title font-weight-medium primary-color-txt border-title">
-          Tra cứu mã số thuế theo ngành nghề
+      <div class="col-md-8 col-12">
+        <h3 class="font-weight-medium primary-color-txt border-title">
+          Tra cứu mã số thuế và danh sách công ty theo ngành nghề
         </h3>
-        <div class="career__list">
-          <div class="career-header display-flex">
-            <h4 class="code text-center mr-4">
-              Mã
-            </h4>
-            <h4>Ngành</h4>
-          </div>
-          <div class="career-body">
-            <div v-for="(item, index) of listBusinessType" :key="index" class="item item-career display-flex cursor-pointer font-size-18">
-              <p class="code text-center mr-4">
-                <nuxt-link class="primary-color-txt" :to="localePath(`/tra-cuu-theo-nganh-nghe/${item.alias}`)">
-                  {{ item.id }}
-                </nuxt-link>
-              </p>
-              <p>
-                <nuxt-link class="primary-color-txt" :to="localePath(`/tra-cuu-theo-nganh-nghe/${item.alias}`)">
-                  {{ item.name }}
-                </nuxt-link>
-              </p>
-            </div>
-          </div>
-        </div>
+        <ItemInfoBusiness
+          v-for="(item, index) of listCompany"
+          :key="index"
+          :data-source="item"
+        />
         <Pagination
-          :total-records="totalRecordsBusinessType"
-          :total-page="(Math.floor(totalRecordsBusinessType/50) + (totalRecordsBusinessType % 50 == 0 ? 0 : 1 ))"
+          :total-records="totalRecordsCompany"
+          :total-page="(Math.floor(totalRecordsCompany/10) + (totalRecordsCompany % 10 == 0 ? 0 : 1 ))"
           @change="changPage"
         />
         <div v-if="listAdvertisementBottom && listAdvertisementBottom.length > 0">
@@ -55,7 +38,7 @@
           </div>
         </div>
       </div>
-      <div class="col-md-3">
+      <div class="col-md-4 col-12">
         <div v-if="listAdvertisementRight && listAdvertisementRight.length > 0" class="mst-ads">
           <a v-for="(item, index) of listAdvertisementRight" v-show="item.isEnable" :key="index" :href="item.url" target="blank">
             <figure v-if="item.type === 1" class="aspect-ratio aspect-ratio--2-5">
@@ -95,44 +78,49 @@
 </template>
 
 <script>
-import { mapState, mapActions } from 'vuex'
+import { mapActions, mapState } from 'vuex'
 import vueCustomScrollbar from 'vue-custom-scrollbar'
+import { STORE_KEY } from '@/store/company/constants'
+import ItemInfoBusiness from '@/components/shared/ItemInfoBusiness.vue'
 import Pagination from '@/components/shared/Pagination.vue'
 import { APP_CONFIG } from '@/utils/env'
 
 export default {
-  name: 'IndexCareer',
+  name: 'SlugProvince',
   components: {
-    Pagination,
-    vueCustomScrollbar
+    vueCustomScrollbar,
+    ItemInfoBusiness,
+    Pagination
   },
   nuxtI18n: {
     paths: {
-      vi: '/tra-cuu-theo-nganh-nghe'
+      vi: '/tra-cuu-theo-nganh-nghe/:slug'
     }
   },
-
-  async asyncData ({ route, store }) {
-    const dataApi = await Promise.allSettled([
-      store.dispatch('common/acGetListBusinessType', route.query.page ? Number(route.query.page) : 1),
-      store.dispatch('common/acGetListAdvertisement')
-    ])
-    return { dataApi }
+  asyncData ({ route, store }) {
+    const businessTypeAlias = route.params.slug
+    const callAPi = []
+    callAPi.push(store.dispatch('company/acGetListCompanyByTax', { keyword: businessTypeAlias, pageIndex: route.query.page ? Number(route.query.page) : 1, pageSize: 10, type: 5 }))
+    callAPi.push(store.dispatch('common/acGetListAdvertisement'))
+    if (callAPi.length) {
+      return Promise.allSettled(callAPi)
+    }
   },
   data () {
     return {
       cdnUrl: APP_CONFIG.cdnUrl,
-      isFetchBusinessType: false
+      isFetchCompany: false
     }
   },
   fetch () {
-    if (this.isFetchBusinessType) {
-      this.isFetchBusinessType = false
-      return this.$store.dispatch('common/acGetListBusinessType', this.$route.query.page ? Number(this.$route.query.page) : 1)
+    if (this.isFetchCompany) {
+      this.isFetchCompany = false
+      return this.$store.dispatch('company/acGetListCompanyByTax', { keyword: this.businessTypeAlias, pageIndex: this.$route.query.page ? Number(this.$route.query.page) : 1, pageSize: 10, type: 5 })
     }
   },
   computed: {
-    ...mapState('common', ['listProvince', 'listBusinessType', 'totalRecordsBusinessType', 'listAdvertisement']),
+    ...mapState(STORE_KEY, ['listCompany', 'totalRecordsCompany']),
+    ...mapState('common', ['listProvince', 'listAdvertisement']),
     listAdvertisementHead () {
       const arrayAds = []
       if (this.listAdvertisement && this.listAdvertisement.length > 0) {
@@ -168,6 +156,10 @@ export default {
         })
       }
       return arrayAds
+    },
+    businessTypeAlias () {
+      const businessTypeAlias = this.$route.params.slug
+      return businessTypeAlias
     }
   },
   watch: {
@@ -182,12 +174,13 @@ export default {
   methods: {
     ...mapActions('common', ['acGetListProvince']),
     changPage (page) {
-      this.$router.push({ path: '/tra-cuu-theo-nganh-nghe', query: { page: page.page } })
+      // this.acGetListCompanyByTax({ keyword: '', pageIndex: page.page, pageSize: 10, type: -1 })
+      this.$router.push({ path: this.$route.path, query: { page: page.page, size: 10 } })
     },
     fetchData (newVal) {
       if (newVal) {
         setTimeout(() => {
-          this.isFetchBusinessType = true
+          this.isFetchCompany = true
           return this.$fetch()
         }, 200)
         setTimeout(() => {
@@ -202,39 +195,11 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
-  .career {
-    padding-top: 1rem;
-    // width: 60%;
-    &__title {
-      &:after {
-        width: 40%;
-      }
-    }
-    &__list {
-      .career-header {
-        border-bottom: 1px solid $color_border;
-        padding-bottom: 0.6rem;
-        margin-bottom: 0.8rem;
-      }
-
-      .code {
-        width: 60px;
-      }
-
-      .career-body {
-        .item {
-          border-bottom: 1px solid $color_background;
-          padding-bottom: 0.6rem;
-          margin-bottom: 0.8rem;
-
-          &:hover {
-            color: $primary-color;
-          }
-        }
-      }
-    }
-    .list-sort {
+<style  lang="scss" scoped>
+.province {
+  padding-top: 1rem;
+}
+.list-sort {
   li {
     border-bottom: 1px solid $color_border;
     position: relative;
@@ -266,12 +231,11 @@ export default {
       }
   }
 }
-  }
-.item-career {
-  &:hover {
-    a {
-      color: $primary_color;
-    }
+</style>
+<style lang="scss">
+.activeProvince {
+  a {
+    color: $primary_color !important;
   }
 }
 </style>

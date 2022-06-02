@@ -18,7 +18,9 @@ export const initState = () => {
       list: [],
       parent: []
     },
-    listAdvertisement: []
+    listAdvertisement: [],
+    listBusinessType: [],
+    totalRecordsBusinessType: null
   }
 }
 const state = initState()
