@@ -10,6 +10,10 @@
       <a class="primary-color-txt" href="javascript:;">&ensp;{{ dataSource.tax ? dataSource.tax : '0000000' }}</a>
     </div>
     <div class="mg-b-8r font-size-18">
+      <i class="fa fa-usd font-size-20" aria-hidden="true" />
+      <a class="primary-color-txt font-size-18" href="javascript:;">{{ dataSource.capacity ? `${dataSource.capacity.toLocaleString('de-DE')}(vnđ)` : '...' }}</a>
+    </div>
+    <div class="mg-b-8r font-size-18">
       <i class="fa fa-user font-size-20" aria-hidden="true" /> Người đại diện:
       <nuxt-link class="primary-color text-uppercase font-italic font-size-16" :to="localePath({ path: '/tra-cuu', query: { type: 3, keyword: dataSource.director }})">
         &ensp;{{ dataSource.director ? dataSource.director : '' }}
@@ -18,10 +22,6 @@
     <div class="mg-b-8r font-size-18">
       <i class="fa fa-map-marker font-size-20" aria-hidden="true" />
       <a class="primary-color-txt font-size-18" href="javascript:;">{{ dataSource.address ? dataSource.address : '...' }}</a>
-    </div>
-    <div class="mg-b-8r font-size-18">
-      <i class="fa fa-usd font-size-20" aria-hidden="true" />
-      <a class="primary-color-txt font-size-18" href="javascript:;">{{ dataSource.capacity ? `${dataSource.capacity.toLocaleString('de-DE')}(vnđ)` : '...' }}</a>
     </div>
   </div>
 </template>
