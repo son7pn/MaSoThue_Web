@@ -19,14 +19,12 @@ function isSassRule (rule) {
 export default {
   // Global page headers (https://go.nuxtjs.dev/config-head)
   head: {
-    title: 'Mã Số Thuế (Công ty, Cá Nhân) - MaSoThue',
+    title: config.AppSettings.SiteName,
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { hid: 'description', name: 'description', content: 'Tra cứu mã số thuế 1,7 triệu doanh nghiệp, tra cứu mã số thuế cá nhân, tra cứu mã số thuế trên facebook, zalo. Tin tức về thuế, kế toán và doanh nghiệp.' },
-      { name: 'keywords', content: 'Tra cứu mã số thuế, tra cuu ma so thue, mã số thuế, ma so thue, tra cứu mã số thuế cá nhân, tra cứu thông tin doanh nghiệp, tra cứu mã số thuế online' },
-      { name: 'apple-mobile-web-app-title', content: 'tracuunnt' },
-      { name: 'application-name', content: 'BidtoArt' },
+        { name: 'apple-mobile-web-app-title', content: 'tracuunnt' },
+      { name: 'application-name', content: 'tracuunnt' },
       { name: 'google-site-verification', content: '1wb24bC9lwHscnGHVCcgwN__34MDraJciGj5-9QDGOg' },
       {
         property: 'fb:app_id',
@@ -36,25 +34,7 @@ export default {
         property: 'og:site_name',
         content: config.AppSettings.SiteName
       },
-      {
-        hid: 'og:image',
-        property: 'og:image',
-        content: 'https://api.tracuunnt.com/uploads/logo-masothue.png'
-      },
-      {
-        property: 'og:type',
-        content: 'website'
-      },
-      {
-        hid: 'og:title',
-        property: 'og:title',
-        content: 'Mã Số Thuế (Công ty, Cá Nhân) - MaSoThue'
-      },
-      {
-        hid: 'og:description',
-        property: 'og:description',
-        content: 'Tra cứu mã số thuế 1,7 triệu doanh nghiệp, tra cứu mã số thuế cá nhân, tra cứu mã số thuế trên facebook, zalo. Tin tức về thuế, kế toán và doanh nghiệp'
-      }
+     
     ],
     link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
     script: [],

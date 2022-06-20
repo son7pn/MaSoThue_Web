@@ -76,7 +76,6 @@
     </div>
   </div>
 </template>
-
 <script>
 import { mapActions, mapState } from 'vuex'
 import vueCustomScrollbar from 'vue-custom-scrollbar'
@@ -84,7 +83,6 @@ import { STORE_KEY } from '@/store/company/constants'
 import { APP_CONFIG } from '@/utils/env'
 import ItemInfoBusiness from '@/components/shared/ItemInfoBusiness.vue'
 // import Pagination from '@/components/shared/Pagination.vue'
-
 export default {
   name: 'SlugProvince',
   components: {
@@ -97,6 +95,7 @@ export default {
       vi: '/doanh-nghiep-moi'
     }
   },
+
   async asyncData ({ route, store }) {
     const dataApi = await Promise.allSettled([
       store.dispatch('company/acGetListCompanyByTax', { keyword: '', pageIndex: route.query.page ? Number(route.query.page) : 1, pageSize: 10, type: 0 }),
