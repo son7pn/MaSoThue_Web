@@ -109,7 +109,8 @@ export default {
     const dataApi = await Promise.allSettled([
       store.dispatch('company/acGetListCompanyByTax', { keyword: '', pageIndex: route.query.page ? Number(route.query.page) : 1, pageSize: 20, type: -1 }),
       store.dispatch('common/acGetListProvince'),
-      store.dispatch('common/acGetListAdvertisement')
+      store.dispatch('common/acGetListAdvertisement'),
+      store.dispatch('common/acGetDataConfig')
     ])
     return { dataApi }
   },

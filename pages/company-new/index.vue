@@ -99,7 +99,8 @@ export default {
   async asyncData ({ route, store }) {
     const dataApi = await Promise.allSettled([
       store.dispatch('company/acGetListCompanyByTax', { keyword: '', pageIndex: route.query.page ? Number(route.query.page) : 1, pageSize: 10, type: 0 }),
-      store.dispatch('common/acGetListAdvertisement')
+      store.dispatch('common/acGetListAdvertisement'),
+      store.dispatch('common/acGetDataConfig')
     ])
     return { dataApi }
   },

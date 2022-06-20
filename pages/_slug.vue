@@ -141,7 +141,8 @@ export default {
     const tax = route.params.slug.split('-').shift()
     const dataApi = await Promise.allSettled([
       store.dispatch('company/acDetailCompanyByTax', tax),
-      store.dispatch('common/acGetListAdvertisement')
+      store.dispatch('common/acGetListAdvertisement'),
+      store.dispatch('common/acGetDataConfig')
     ])
     return { dataApi }
   },

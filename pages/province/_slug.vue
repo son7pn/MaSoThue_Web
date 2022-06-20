@@ -106,6 +106,7 @@ export default {
     const callAPi = []
     callAPi.push(store.dispatch('company/acGetListCompanyByTax', { keyword: key, pageIndex: route.query.page ? Number(route.query.page) : 1, pageSize: 10, type: 4 }))
     callAPi.push(store.dispatch('common/acGetListAdvertisement'))
+    callAPi.push(store.dispatch('common/acGetDataConfig'))
     if (id.length === 2) {
       callAPi.push(store.dispatch('common/acGetListDistrict', id))
     } else if (id.length === 3) {

@@ -30,5 +30,17 @@ export default {
   [types.GET_LIST_BUSINESS_TYPE] (state, data) {
     state.listBusinessType = data.list
     state.totalRecordsBusinessType = data.totalRow
-  }
+  },
+  [types.GET_DATA_CONFIG] (state, data) {
+    state.dataConfig = data
+    data && data.map((item) => {
+      if (item.configKey === 'EMAIL') {
+        state.configEmail = item.configContent
+      } else if (item.configKey === 'HOTLINE') {
+        state.configHotline = item.configContent
+      } else if (item.configKey === 'LOGO') {
+        state.configLogo = item.configContent
+      }
+    })
+  },
 }
