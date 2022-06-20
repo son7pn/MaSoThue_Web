@@ -7,10 +7,17 @@
 </template>
 
 <script>
+const config = require('./../../appsettings.json')
+
 export default {
   name: 'Main',
+  head() {
+    return {
+     
+    }
+  },
   computed: {
-    key () {
+    key() {
       return this.$route.path
     }
   }

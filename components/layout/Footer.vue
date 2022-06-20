@@ -6,7 +6,7 @@
           <a href="javascript:;" class="display-flex" rel="noopener noreferrer">
             <figure class="aspect-ratio aspect-ratio--1-1 border-rd-8 aspect-ratio--bg-transparent">
               <!-- <img loading="lazy" class="full-box" :src="@/assets/images/logo/logo-masothue.png" alt="MaSoThue"> -->
-              <img loading="lazy" class="full-box" :src="logo ? cdnUrl + logo : logoDefault" alt="MaSoThue">
+              <img loading="lazy" class="full-box" :src="configLogo ? cdnUrl + configLogo : logoDefault" alt="MaSoThue">
             </figure>
           </a>
         </div>
@@ -21,11 +21,11 @@
           </div>
           <div class="display-flex mg-t-24r">
             <i class="fa fa-envelope font-size-20" aria-hidden="true" />
-            <span class="mg-l-12r font-size-18">{{ emailDefault ? emailDefault : '' }}</span>
+            <span class="mg-l-12r font-size-18">{{ configEmail ? configEmail : '' }}</span>
           </div>
           <div class="display-flex mg-t-24r">
             <i class="fa fa-phone font-size-20" aria-hidden="true" />
-            <span class="mg-l-12r font-size-18">{{ hotlineDefault ? hotlineDefault : '' }}</span>
+            <span class="mg-l-12r font-size-18">{{ configHotline ? configHotline : '' }}</span>
           </div>
         </div>
       </div>
@@ -105,6 +105,7 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
 import { APP_CONFIG } from '@/utils/env'
 const logoDefault = require('@/assets/images/logo/logo-masothue.png')
 export default {
@@ -120,9 +121,10 @@ export default {
     }
   },
   computed: {
+    ...mapState('common', ['configEmail', 'configHotline', 'configLogo'])
   },
   mounted () {
-    this.nuxtServerInit()
+    // this.nuxtServerInit()
   },
   methods: {
     async nuxtServerInit () {

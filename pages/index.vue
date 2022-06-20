@@ -1,5 +1,9 @@
 <template>
-  <div class="home-index full-box">
+  <div class="home-index full-box"> <div style="position: relative">
+      <h1 class="hideh1Seo">
+      Tra cứu mã số thuế và thông tin người nộp thuế
+      </h1>
+    </div>
     <div v-if="listAdvertisementHead && listAdvertisementHead.length > 0" class="container">
       <div class="mst-ads">
         <a v-for="(item, index) of listAdvertisementHead" v-show="item.isEnable" :key="index" :href="item.url" target="blank">
@@ -92,6 +96,8 @@ import 'vue-custom-scrollbar/dist/vueScrollbar.css'
 import ItemInfoBusiness from '@/components/shared/ItemInfoBusiness.vue'
 import Banner from '@/components/shared/Banner.vue'
 import Pagination from '@/components/shared/Pagination.vue'
+const config = require('./../appsettings.json')
+
 export default {
   components: {
     vueCustomScrollbar,
@@ -103,7 +109,8 @@ export default {
     const dataApi = await Promise.allSettled([
       store.dispatch('company/acGetListCompanyByTax', { keyword: '', pageIndex: route.query.page ? Number(route.query.page) : 1, pageSize: 20, type: -1 }),
       store.dispatch('common/acGetListProvince'),
-      store.dispatch('common/acGetListAdvertisement')
+      store.dispatch('common/acGetListAdvertisement'),
+      store.dispatch('common/acGetDataConfig')
     ])
     return { dataApi }
   },
@@ -132,6 +139,31 @@ export default {
   },
   head () {
     return {
+     // title: config.AppSettings.SiteName,
+      meta: [
+      
+        { hid: 'description', name: 'description', content: 'Tra cứu mã số thuế của người nộp thuế, tra cứu giám đốc, điện thoại, vốn điều lệ, tỉ lệ góp vốn của hàng triệu doanh nghiệp tại Việt Nam.' },
+        { name: 'keywords', content: 'Tra cứu mã số thuế, tra cuu ma so thue, mã số thuế, ma so thue, tra cứu mã số thuế cá nhân, tra cứu thông tin doanh nghiệp, tra cứu mã số thuế online' },
+       
+        
+        {
+          hid: 'og:image',
+          property: 'og:image',
+          content: 'https://api.tracuunnt.com/uploads/logo-masothue.png'
+        },
+      
+        {
+          hid: 'og:title',
+          property: 'og:title',
+          content: config.AppSettings.SiteName
+        },
+        {
+          hid: 'og:description',
+          property: 'og:description',
+          content: 'Tra cứu mã số thuế của người nộp thuế, tra cứu giám đốc, điện thoại, vốn điều lệ, tỉ lệ góp vốn của hàng triệu doanh nghiệp tại Việt Nam.'
+        }
+
+      ],
       script: [{ type: 'application/ld+json', json: this.structuredData }]
     }
   },
@@ -255,5 +287,9 @@ export default {
         }
     }
   }
+  .hideh1Seo {
+  position: absolute;
+  top: -99999px;
+}
 }
 </style>

@@ -58,7 +58,9 @@
       {{ dataSource.status === 1 ? 'Đang hoạt động' : 'Ngừng hoạt động' }}
     </div>
     <div class="item-key display-flex-center-wrap justify-content-between">
-      <span>Cập nhật mã số thuế <b>{{ dataSource.tax ? dataSource.tax : '' }}</b>  lần cuối vào <i>{{ dataSource.lastModifiedDate ? $dayjs(dataSource.lastModifiedDate).format('YYYY-MM-DD HH:mm:ss') : '' }}.</i></span>
+      <span>Cập nhật mã số thuế <b>{{ dataSource.tax ? dataSource.tax : '' }}</b> lần cuối vào <i>{{
+          dataSource.lastModifiedDate ? $dayjs(dataSource.lastModifiedDate).format('YYYY-MM-DD HH:mm:ss') : ''
+      }}.</i></span>
       <button type="button" class="btn bg-primary-color full-width color-light" @click="downloadFile(dataSource)">
         Tải file
       </button>
@@ -68,6 +70,8 @@
 
 <script>
 import mixinsFile from '@/mixins/mixinsFile'
+const config = require('./../../appsettings.json')
+
 export default {
   name: 'DetailCompany',
   mixins: [mixinsFile],
@@ -77,7 +81,67 @@ export default {
       default: Object
     }
   },
-  data () {
+
+  head() {
+    return {
+      script: [{ type: 'application/ld+json', json: this.structuredData }],
+      title: this.dataSource.tax + ' - ' + this.dataSource.compnayName,
+      meta: [
+        //basic metadata
+        {
+          hid: "og:title",
+          property: "og:title",
+          content: this.dataSource.tax + ' - ' + this.dataSource.compnayName,
+        },
+        {
+          hid: "og:image:alt",
+          property: "og:image:alt",
+          content: this.dataSource.tax + ' - ' + this.dataSource.compnayName,
+        },
+        {
+          hid: "og:image",
+          property: "og:image",
+          content: 'https://api.tracuunnt.com/uploads/logo-masothue.png',
+        },
+        {
+          hid: "og:image:width",
+          property: "og:image:width",
+          content: '800px',
+        },
+        {
+          hid: "og:image:height",
+          property: "og:image:height",
+          content: '800px',
+        },
+        {
+          hid: "og:type",
+          property: "og:type",
+          content: 'aricle',
+        },
+        {
+          hid: "og:url",
+          property: "og:url",
+          content: config.AppSettings.Domain + this.$nuxt.$route.fullPath,
+        },
+        {
+          hid: "og:description",
+          property: "og:description",
+          content: this.dataSource.tax + ', ' + this.dataSource.compnayName+', ' + this.dataSource.director+', ' + this.dataSource.capacity+', ' + this.dataSource.address+', ' + this.dataSource.phone,
+        },
+        {
+          hid: "description",
+          name: "description",
+          content:  this.dataSource.tax + ', ' + this.dataSource.compnayName+', ' + this.dataSource.director+', ' + this.dataSource.capacity+', ' + this.dataSource.address+', ' + this.dataSource.phone,
+        },
+        {
+          hid: "keywords",
+          name: "keywords",
+          content: this.dataSource.tax + ', ' + this.dataSource.compnayName+', ' + this.dataSource.director+', ' + this.dataSource.capacity+', ' + this.dataSource.address+', ' + this.dataSource.phone,
+        },
+      ],
+    };
+  },
+  data() {
     return {
       isFetchCompany: false,
       structuredData: {
@@ -85,7 +149,7 @@ export default {
         '@type': 'Article',
         mainEntityOfPage: {
           '@type': 'WebPage',
-          '@id': 'http://shopli.vn/goi-y-5-loai-mat-na-cho-da-dau-mun-gop-phan-hut-dau-tru-mun-ma-ban-nen-tham-khao.htm'
+          '@id': 'https://tracuunnt.com'+ this.$nuxt.$route.fullPath,
         },
         headline: `${this.dataSource.compnayName}`,
         image: {
@@ -94,8 +158,8 @@ export default {
           height: 600,
           width: 800
         },
-        datePublished: '9/3/2020 11:48:18 PM',
-        dateModified: '9/3/2020 11:48:18 PM',
+      //  datePublished: '9/3/2020 11:48:18 PM',
+        dateModified: this.dataSource.lastModifiedDate,
         author: {
           '@type': 'Person',
           name: 'tracuunnt'
@@ -138,13 +202,9 @@ export default {
       }
     }
   },
-  head () {
-    return {
-      script: [{ type: 'application/ld+json', json: this.structuredData }]
-    }
-  },
+
   methods: {
-    downloadFile (data) {
+    downloadFile(data) {
       if (!data || !data.attackName) {
         this.$toast.error('Tài liệu hiện không thể tải xuống')
         return
@@ -159,21 +219,24 @@ export default {
 </script>
 
 <style lang="scss" scoped>
- .detail-company {
-   &__name {
-     border-bottom: 1px solid #dadbe1;
-     padding-bottom: 1.2rem;
-   }
-   .item-key {
-     border-bottom: 1px solid #dadbe1;
-     padding: 0.8rem 0;
-     &__title {
-       width: 200px;
-       i {
-         margin-right: 0.2rem;
-         width: 17px;
-       }
-     }
-   }
- }
+.detail-company {
+  &__name {
+    border-bottom: 1px solid #dadbe1;
+    padding-bottom: 1.2rem;
+  }
+
+  .item-key {
+    border-bottom: 1px solid #dadbe1;
+    padding: 0.8rem 0;
+
+    &__title {
+      width: 200px;
+
+      i {
+        margin-right: 0.2rem;
+        width: 17px;
+      }
+    }
+  }
+}
 </style>

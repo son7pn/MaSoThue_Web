@@ -20,7 +20,11 @@ export const initState = () => {
     },
     listAdvertisement: [],
     listBusinessType: [],
-    totalRecordsBusinessType: null
+    totalRecordsBusinessType: null,
+    dataConfig: [],
+    configLogo: '',
+    configHotline: '',
+    configEmail: ''
   }
 }
 const state = initState()
