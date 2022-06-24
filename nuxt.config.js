@@ -42,7 +42,7 @@ export default {
         src: 'https://www.googletagmanager.com/gtag/js?id=G-K14G0VBL5M'
       },
       {
-        src: '/js/bundle.js'
+        src: '/js/gtag.js'
       }
     ],
     noscript: []
