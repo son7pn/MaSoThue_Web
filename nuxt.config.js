@@ -37,7 +37,12 @@ export default {
      
     ],
     link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
-    script: [],
+    script: [
+      {
+        src: 'https://www.googletagmanager.com/gtag/js?id=G-K14G0VBL5M',
+        src: '~/static/js/bundle.js'
+      }
+    ],
     noscript: []
   },
   /**
