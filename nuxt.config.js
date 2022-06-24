@@ -40,7 +40,7 @@ export default {
     script: [
       {
         src: 'https://www.googletagmanager.com/gtag/js?id=G-K14G0VBL5M',
-        src: '~/static/js/bundle.js'
+        src: 'js/bundle.js'
       }
     ],
     noscript: []
