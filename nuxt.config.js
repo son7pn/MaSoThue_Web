@@ -82,6 +82,7 @@ export default {
     { src: '~/plugins/vuelidate.js', ssr: false, mode: 'client' },
     { src: '~plugins/vue-debounce.js', ssr: false },
     { src: '~plugins/paginate', ssr: false, mode: 'client' },
+    { src: '~plugins/vue-slider-component.js', ssr: false, mode: 'client' },
     { src: '~/plugins/vuex-cache.js', ssr: false }
   ],
   /*

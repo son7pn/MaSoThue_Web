@@ -16,6 +16,13 @@
         <h3 class="font-weight-medium primary-color-txt border-title font-size-34">
           {{ $route.query.type == 2 ? `Tra cứu tên công ty ${$route.query.keyword}` : $route.query.type == 3 ? `Tra cứu tên người đại diện pháp luật ${$route.query.keyword}` : 'Tra cứu mã số thuế và danh sách công ty' }}
         </h3>
+        <div>
+          <vue-slider
+            class="w-full"
+            :value="[0, 10]"
+            @change="changeValue($event)"
+          />
+        </div>
         <ItemInfoBusiness
           v-for="(item, index) of listCompany"
           :key="index"
@@ -186,6 +193,9 @@ export default {
     },
     scrollToTop () {
       window.scrollTo(0, 0)
+    },
+    changeValue (event) {
+      console.log('even: ', event);
     }
   }
 }
