@@ -34,7 +34,10 @@ export default {
         property: 'og:site_name',
         content: config.AppSettings.SiteName
       },
-     
+      {
+        name: 'robots',
+        content: 'max-snippet:-1, max-image-preview:large, max-video-preview:-1'
+      },
     ],
     link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
     script: [
