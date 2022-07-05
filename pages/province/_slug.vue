@@ -97,6 +97,65 @@ export default {
       vi: '/tra-cuu-doanh-nghiep/:slug'
     }
   },
+  head() {
+    return {
+    
+      title:'Tra cứu thông tin hồ sơ thuế theo '+ this.nameProvinceActive,
+      meta: [
+        //basic metadata
+        {
+          hid: "og:title",
+          property: "og:title",
+          content:'Tra cứu thông tin hồ sơ thuế theo '+ this.nameProvinceActive,
+        },
+        {
+          hid: "og:image:alt",
+          property: "og:image:alt",
+          content:'Tra cứu thông tin hồ sơ thuế theo '+ this.nameProvinceActive,
+        },
+        {
+          hid: "og:image",
+          property: "og:image",
+          content: 'https://api.tracuunnt.com/uploads/logo-masothue.png',
+        },
+        {
+          hid: "og:image:width",
+          property: "og:image:width",
+          content: '800px',
+        },
+        {
+          hid: "og:image:height",
+          property: "og:image:height",
+          content: '800px',
+        },
+        {
+          hid: "og:type",
+          property: "og:type",
+          content: 'aricle',
+        },
+        {
+          hid: "og:url",
+          property: "og:url",
+          content: "https://tracuunnt.com" + this.$nuxt.$route.fullPath,
+        },
+        {
+          hid: "og:description",
+          property: "og:description",
+          content: 'Tra cứu thông tin hồ sơ thuế theo '+ this.nameProvinceActive,
+        },
+        {
+          hid: "description",
+          name: "description",
+          content:'Tra cứu thông tin hồ sơ thuế theo '+  this.nameProvinceActive,
+        },
+        {
+          hid: "keywords",
+          name: "keywords",
+          content: 'Tra cứu thông tin hồ sơ thuế theo '+this.nameProvinceActive,
+        },
+      ],
+    };
+  },
   asyncData ({ route, store }) {
     const provinceAlias = route.params.slug.split('-')
     // console.log(provinceAlias.slice(0, provinceAlias.length - 1, 1).join('-'))

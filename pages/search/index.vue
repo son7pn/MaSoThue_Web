@@ -104,6 +104,10 @@ export default {
     ])
     return { dataApi }
   },
+   head() {
+    return {
+    
+      title:'Kết quả tìm kiếm'}},
   data () {
     return {
       isFetchCompany: false,

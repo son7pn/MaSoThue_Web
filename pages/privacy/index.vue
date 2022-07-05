@@ -55,6 +55,13 @@ export default {
       cdnUrl: APP_CONFIG.cdnUrl
     }
   },
+  head() {
+    return {
+     
+      title:"Chính sách bảo mật",
+     
+    };
+  },
   computed: {
     ...mapState('common', ['contentConfig', 'listAdvertisement']),
     listAdvertisementHead () {

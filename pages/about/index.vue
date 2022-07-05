@@ -43,6 +43,13 @@ export default {
       vi: '/gioi-thieu'
     }
   },
+  head() {
+    return {
+      script: [{ type: 'application/ld+json', json: this.structuredData }],
+      title: "Giới thiệu",
+      
+    };
+  },
   async asyncData ({ route, store }) {
     const dataApi = await Promise.allSettled([
       store.dispatch('common/acGetContentConfig', 'ABOUTUS'),

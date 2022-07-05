@@ -97,6 +97,11 @@ export default {
       vi: '/tra-cuu-theo-nganh-nghe/:slug'
     }
   },
+   head() {
+    return {
+    
+      title:'Tra cứu thông tin hồ sơ thuế theo ngành nghề ',
+      }},
   asyncData ({ route, store }) {
     const businessTypeAlias = route.params.slug
     const callAPi = []
