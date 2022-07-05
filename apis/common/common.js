@@ -25,6 +25,10 @@ export default ($axios) => {
     async showListBusinessType (payload) {
       const data = await $axios.get(`v1/Article/BusinessType?pageIndex=${payload}&pageSize=50`)
       return data !== STATUS_FAIL ? data : null
+    },
+    async showDataConfig () {
+      const data = await $axios.get('v1/config/GetListByGroup?group=all')
+      return data !== STATUS_FAIL ? data : null
     }
   }
 }

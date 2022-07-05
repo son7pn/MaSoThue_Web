@@ -92,7 +92,8 @@ export default {
   mixins: [validationMixin],
   async asyncData ({ route, store }) {
     const dataApi = await Promise.allSettled([
-      store.dispatch('common/acGetListAdvertisement')
+      store.dispatch('common/acGetListAdvertisement'),
+      store.dispatch('common/acGetDataConfig')
     ])
     return { dataApi }
   },

@@ -115,7 +115,8 @@ export default {
   async asyncData ({ route, store }) {
     const dataApi = await Promise.allSettled([
       store.dispatch('common/acGetListBusinessType', route.query.page ? Number(route.query.page) : 1),
-      store.dispatch('common/acGetListAdvertisement')
+      store.dispatch('common/acGetListAdvertisement'),
+      store.dispatch('common/acGetDataConfig')
     ])
     return { dataApi }
   },

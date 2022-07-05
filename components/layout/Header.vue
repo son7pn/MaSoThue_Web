@@ -4,7 +4,7 @@
       <div class="logo bg-color-light">
         <nuxt-link :to="localePath('/')" class="display-flex">
           <figure class="aspect-ratio aspect-ratio--1-1 border-rd-8 aspect-ratio--bg-transparent">
-            <img loading="lazy" class="full-box" :src="logo ? cdnUrl + logo : logoDefault" alt="MaSoThue">
+            <img loading="lazy" class="full-box" :src="configLogo ? cdnUrl + configLogo : logoDefault" alt="MaSoThue">
           </figure>
         </nuxt-link>
       </div>
@@ -42,6 +42,7 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
 import ClickOutside from 'vue-click-outside'
 import { APP_CONFIG } from '@/utils/env'
 import BoxSearch from '@/components/search/BoxSearch.vue'
@@ -68,12 +69,13 @@ export default {
     }
   },
   computed: {
+    ...mapState('common', ['configLogo'])
   },
   watch: {
   },
   mounted () {
     window.addEventListener('scroll', this.onScroll)
-    this.nuxtServerInit()
+    // this.nuxtServerInit()
   },
   methods: {
     async nuxtServerInit () {

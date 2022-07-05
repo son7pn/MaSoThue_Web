@@ -16,6 +16,13 @@
         <h3 class="font-weight-medium primary-color-txt border-title font-size-34">
           {{ $route.query.type == 2 ? `Tra cứu tên công ty ${$route.query.keyword}` : $route.query.type == 3 ? `Tra cứu tên người đại diện pháp luật ${$route.query.keyword}` : 'Tra cứu mã số thuế và danh sách công ty' }}
         </h3>
+        <div>
+          <vue-slider
+            class="w-full"
+            :value="[0, 10]"
+            @change="changeValue($event)"
+          />
+        </div>
         <ItemInfoBusiness
           v-for="(item, index) of listCompany"
           :key="index"
@@ -64,8 +71,8 @@
           </h3>
           <vueCustomScrollbar class="scroll-class none-ps-x none-ps-y">
             <ul class="row list-sort list-style-none">
-              <li v-for="(item1, index1) of listProvince" :key="index1" class="cat-item align-items-center col-xs-6 col-md-12">
-                <nuxt-link :to="localePath(`/tra-cuu-doanh-nghiep/${item1.alias}-${item1.matp}`)" class="primary-color-txt font-size-18">
+              <li v-for="(item1, index1) of listProvince" :key="index1" class="cat-item align-items-center col-xs-6 col-md-12" :class="{'activeProvince' : $route.query.tinh && item1.alias === $route.query.tinh}">
+                <nuxt-link :to="localePath(`/tra-cuu?type=${$route.query.type}&keyword=${$route.query.keyword}&tinh=${item1.alias}`)" class="primary-color-txt font-size-18">
                   {{ item1.name }}
                 </nuxt-link>
               </li>
@@ -99,8 +106,9 @@ export default {
   },
   async asyncData ({ route, store }) {
     const dataApi = await Promise.allSettled([
-      store.dispatch('company/acGetListCompanyByTax', { keyword: route.query.keyword ? route.query.keyword : '', pageIndex: route.query.page ? Number(route.query.page) : 1, pageSize: 10, type: route.query.type ? route.query.type : 0 }),
-      store.dispatch('common/acGetListAdvertisement')
+      store.dispatch('company/acGetListCompanyByTax', { keyword: route.query.keyword ? route.query.keyword : '', pageIndex: route.query.page ? Number(route.query.page) : 1, pageSize: 10, type: route.query.type ? route.query.type : 0, tinh: route.query.tinh ? route.query.tinh : '' }),
+      store.dispatch('common/acGetListAdvertisement'),
+      store.dispatch('common/acGetDataConfig')
     ])
     return { dataApi }
   },
@@ -117,7 +125,7 @@ export default {
   fetch () {
     if (this.isFetchCompany) {
       this.isFetchCompany = false
-      return this.$store.dispatch('company/acGetListCompanyByTax', { keyword: this.$route.query.keyword, pageIndex: this.$route.query.page ? Number(this.$route.query.page) : 1, pageSize: 10, type: Number(this.$route.query.type) })
+      return this.$store.dispatch('company/acGetListCompanyByTax', { keyword: this.$route.query.keyword, pageIndex: this.$route.query.page ? Number(this.$route.query.page) : 1, pageSize: 10, type: Number(this.$route.query.type), tinh: this.$route.query.tinh ? this.$route.query.tinh : '' })
     }
   },
   computed: {
@@ -189,6 +197,9 @@ export default {
     },
     scrollToTop () {
       window.scrollTo(0, 0)
+    },
+    changeValue (event) {
+      console.log('even: ', event);
     }
   }
 }

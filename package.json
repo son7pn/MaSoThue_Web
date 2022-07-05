@@ -1,5 +1,4 @@
 {
-
   "version": "1.0.0",
   "private": true,
   "scripts": {
@@ -38,7 +37,7 @@
     "vue-click-outside": "^1.1.0",
     "vue-custom-scrollbar": "^1.4.4",
     "vue-debounce": "^3.1.1",
-    "vue-slider-component": "^3.2.15",
+    "vue-slider-component": "^3.2.16",
     "vuejs-paginate": "^2.1.0",
     "vuelidate": "^0.7.7",
     "vuex-cache": "^3.5.0"

@@ -40,5 +40,9 @@ export default {
   async acGetListBusinessType ({ commit }, params) {
     const data = await this.$apis.common.showListBusinessType(params)
     data && commit(types.GET_LIST_BUSINESS_TYPE, data)
+  },
+  async acGetDataConfig ({ commit }) {
+    const data = await this.$apis.common.showDataConfig()
+    data && commit(types.GET_DATA_CONFIG, data)
   }
 }

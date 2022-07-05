@@ -37,7 +37,14 @@ export default {
      
     ],
     link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
-    script: [],
+    script: [
+      {
+        src: 'https://www.googletagmanager.com/gtag/js?id=G-K14G0VBL5M'
+      },
+      {
+        src: '/js/gtag.js'
+      }
+    ],
     noscript: []
   },
   /**
@@ -75,6 +82,7 @@ export default {
     { src: '~/plugins/vuelidate.js', ssr: false, mode: 'client' },
     { src: '~plugins/vue-debounce.js', ssr: false },
     { src: '~plugins/paginate', ssr: false, mode: 'client' },
+    { src: '~plugins/vue-slider-component.js', ssr: false, mode: 'client' },
     { src: '~/plugins/vuex-cache.js', ssr: false }
   ],
   /*
@@ -83,6 +91,7 @@ export default {
   modules: [
     // Doc: https://axios.nuxtjs.org/usage
     '@nuxtjs/axios',
+    '@nuxtjs/sitemap',
     '@nuxtjs/pwa',
     // Doc: https://github.com/nuxt/content
     '@nuxt/content',
